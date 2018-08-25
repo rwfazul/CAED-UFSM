@@ -1,6 +1,6 @@
 # animaUFSM
 
-O **ÂnimaUFSM** será um canal de comunicação entre alunos e servidores com o Núcleo de Apoio à Aprendizagem da UFSM (Ânima), além de uma plataforma de gerência e controle interno para núcleo. Leia mais na [Wiki](/wiki) do projeto.
+O **ÂnimaUFSM** será um canal de comunicação entre alunos e servidores com o Núcleo de Apoio à Aprendizagem da UFSM (Ânima), além de uma plataforma de gerência e controle interno para núcleo. Leia mais na [Wiki](https://github.com/rwfazul/animaUFSM/wiki) do projeto.
 
 ## Cronograma de d	esenvolvimento
 
@@ -143,4 +143,4 @@ O **ÂnimaUFSM** será um canal de comunicação entre alunos e servidores com o
   </tbody>
 </table>
 
-<em align="right">Backlog last updated on Aug 23, 2018</em>
+<p align="right"><em>Backlog last updated on Aug 23, 2018.</em></p>
