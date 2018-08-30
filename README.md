@@ -15,13 +15,13 @@ O **ÂnimaUFSM** será um canal de comunicação entre alunos e servidores com o
     <tr>
        <td>Documentação inicial</td>
        <td>Diagrama de Casos de Uso</td>
-       <td>&#9744; <!--&#9745;--></td>
+       <td>&#9745</td>
        <td rowspan="2">30/08/2018</td>
     </tr>
     <tr>
        <td>Análise de Ferramentas</td>
        <td>Frameworks front-end e back-end</td>
-       <td>&#9744;</td>
+       <td>&#9745</td>
     </tr>
     <tr>
       <td>Reunião cliente</td>
@@ -141,4 +141,4 @@ O **ÂnimaUFSM** será um canal de comunicação entre alunos e servidores com o
   </tbody>
 </table>
 
-<p align="right"><em>Backlog last updated on Aug 23, 2018.</em></p>
+<p align="right"><em>Backlog last updated on Aug 29, 2018.</em></p>
