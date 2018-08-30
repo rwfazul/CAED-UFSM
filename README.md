@@ -24,6 +24,7 @@ O **ÂnimaUFSM** será um canal de comunicação entre alunos e servidores com o
        <td>&#9744;</td>
     </tr>
     <tr>
+      <td>Reunião cliente</td>
        <td>Validação Documento Visão junto ao Cliente</td>
        <td>&#9744;</td>
        <td>31/08/2018</td>
