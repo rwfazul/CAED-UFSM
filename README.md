@@ -13,23 +13,20 @@ O **ÂnimaUFSM** será um canal de comunicação entre alunos e servidores com o
   </thead>
   <tbody>
     <tr>
-       <td rowspan="3">Documentação inicial</td>
+       <td>Documentação inicial</td>
        <td>Diagrama de Casos de Uso</td>
        <td>&#9744; <!--&#9745;--></td>
-       <td rowspan="4">30/08/2018</td>
-    </tr>
-    <tr>
-       <td>Diagrama de Classes</td>
-       <td>&#9744;</td>
-    </tr>
-    <tr>
-       <td>Validação Documento Visão junto ao Cliente</td>
-       <td>&#9744;</td>
+       <td rowspan="2">30/08/2018</td>
     </tr>
     <tr>
        <td>Análise de Ferramentas</td>
        <td>Frameworks front-end e back-end</td>
        <td>&#9744;</td>
+    </tr>
+    <tr>
+       <td>Validação Documento Visão junto ao Cliente</td>
+       <td>&#9744;</td>
+       <td>31/08/2018</td>
     </tr>
     <tr>
        <td rowspan="8">Serviço Mensagens Instantâneas</td>
