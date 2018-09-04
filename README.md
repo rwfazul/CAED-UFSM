@@ -26,26 +26,26 @@ O **ÂnimaUFSM** será um canal de comunicação entre alunos e servidores com o
     <tr>
       <td>Reunião cliente</td>
        <td>Validação Documento Visão junto ao Cliente</td>
-       <td>&#9744;</td>
+       <td>&#9745;</td>
        <td>31/08/2018</td>
     </tr>
     <tr>
        <td rowspan="8">Serviço Mensagens Instantâneas</td>
-       <td>Integração API UFSM Login - Implementação</td>
+       <td>Integração Módulo Chat - Implementação</td>
        <td>&#9744;</td>
        <td rowspan="2">06/09/2018</td>
     </tr>
     <tr>
-       <td>Integração API UFSM Login - Testes</td>
+       <td>Integração Módulo Chat - Testes</td>
        <td>&#9744;</td>
     </tr>
     <tr>
-       <td>Integração Módulo Chat - Implementação</td>
+       <td>Integração API UFSM Login - Implementação</td>
        <td>&#9744;</td>
        <td rowspan="2">13/09/2018</td>
     </tr>    
     <tr>
-       <td>Integração Módulo Chat - Testes</td>
+       <td>Integração API UFSM Login - Testes</td>
        <td>&#9744;</td>
     </tr>
     <tr>
@@ -141,4 +141,4 @@ O **ÂnimaUFSM** será um canal de comunicação entre alunos e servidores com o
   </tbody>
 </table>
 
-<p align="right"><em>Backlog last updated on Aug 29, 2018.</em></p>
+<p align="right"><em>Backlog last updated on September 03, 2018.</em></p>
