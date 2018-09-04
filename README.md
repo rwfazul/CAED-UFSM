@@ -1,6 +1,6 @@
-# ÂnimaUFSM
+# CAED-UFSM
 
-O **ÂnimaUFSM** será um canal de comunicação entre alunos e servidores com o Núcleo de Apoio à Aprendizagem da UFSM (Ânima), além de uma plataforma de gerência e controle interno para núcleo. Leia mais na [Wiki](https://github.com/rwfazul/animaUFSM/wiki) do projeto.
+O **CAED-UFSM** será um canal de comunicação entre alunos e servidores com o Núcleo de Apoio à Aprendizagem, que faz parte da Coordenadoria de Ações Educacionais (CAED) da UFSM, além de uma plataforma de gerência e controle interno para núcleo. Leia mais na [Wiki](https://github.com/rwfazul/CAED-UFSM/wiki) do projeto.
 
 ## Cronograma de desenvolvimento
 
