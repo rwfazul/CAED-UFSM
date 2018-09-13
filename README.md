@@ -30,7 +30,7 @@ O **CAED-UFSM** será um canal de comunicação entre alunos e servidores com o 
        <td>31/08/2018</td>
     </tr>
      <tr>
-       <td>Análise de Ferramentas</td>
+       <td>Estudo de Ferramentas</td>
        <td>Frameworks front-end e back-end</td>
        <td>&#9745</td>
        <td rowspan="2">06/09/2018</td>
