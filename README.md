@@ -53,12 +53,16 @@ O **CAED-UFSM** será um canal de comunicação entre alunos e servidores com o 
     <tr>
        <td>Integração API GoogleSheets - Testes</td>
        <td>&#9744;</td>
-       <td rowspan="2">20/09/2018</td>
+       <td rowspan="3">20/09/2018</td>
     </tr>
     <tr>
        <td>Protótipo inicial Interfaces</td>
        <td>&#9744;</td>
     </tr>  
+     <tr>
+       <td>Implementação inicial back-end</td>
+       <td>&#9744;</td>
+    </tr> 
     <tr>
       <td rowspan="2">Serviço Mensagens Instantâneas</td>
       <td>Módulo Chat - Testes com clientes/usuários</td>
@@ -70,29 +74,29 @@ O **CAED-UFSM** será um canal de comunicação entre alunos e servidores com o 
     </tr>     
     <tr>
       <td rowspan="3">Serviço Solicitação/Agendamento Atendimentos</td>
-       <td>Implementação inicial back-end</td>
-       <td>&#9744;</td>
-       <td rowspan="2">04/10/2018</td>
-    </tr>    
-    <tr>
        <td>Implementação front-end (Interfaces)</td>
        <td>&#9744;</td>
+       <td rowspan="2">04/10/2018</td>
     </tr>
     <tr>
        <td>Implementação back-end</td>
        <td>&#9744;</td>
-       <td rowspan="1">11/10/2018</td>
-    </tr>    
+    </tr>  
+    <tr>
+      <td>Finalização implementação - produto testável</td>
+       <td>&#9744;</td>
+      <td rowspan="2">11/10/2018</td>
+    </tr>
+    <tr>
+      <td>Planejamento testes com clientes/usuários</td>
+       <td>&#9744;</td>
+    </tr> 
     <tr>
        <td rowspan="3">Testes iniciais</td>
-       <td>Planejamento testes com clientes/usuários</td>
-       <td>&#9744;</td>
-       <td rowspan="3">18/10/2018</td>
-    </tr>    
-    <tr>
        <td>Realização testes com clientes/usuários</td>
        <td>&#9744;</td>
-    </tr>
+       <td rowspan="2">18/10/2018</td>
+    </tr>    
     <tr>
        <td>Avaliação do estágio atual do sistema de acordo com clientes/usuários</td>
        <td>&#9744;</td>
