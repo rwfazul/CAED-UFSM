@@ -53,7 +53,7 @@ O **CAED-UFSM** será um canal de comunicação entre alunos e servidores com o 
     <tr>
        <td>Integração API GoogleSheets - Testes</td>
        <td>&#9744;</td>
-       <td rowspan="3">20/09/2018</td>
+       <td rowspan="2">20/09/2018</td>
     </tr>
     <tr>
        <td>Protótipo inicial Interfaces</td>
@@ -131,4 +131,4 @@ O **CAED-UFSM** será um canal de comunicação entre alunos e servidores com o 
   </tbody>
 </table>
 
-<p align="right"><em>Backlog last updated on September 03, 2018.</em></p>
+<p align="right"><em>Backlog last updated on September 12, 2018.</em></p>
