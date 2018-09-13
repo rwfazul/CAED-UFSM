@@ -46,7 +46,7 @@ O **CAED-UFSM** será um canal de comunicação entre alunos e servidores com o 
        <td rowspan="2">13/09/2018</td>
     </tr>
     <tr>
-       <td rowspan="3">Serviço Solicitação/Agendamento Atendimentos</td>
+       <td rowspan="4">Serviço Solicitação/Agendamento Atendimentos</td>
        <td>Integração API GoogleSheets - Implementação</td>
        <td>&#9745;</td>
     </tr>
@@ -73,7 +73,7 @@ O **CAED-UFSM** será um canal de comunicação entre alunos e servidores com o 
        <td>&#9744;</td>
     </tr>     
     <tr>
-      <td rowspan="3">Serviço Solicitação/Agendamento Atendimentos</td>
+      <td rowspan="4">Serviço Solicitação/Agendamento Atendimentos</td>
        <td>Implementação front-end (Interfaces)</td>
        <td>&#9744;</td>
        <td rowspan="2">04/10/2018</td>
