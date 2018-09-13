@@ -92,7 +92,7 @@ O **CAED-UFSM** será um canal de comunicação entre alunos e servidores com o 
        <td>&#9744;</td>
     </tr> 
     <tr>
-       <td rowspan="3">Testes iniciais</td>
+       <td rowspan="2">Testes iniciais</td>
        <td>Realização testes com clientes/usuários</td>
        <td>&#9744;</td>
        <td rowspan="2">18/10/2018</td>
