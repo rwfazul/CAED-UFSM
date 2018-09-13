@@ -29,67 +29,50 @@ O **CAED-UFSM** será um canal de comunicação entre alunos e servidores com o 
        <td>&#9745;</td>
        <td>31/08/2018</td>
     </tr>
+     <tr>
+       <td>Análise de Ferramentas</td>
+       <td>Frameworks front-end e back-end</td>
+       <td>&#9745</td>
+       <td rowspan="2">06/09/2018</td>
+    </tr>
     <tr>
        <td rowspan="2">Serviço Mensagens Instantâneas</td>
        <td>Integração Módulo Chat - Implementação</td>
        <td>&#9745;</td>
-       <td rowspan="3">06/09/2018</td>
-    </tr>
+    </tr>    
     <tr>
       <td>Integração API Login - Implementação</td>
        <td>&#9745;</td>
+       <td rowspan="2">13/09/2018</td>
     </tr>
     <tr>
-    <td>Serviço Solicitação/Agendamento Atendimentos</td>
+       <td rowspan="3">Serviço Solicitação/Agendamento Atendimentos</td>
        <td>Integração API GoogleSheets - Implementação inicial</td>
        <td>&#9745;</td>
     </tr>
     <tr>
-      <td rowspan="5">Serviço Mensagens Instantâneas</td>
-      <td>Integração Módulo Chat - Testes</td>
+       <td>Integração API GoogleSheets - Testes</td>
        <td>&#9744;</td>
-       <td rowspan="2">13/09/2018</td>
-    </tr>    
+       <td rowspan="3">20/09/2018</td>
+    </tr>
+    <tr>
+       <td>Protótipo inicial Interfaces</td>
+       <td>&#9744;</td>
+    </tr>  
+    <tr>
+      <td rowspan="2">Serviço Mensagens Instantâneas</td>
+      <td>Módulo Chat - Testes com clientes/usuários</td>
+       <td>&#9744;</td>
+       <td rowspan="2">27/09/2018</td>    
     <tr>
        <td>Integração API Login - Testes</td>
        <td>&#9744;</td>
-    </tr>
+    </tr>     
     <tr>
-       <td>Protótipo inicial Interfaces</td>
-       <td>&#9744;</td>
-       <td rowspan="2">20/09/2018</td>
-    </tr>    
-    <tr>
+      <td rowspan="3">Serviço Solicitação/Agendamento Atendimentos</td>
        <td>Implementação inicial back-end</td>
        <td>&#9744;</td>
-    </tr>
-    <tr>
-       <td>Implementação front-end (Interfaces)</td>
-       <td>&#9744;</td>
-       <td rowspan="2">27/09/2018</td>
-    </tr>    
-    <tr>
-       <td>Implementação back-end</td>
-       <td>&#9744;</td>
-    </tr>
-    <tr>
-       <td rowspan="6">Serviço Solicitação/Agendamento Atendimentos</td>
-       <td>Integração API GoogleSheets - Implementação</td>
-       <td>&#9744;</td>
-       <td rowspan="3">04/10/2018</td>
-    </tr>
-    <tr>
-       <td>Integração API GoogleSheets - Testes</td>
-       <td>&#9744;</td>
-    </tr>
-    <tr>
-       <td>Protótipo inicial Interfaces</td>
-       <td>&#9744;</td>
-    </tr>    
-    <tr>
-       <td>Implementação inicial back-end</td>
-       <td>&#9744;</td>
-       <td rowspan="3">11/10/2018</td>
+       <td rowspan="2">04/10/2018</td>
     </tr>    
     <tr>
        <td>Implementação front-end (Interfaces)</td>
@@ -98,6 +81,7 @@ O **CAED-UFSM** será um canal de comunicação entre alunos e servidores com o 
     <tr>
        <td>Implementação back-end</td>
        <td>&#9744;</td>
+       <td rowspan="1">11/10/2018</td>
     </tr>    
     <tr>
        <td rowspan="3">Testes iniciais</td>
