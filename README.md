@@ -30,22 +30,28 @@ O **CAED-UFSM** será um canal de comunicação entre alunos e servidores com o 
        <td>31/08/2018</td>
     </tr>
     <tr>
-       <td rowspan="8">Serviço Mensagens Instantâneas</td>
+       <td rowspan="2">Serviço Mensagens Instantâneas</td>
        <td>Integração Módulo Chat - Implementação</td>
-       <td>&#9744;</td>
-       <td rowspan="2">06/09/2018</td>
+       <td>&#9745;</td>
+       <td rowspan="3">06/09/2018</td>
     </tr>
     <tr>
-       <td>Integração Módulo Chat - Testes</td>
-       <td>&#9744;</td>
+      <td>Integração API Login - Implementação</td>
+       <td>&#9745;</td>
     </tr>
     <tr>
-       <td>Integração API UFSM Login - Implementação</td>
+    <td>Serviço Solicitação/Agendamento Atendimentos</td>
+       <td>Integração API GoogleSheets - Implementação inicial</td>
+       <td>&#9745;</td>
+    </tr>
+    <tr>
+      <td rowspan="5">Serviço Mensagens Instantâneas</td>
+      <td>Integração Módulo Chat - Testes</td>
        <td>&#9744;</td>
        <td rowspan="2">13/09/2018</td>
     </tr>    
     <tr>
-       <td>Integração API UFSM Login - Testes</td>
+       <td>Integração API Login - Testes</td>
        <td>&#9744;</td>
     </tr>
     <tr>
@@ -68,12 +74,12 @@ O **CAED-UFSM** será um canal de comunicação entre alunos e servidores com o 
     </tr>
     <tr>
        <td rowspan="6">Serviço Solicitação/Agendamento Atendimentos</td>
-       <td>Integração API Google - Implementação</td>
+       <td>Integração API GoogleSheets - Implementação</td>
        <td>&#9744;</td>
        <td rowspan="3">04/10/2018</td>
     </tr>
     <tr>
-       <td>Integração API Google - Testes</td>
+       <td>Integração API GoogleSheets - Testes</td>
        <td>&#9744;</td>
     </tr>
     <tr>
