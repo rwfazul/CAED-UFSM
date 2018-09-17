@@ -29,80 +29,79 @@ O **CAED-UFSM** será um canal de comunicação entre alunos e servidores com o 
        <td>&#9745;</td>
        <td>31/08/2018</td>
     </tr>
-    <tr>
-       <td rowspan="8">Serviço Mensagens Instantâneas</td>
-       <td>Integração Módulo Chat - Implementação</td>
-       <td>&#9744;</td>
+     <tr>
+       <td>Estudo de Ferramentas</td>
+       <td>Frameworks front-end e back-end</td>
+       <td>&#9745</td>
        <td rowspan="2">06/09/2018</td>
     </tr>
     <tr>
-       <td>Integração Módulo Chat - Testes</td>
-       <td>&#9744;</td>
-    </tr>
-    <tr>
-       <td>Integração API UFSM Login - Implementação</td>
-       <td>&#9744;</td>
-       <td rowspan="2">13/09/2018</td>
+       <td rowspan="2">Serviço Mensagens Instantâneas</td>
+       <td>Integração Módulo Chat - Implementação</td>
+       <td>&#9745;</td>
     </tr>    
     <tr>
-       <td>Integração API UFSM Login - Testes</td>
-       <td>&#9744;</td>
+      <td>Integração API Login - Implementação</td>
+       <td>&#9745;</td>
+       <td rowspan="2">13/09/2018</td>
     </tr>
     <tr>
-       <td>Protótipo inicial Interfaces</td>
+       <td rowspan="2">Serviço Solicitação/Agendamento Atendimentos</td>
+       <td>Integração API GoogleSheets - Implementação</td>
+       <td>&#9745;</td>
+    </tr>
+    <tr>
+       <td>Integração API GoogleSheets - Testes</td>
        <td>&#9744;</td>
        <td rowspan="2">20/09/2018</td>
-    </tr>    
-    <tr>
-       <td>Implementação inicial back-end</td>
-       <td>&#9744;</td>
     </tr>
     <tr>
+      <td rowspan="3">Serviço Mensagens Instantâneas</td>
        <td>Implementação front-end (Interfaces)</td>
        <td>&#9744;</td>
-       <td rowspan="2">27/09/2018</td>
-    </tr>    
-    <tr>
-       <td>Implementação back-end</td>
-       <td>&#9744;</td>
     </tr>
     <tr>
-       <td rowspan="6">Serviço Solicitação/Agendamento Atendimentos</td>
-       <td>Integração API Google - Implementação</td>
+       <td>Módulo Chat - Testes com clientes/usuários</td>
        <td>&#9744;</td>
-       <td rowspan="3">04/10/2018</td>
-    </tr>
+       <td rowspan="4">27/09/2018</td> 
+    </tr> 
     <tr>
-       <td>Integração API Google - Testes</td>
+       <td>API Login - Testes com usuários</td>
        <td>&#9744;</td>
-    </tr>
+    </tr> 
     <tr>
+       <td rowspan="4">Serviço Solicitação/Agendamento Atendimentos</td>
        <td>Protótipo inicial Interfaces</td>
        <td>&#9744;</td>
-    </tr>    
-    <tr>
+    </tr>  
+     <tr>
        <td>Implementação inicial back-end</td>
        <td>&#9744;</td>
-       <td rowspan="3">11/10/2018</td>
-    </tr>    
+    </tr>
     <tr>
        <td>Implementação front-end (Interfaces)</td>
        <td>&#9744;</td>
+       <td rowspan="2">04/10/2018</td>
     </tr>
     <tr>
        <td>Implementação back-end</td>
        <td>&#9744;</td>
-    </tr>    
+    </tr>  
     <tr>
-       <td rowspan="3">Testes iniciais</td>
-       <td>Planejamento testes com clientes/usuários</td>
+      <td rowspan="4">Testes iniciais</td>
+      <td>Finalização implementação - produto testável</td>
        <td>&#9744;</td>
-       <td rowspan="3">18/10/2018</td>
-    </tr>    
+      <td rowspan="2">11/10/2018</td>
+    </tr>
+    <tr>
+      <td>Planejamento testes com clientes/usuários</td>
+       <td>&#9744;</td>
+    </tr> 
     <tr>
        <td>Realização testes com clientes/usuários</td>
        <td>&#9744;</td>
-    </tr>
+       <td rowspan="2">18/10/2018</td>
+    </tr>    
     <tr>
        <td>Avaliação do estágio atual do sistema de acordo com clientes/usuários</td>
        <td>&#9744;</td>
@@ -141,4 +140,4 @@ O **CAED-UFSM** será um canal de comunicação entre alunos e servidores com o 
   </tbody>
 </table>
 
-<p align="right"><em>Backlog last updated on September 03, 2018.</em></p>
+<p align="right"><em>Backlog last updated on September 16, 2018.</em></p>
