@@ -36,5 +36,5 @@ UserInterfaceState.xcuserstate
 
 # keys and pwds
 credentials.json
-login/
+curls/
 token.json
