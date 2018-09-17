@@ -56,7 +56,7 @@ O **CAED-UFSM** será um canal de comunicação entre alunos e servidores com o 
        <td rowspan="2">20/09/2018</td>
     </tr>
     <tr>
-      <td rowspan="1">Serviço Mensagens Instantâneas</td>
+      <td rowspan="3">Serviço Mensagens Instantâneas</td>
        <td>Implementação front-end (Interfaces)</td>
        <td>&#9744;</td>
     </tr>
