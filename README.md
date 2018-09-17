@@ -60,27 +60,25 @@ O **CAED-UFSM** será um canal de comunicação entre alunos e servidores com o 
        <td>Implementação front-end (Interfaces)</td>
        <td>&#9744;</td>
     </tr>
-   <tr>
-       <td rowspan="2">Serviço Solicitação/Agendamento Atendimentos</td>
-       <td>Protótipo inicial Interfaces</td>
-       <td>&#9744;</td>
-        <td rowspan="4">27/09/2018</td> 
-    </tr>  
-     <tr>
-       <td>Implementação inicial back-end</td>
-       <td>&#9744;</td>
-    </tr>
     <tr>
-      <td rowspan="2">Serviço Mensagens Instantâneas</td>
        <td>Módulo Chat - Testes com clientes/usuários</td>
        <td>&#9744;</td>
+       <td rowspan="4">27/09/2018</td> 
     </tr> 
     <tr>
        <td>API Login - Testes com usuários</td>
        <td>&#9744;</td>
     </tr> 
     <tr>
-      <td rowspan="4">Serviço Solicitação/Agendamento Atendimentos</td>
+       <td rowspan="6">Serviço Solicitação/Agendamento Atendimentos</td>
+       <td>Protótipo inicial Interfaces</td>
+       <td>&#9744;</td>
+    </tr>  
+     <tr>
+       <td>Implementação inicial back-end</td>
+       <td>&#9744;</td>
+    </tr>
+    <tr>
        <td>Implementação front-end (Interfaces)</td>
        <td>&#9744;</td>
        <td rowspan="2">04/10/2018</td>
@@ -99,7 +97,7 @@ O **CAED-UFSM** será um canal de comunicação entre alunos e servidores com o 
        <td>&#9744;</td>
     </tr> 
     <tr>
-       <td rowspan="2">Testes iniciais</td>
+       <td rowspan="2">Testes</td>
        <td>Realização testes com clientes/usuários</td>
        <td>&#9744;</td>
        <td rowspan="2">18/10/2018</td>
