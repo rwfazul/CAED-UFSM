@@ -76,7 +76,7 @@ O **CAED-UFSM** será um canal de comunicação entre alunos e servidores com o 
        <td>&#9744;</td>
     </tr> 
     <tr>
-       <td>Integração API Login - Testes</td>
+       <td>API Login - Testes com usuários</td>
        <td>&#9744;</td>
     </tr> 
     <tr>
