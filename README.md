@@ -46,29 +46,32 @@ O **CAED-UFSM** será um canal de comunicação entre alunos e servidores com o 
        <td rowspan="2">13/09/2018</td>
     </tr>
     <tr>
-       <td rowspan="4">Serviço Solicitação/Agendamento Atendimentos</td>
+       <td rowspan="2">Serviço Solicitação/Agendamento Atendimentos</td>
        <td>Integração API GoogleSheets - Implementação</td>
        <td>&#9745;</td>
     </tr>
     <tr>
        <td>Integração API GoogleSheets - Testes</td>
        <td>&#9744;</td>
-       <td rowspan="3">20/09/2018</td>
+       <td rowspan="2">20/09/2018</td>
     </tr>
     <tr>
+      <td rowspan="1">Serviço Mensagens Instantâneas</td>
+       <td>Implementação front-end (Interfaces)</td>
+       <td>&#9744;</td>
+    </tr>
+   <tr>
+       <td rowspan="2">Serviço Solicitação/Agendamento Atendimentos</td>
        <td>Protótipo inicial Interfaces</td>
        <td>&#9744;</td>
+        <td rowspan="4">27/09/2018</td> 
     </tr>  
      <tr>
        <td>Implementação inicial back-end</td>
        <td>&#9744;</td>
-    </tr> 
+    </tr>
     <tr>
-      <td rowspan="3">Serviço Mensagens Instantâneas</td>
-       <td>Implementação front-end (Interfaces)</td>
-       <td>&#9744;</td>
-       <td rowspan="3">27/09/2018</td>    
-    <tr>
+      <td rowspan="2">Serviço Mensagens Instantâneas</td>
        <td>Módulo Chat - Testes com clientes/usuários</td>
        <td>&#9744;</td>
     </tr> 
@@ -139,4 +142,4 @@ O **CAED-UFSM** será um canal de comunicação entre alunos e servidores com o 
   </tbody>
 </table>
 
-<p align="right"><em>Backlog last updated on September 12, 2018.</em></p>
+<p align="right"><em>Backlog last updated on September 16, 2018.</em></p>
