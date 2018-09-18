@@ -1,0 +1,29 @@
+<!--
+  Generated template for the CaedPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+    <ion-navbar>
+      <button ion-button menuToggle>
+        <ion-icon name="menu"></ion-icon>
+      </button>
+      <ion-title>CAED UFSM</ion-title>
+    </ion-navbar>
+  </ion-header>
+  
+  <ion-content padding>
+    <ion-list>
+      <p>
+        O CAED é o Núcleo de Coordenadoria de Ações Educacionais da Universidade Federal de Santa Maria (UFSM).
+      </p>
+      <ion-grid>
+          <a ion-button icon-only large clear round medium *ngFor="let l of links" href={{l.url}} target="_blank">
+              <ion-icon name={{l.icon}}></ion-icon>
+          </a>
+      </ion-grid>
+    </ion-list>
+    
+  </ion-content>
+  

@@ -6,20 +6,22 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
-import { LoginPage } from '../pages/login/login';
+import { ChatPage } from '../pages/chat/chat';
 import { SolicitacaoPage } from '../pages/solicitacao/solicitacao';
 import { SobrePage } from '../pages/sobre/sobre';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { LoginProvider } from '../providers/login/login';
+import { CaedPage } from '../pages/caed/caed';
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
-    LoginPage,
+    ChatPage,
     SolicitacaoPage, 
+    CaedPage,
     SobrePage
   ],
   imports: [
@@ -31,8 +33,9 @@ import { LoginProvider } from '../providers/login/login';
   entryComponents: [
     MyApp,
     HomePage,
-    LoginPage,
+    ChatPage,
     SolicitacaoPage,
+    CaedPage,
     SobrePage
   ],
   providers: [

@@ -8,13 +8,13 @@
 </ion-header>
 
 <ion-content padding>
-  <ion-grid>
-    <ion-row>
-      <button ion-button secondary>Quero solicitar atendimento</button>
-    </ion-row>
-    <ion-row>
-      <button ion-button secondary>Quero conversar com alguém</button>
-    </ion-row>
-  </ion-grid>
+  <ion-list>
+    <ion-grid>
+        <button ion-button icon-start secondary medium *ngFor="let p of pages" (click)="openPage(p)">
+            <ion-icon name={{p.icon}}></ion-icon>
+            {{p.title}}
+        </button>
+    </ion-grid>
+  </ion-list>
   
 </ion-content>

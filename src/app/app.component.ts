@@ -5,8 +5,9 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { HomePage } from '../pages/home/home';
 import { SolicitacaoPage } from '../pages/solicitacao/solicitacao';
-import { LoginPage } from '../pages/login/login';
+import { ChatPage } from '../pages/chat/chat';
 import { SobrePage } from '../pages/sobre/sobre';
+import { CaedPage } from '../pages/caed/caed';
 
 @Component({
   templateUrl: 'app.html'
@@ -16,17 +17,18 @@ export class MyApp {
 
   rootPage: any = HomePage;
 
-  pages: Array<{title: string, component: any}>;
+  pages: Array<{title: string, component: any, icon: String}>;
 
   constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen) {
     this.initializeApp();
 
     // used for an example of ngFor and navigation
     this.pages = [
-      { title: 'Home', component: HomePage },
-      { title: 'Conversar com alguém', component: LoginPage },
-      { title: 'Solicitar atendimento', component: SolicitacaoPage}, 
-      { title: 'Sobre', component: SobrePage}
+      { title: 'Home', component: HomePage, icon: "home" },
+      { title: 'Conversar com alguém', component: ChatPage, icon: "chatbubbles" },
+      { title: 'Solicitar atendimento', component: SolicitacaoPage, icon: "create" }, 
+      { title: 'CAED', component: CaedPage, icon: "help-circle" },
+      { title: 'Sobre', component: SobrePage, icon: "help-circle" }
     ];
 
   }
