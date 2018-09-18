@@ -72,9 +72,13 @@ var CaedPage = /** @class */ (function () {
     function CaedPage(navCtrl, navParams) {
         this.navCtrl = navCtrl;
         this.navParams = navParams;
-        this.links = [
+        this.caed = [
             { icon: "home", url: "http://coral.ufsm.br/caed/" },
             { icon: "logo-facebook", url: "https://www.facebook.com/caedufsm/" }
+        ];
+        this.nucleo = [
+            { icon: "home", url: "http://coral.ufsm.br/anima/" },
+            { icon: "logo-facebook", url: "https://www.facebook.com/N%C3%BAcleo-de-Apoio-%C3%A0-Aprendizagem-UFSM-894880297286164/" }
         ];
     }
     CaedPage.prototype.ionViewDidLoad = function () {
@@ -82,7 +86,7 @@ var CaedPage = /** @class */ (function () {
     };
     CaedPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-caed',template:/*ion-inline-start:"/home/isabella/Documentos/UFSM-2018-2/CAED-UFSM/src/pages/caed/caed.html"*/'<!--\n  Generated template for the CaedPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n    <ion-navbar>\n      <button ion-button menuToggle>\n        <ion-icon name="menu"></ion-icon>\n      </button>\n      <ion-title>CAED UFSM</ion-title>\n    </ion-navbar>\n  </ion-header>\n  \n  <ion-content padding>\n    <ion-list>\n      <p>\n        O CAED é o Núcleo de Coordenadoria de Ações Educacionais da Universidade Federal de Santa Maria (UFSM).\n      </p>\n      <ion-grid>\n          <a ion-button icon-only large clear round medium *ngFor="let l of links" href={{l.url}} target="_blank">\n              <ion-icon name={{l.icon}}></ion-icon>\n          </a>\n      </ion-grid>\n    </ion-list>\n    \n  </ion-content>\n  '/*ion-inline-end:"/home/isabella/Documentos/UFSM-2018-2/CAED-UFSM/src/pages/caed/caed.html"*/,
+            selector: 'page-caed',template:/*ion-inline-start:"/home/isabella/Documentos/UFSM-2018-2/CAED-UFSM/src/pages/caed/caed.html"*/'<!--\n  Generated template for the CaedPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n    <ion-navbar>\n      <button ion-button menuToggle>\n        <ion-icon name="menu"></ion-icon>\n      </button>\n      <ion-title>CAED UFSM</ion-title>\n    </ion-navbar>\n  </ion-header>\n  \n  <ion-content padding>\n    <ion-list>\n        <h3>O que é a Coordenadoria de Ações Educacionais (CAED)?</h3> \n        <p align="justify">A Coordenadoria de Ações Educacionais da Universidade Federal de Santa Maria (UFSM) \n          é um órgão que visa promover ações de inclusão na UFSM, atuando como agente de inovação pedagógica e\n          social dos processos de acesso, permanência, aprendizagem e de relações de trabalho no que se refira\n          a servidores com deficiência que necessitem de acompanhamento especial. A CAED é composta pelos Núcleo de Acessibilidade,\n          Núcleo de Apoio à Aprendizagem e Núcleo de Ações Afirmativas Sociais, Étnico-Raciais e Indígenas.\n        </p>\n        <ion-list>\n            <a ion-button icon-start large clear round medium *ngFor="let l of caed" href={{l.url}} target="_blank">\n                <ion-icon name={{l.icon}}></ion-icon>\n            </a>\n        </ion-list>\n      <h3>O que é o Núcleo de Apoio à Aprendizagem?</h3> \n      <p align="justify">O Núcleo de Apoio à Aprendizagem faz parte da CAED \n        da UFSM e atua em parceria com o Ânima - Núcleo de Apoio à Aprendizagem na Educação, \n        realizando Atendimento aos estudantes da UFSM. O objetivo do núcleo é orientar e assistir a \n        comunidade universitária por meio de uma abordagem interdisciplinar de promoção, potencialização, \n        qualificação e ressignificação dos processos de ensino e aprendizagem. \n        Sua atuação se dá por meio de atendimentos em sessões individuais destinadas aos alunos da UFSM, \n        nas quais são disponibilizados serviços como orientação profissional, avaliação e acompanhamento \n        psicológico e psicopedagógico, além de atendimento educacional especializado.\n      </p>\n      <ion-list>\n          <a ion-button icon-start large clear round medium *ngFor="let l of nucleo" href={{l.url}} target="_blank">\n              <ion-icon name={{l.icon}}></ion-icon>\n          </a>\n      </ion-list>\n    </ion-list>\n    \n  </ion-content>\n  '/*ion-inline-end:"/home/isabella/Documentos/UFSM-2018-2/CAED-UFSM/src/pages/caed/caed.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavParams */]])
     ], CaedPage);
@@ -172,7 +176,7 @@ var HomePage = /** @class */ (function () {
     };
     HomePage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-home',template:/*ion-inline-start:"/home/isabella/Documentos/UFSM-2018-2/CAED-UFSM/src/pages/home/home.html"*/'<ion-header>\n  <ion-navbar>\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>CAED UFSM</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n  <ion-list>\n    <ion-grid>\n        <button ion-button icon-start secondary medium *ngFor="let p of pages" (click)="openPage(p)">\n            <ion-icon name={{p.icon}}></ion-icon>\n            {{p.title}}\n        </button>\n    </ion-grid>\n  </ion-list>\n  \n</ion-content>\n'/*ion-inline-end:"/home/isabella/Documentos/UFSM-2018-2/CAED-UFSM/src/pages/home/home.html"*/
+            selector: 'page-home',template:/*ion-inline-start:"/home/isabella/Documentos/UFSM-2018-2/CAED-UFSM/src/pages/home/home.html"*/'<ion-header>\n  <ion-navbar>\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>CAED UFSM</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n  <ion-list>\n    <ion-grid>\n      <ion-row>\n      <ion-col col-12 *ngFor="let p of pages">\n        <button ion-button icon-start secondary round medium (click)="openPage(p)">\n            <ion-icon name={{p.icon}}></ion-icon>\n            {{p.title}}\n        </button>\n      </ion-col>\n    </ion-row>\n    </ion-grid>\n  </ion-list>\n  \n</ion-content>\n'/*ion-inline-end:"/home/isabella/Documentos/UFSM-2018-2/CAED-UFSM/src/pages/home/home.html"*/
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */]])
     ], HomePage);
@@ -445,15 +449,14 @@ var MyApp = /** @class */ (function () {
     };
     __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_8" /* ViewChild */])(__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* Nav */]),
-        __metadata("design:type", typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* Nav */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* Nav */]) === "function" && _a || Object)
+        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* Nav */])
     ], MyApp.prototype, "nav", void 0);
     MyApp = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({template:/*ion-inline-start:"/home/isabella/Documentos/UFSM-2018-2/CAED-UFSM/src/app/app.html"*/'<ion-menu [content]="content">\n  <ion-header>\n    <ion-toolbar>\n      <ion-title>Menu</ion-title>\n    </ion-toolbar>\n  </ion-header>\n\n  <ion-content>\n    <ion-list>\n      <button menuClose ion-item icon-start *ngFor="let p of pages" (click)="openPage(p)">\n          <ion-icon name={{p.icon}}></ion-icon>\n        {{p.title}}\n      </button>\n    </ion-list>\n  </ion-content>\n\n</ion-menu>\n\n<!-- Disable swipe-to-go-back because it\'s poor UX to combine STGB with side menus -->\n<ion-nav [root]="rootPage" #content swipeBackEnabled="false"></ion-nav>'/*ion-inline-end:"/home/isabella/Documentos/UFSM-2018-2/CAED-UFSM/src/app/app.html"*/
         }),
-        __metadata("design:paramtypes", [typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* Platform */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* Platform */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__["a" /* StatusBar */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__["a" /* StatusBar */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__["a" /* SplashScreen */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__["a" /* SplashScreen */]) === "function" && _d || Object])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* Platform */], __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__["a" /* StatusBar */], __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__["a" /* SplashScreen */]])
     ], MyApp);
     return MyApp;
-    var _a, _b, _c, _d;
 }());
 
 //# sourceMappingURL=app.component.js.map

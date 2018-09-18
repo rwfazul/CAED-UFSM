@@ -15,14 +15,21 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class CaedPage {
 
-  links: Array<{icon: String, url: String}>;
+  caed: Array<{icon: String, url: String}>;
+  nucleo: Array<{icon: String, url: String}>;
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
-
-    this.links = [
-      {icon: "home", url: "http://coral.ufsm.br/caed/" }, 
-      {icon: "logo-facebook", url: "https://www.facebook.com/caedufsm/" }  
+    
+    this.caed = [
+      {icon: "home", url: "http://coral.ufsm.br/caed/"}, 
+      {icon: "logo-facebook", url: "https://www.facebook.com/caedufsm/"}
     ];
+
+    this.nucleo = [
+      {icon: "home", url: "http://coral.ufsm.br/anima/"}, 
+      {icon: "logo-facebook", url: "https://www.facebook.com/N%C3%BAcleo-de-Apoio-%C3%A0-Aprendizagem-UFSM-894880297286164/"}      
+    ]
+    
   }
 
   ionViewDidLoad() {

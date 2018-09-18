@@ -10,10 +10,14 @@
 <ion-content padding>
   <ion-list>
     <ion-grid>
-        <button ion-button icon-start secondary medium *ngFor="let p of pages" (click)="openPage(p)">
+      <ion-row>
+      <ion-col col-12 *ngFor="let p of pages">
+        <button ion-button icon-start secondary round medium (click)="openPage(p)">
             <ion-icon name={{p.icon}}></ion-icon>
             {{p.title}}
         </button>
+      </ion-col>
+    </ion-row>
     </ion-grid>
   </ion-list>
   

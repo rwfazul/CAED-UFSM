@@ -15,14 +15,33 @@
   
   <ion-content padding>
     <ion-list>
-      <p>
-        O CAED é o Núcleo de Coordenadoria de Ações Educacionais da Universidade Federal de Santa Maria (UFSM).
+        <h3>O que é a Coordenadoria de Ações Educacionais (CAED)?</h3> 
+        <p align="justify">A Coordenadoria de Ações Educacionais da Universidade Federal de Santa Maria (UFSM) 
+          é um órgão que visa promover ações de inclusão na UFSM, atuando como agente de inovação pedagógica e
+          social dos processos de acesso, permanência, aprendizagem e de relações de trabalho no que se refira
+          a servidores com deficiência que necessitem de acompanhamento especial. A CAED é composta pelos Núcleo de Acessibilidade,
+          Núcleo de Apoio à Aprendizagem e Núcleo de Ações Afirmativas Sociais, Étnico-Raciais e Indígenas.
+        </p>
+        <ion-list>
+            <a ion-button icon-start large clear round medium *ngFor="let l of caed" href={{l.url}} target="_blank">
+                <ion-icon name={{l.icon}}></ion-icon>
+            </a>
+        </ion-list>
+      <h3>O que é o Núcleo de Apoio à Aprendizagem?</h3> 
+      <p align="justify">O Núcleo de Apoio à Aprendizagem faz parte da CAED 
+        da UFSM e atua em parceria com o Ânima - Núcleo de Apoio à Aprendizagem na Educação, 
+        realizando Atendimento aos estudantes da UFSM. O objetivo do núcleo é orientar e assistir a 
+        comunidade universitária por meio de uma abordagem interdisciplinar de promoção, potencialização, 
+        qualificação e ressignificação dos processos de ensino e aprendizagem. 
+        Sua atuação se dá por meio de atendimentos em sessões individuais destinadas aos alunos da UFSM, 
+        nas quais são disponibilizados serviços como orientação profissional, avaliação e acompanhamento 
+        psicológico e psicopedagógico, além de atendimento educacional especializado.
       </p>
-      <ion-grid>
-          <a ion-button icon-only large clear round medium *ngFor="let l of links" href={{l.url}} target="_blank">
+      <ion-list>
+          <a ion-button icon-start large clear round medium *ngFor="let l of nucleo" href={{l.url}} target="_blank">
               <ion-icon name={{l.icon}}></ion-icon>
           </a>
-      </ion-grid>
+      </ion-list>
     </ion-list>
     
   </ion-content>
