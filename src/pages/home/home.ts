@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
-import { ChatPage } from '../chat/chat';
+import { LoginPage } from '../login/login';
 import { SolicitacaoPage } from '../solicitacao/solicitacao';
 
 @Component({
@@ -14,7 +14,7 @@ export class HomePage {
   constructor(public navCtrl: NavController) {
 
     this.pages = [
-      { title: 'Conversar com alguém', component: ChatPage, icon: "chatbubbles"  },
+      { title: 'Conversar com alguém', component: LoginPage, icon: "chatbubbles"  },
       { title: 'Solicitar atendimento', component: SolicitacaoPage, icon: "create"}, 
     ];
   }
