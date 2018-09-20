@@ -17,11 +17,7 @@ import { ChatPage } from '../chat/chat';
 export class LoginPage {
 
   private req = {
-		appName: 'UFSMDigital',
-		deviceId: '',
-		deviceInfo: '',
 		login: '',
-		messageToken: '',
 		senha: ''
   }
 
@@ -36,14 +32,16 @@ export class LoginPage {
   }
 
   doLogin() {
-  	/* TEST ENV */
+  	/* ENV. TEST */
   	if (this.req.login == 'adm' && this.req.senha == 'adm') {
   		this.navCtrl.push(ChatPage);
   		return;
   	} 
+
     this.loginProvider.sendPostResquest(this.req).then((result) => {
-  		if (!result['error']) this.navCtrl.push(ChatPage);
-  		else this.res = this.res = 'Matrícula ou Senha inválidas';
+      if (result['authenticated']) this.navCtrl.push(ChatPage);
+  		else this.res = result['originalResponse'] + ' (' + result['msg'] + ')';
+      console.log(result);
   	  }, (err) => {
   	    console.log(err);
   	    this.res = 'Falha na requisição';
