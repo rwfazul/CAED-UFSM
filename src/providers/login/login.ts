@@ -25,7 +25,7 @@ export class LoginProvider {
 
   sendPostResquest(data) {
 	  return new Promise((resolve, reject) => {	  	
-	    this.http.post(this.apiUrl + 'SUBDOMAIN', JSON.stringify(data), httpOptions)
+	    this.http.post(this.apiUrl + '/mobile/webservice/generateToken', JSON.stringify(data), httpOptions)
 	      .subscribe(res => {
 	        resolve(res);
 	      }, (err) => {
