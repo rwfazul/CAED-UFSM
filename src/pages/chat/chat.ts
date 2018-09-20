@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
-import { LoginProvider } from '../../providers/login/login';
-
 /**
  * Generated class for the LoginPage page.
  *
@@ -15,30 +13,11 @@ import { LoginProvider } from '../../providers/login/login';
 })
 export class ChatPage {
 
-  private req = {
-		appName: 'UFSMDigital',
-		deviceId: '',
-		deviceInfo: '',
-		login: '',
-		messageToken: '',
-		senha: ''
-	}
-
-  constructor(public navCtrl: NavController, 
-  	          public loginProvider: LoginProvider) {
+  constructor(public navCtrl: NavController) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad LoginPage');
-  }
-
-  doLogin() {
-  	console.log(this.req);
-  	this.loginProvider.sendPostResquest(this.req).then((result) => {
-  	    console.log(result);
-  	  }, (err) => {
-  	    console.log(err);
-  	});
   }
 
 }
