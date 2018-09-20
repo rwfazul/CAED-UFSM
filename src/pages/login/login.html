@@ -9,23 +9,57 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>CAED UFSM | Login</ion-title>
+    <ion-title>Login</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-  <h2>Digite seus dados</h2>
-  <p>p/ teste: matricula=adm, senha: adm</p>
-  <form (ngSubmit)="doLogin()">
-    <ion-item>
-      <ion-label>Matrícula</ion-label>
-      <ion-input type="text" [(ngModel)]="req.login" name="login"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label>Senha</ion-label>
-      <ion-input type="password" [(ngModel)]="req.senha" name="senha"></ion-input>
-    </ion-item>
-    <button ion-button type="submit" block>Entrar</button>
-  </form>
-  <span class="error" *ngIf="res">{{res}}</span>
+  <p>Para identificar-se, utilize a sua matrícula e a sua senha (mesma usada no Portal do Aluno e no sistema de bibliotecas da UFSM).</p>
+
+  <ion-grid>
+    <form [formGroup]="formLogin" (ngSubmit)="doLogin()">
+      <ion-list inset>
+      <ion-row class="row-form">
+      <ion-col col-md-8 offset-md-2>
+        <ion-item>
+          <ion-label floating>Matrícula</ion-label>
+          <ion-input type="text" name="login" formControlName="login"></ion-input>
+        </ion-item>
+        <span class="error" *ngIf="formLogin.get('login').hasError('required') && formLogin.get('login').touched">
+          {{errorMsgs.matriculaRequiredError}}
+        </span>
+        <span class="error" *ngIf="formLogin.get('login').hasError('pattern') && formLogin.get('login').touched">
+          {{errorMsgs.matriculaPatternError}}
+        </span>
+      </ion-col>
+      </ion-row>
+
+      <ion-row class="row-form">
+      <ion-col col-md-8 offset-md-2>
+        <ion-item>
+          <ion-label floating>Senha</ion-label>
+          <ion-input type="password" name="senha" formControlName="senha"></ion-input>
+        </ion-item>
+        <span class="error" *ngIf="formLogin.get('senha').hasError('required') && formLogin.get('senha').touched">
+          {{errorMsgs.senhaRequiredError}}
+        </span>
+      </ion-col>
+      </ion-row>
+      </ion-list>
+
+      <ion-row class="row-form">
+      <ion-col col-md-8 offset-md-2>        
+        <a href="#" onclick="window.open('https://portal.ufsm.br/usuario/esqueciSenha.html','_system', 'location=no');" class="link-form">Esqueci minha senha</a>
+      </ion-col>
+      </ion-row>
+
+      <ion-row class="row-form">
+      <ion-col col-md-3 offset-md-2>
+        <button ion-button type="submit" name="loginBtn" block>Entrar</button>
+        <span class="error" *ngIf="errorMsgs.serverResponseError">{{errorMsgs.serverResponseError}}</span>
+      </ion-col>
+      </ion-row>
+   </form>
+  </ion-grid>
+  <p>(p/ teste: matricula=adm, senha: adm)</p>
 </ion-content>

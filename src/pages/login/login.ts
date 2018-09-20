@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { LoginProvider } from '../../providers/login/login';
 import { ChatPage } from '../chat/chat';
+import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 
 /**
  * Generated class for the LoginPage page.
@@ -16,15 +17,22 @@ import { ChatPage } from '../chat/chat';
 })
 export class LoginPage {
 
-  private req = {
-		login: '',
-		senha: ''
+  public formLogin : FormGroup;
+
+  public errorMsgs = {
+    matriculaRequiredError: 'Por favor digite sua matrícula',
+    matriculaPatternError: 'Mátricula apenas pode conter números',
+    senhaRequiredError: 'Por favor digite sua senha',
+    serverResponseError: ''
   }
 
-  public res = '';
-
   constructor(public navCtrl: NavController, 
-  	          public loginProvider: LoginProvider) {
+  	          public loginProvider: LoginProvider,
+              private formBuilder: FormBuilder) {
+    this.formLogin = this.formBuilder.group({
+      login: ['', [Validators.required, Validators.pattern('[0-9]')]],
+      senha: ['', Validators.required],
+    });
   }
 
   ionViewDidLoad() {
@@ -32,19 +40,18 @@ export class LoginPage {
   }
 
   doLogin() {
+    var data = this.formLogin.value;
   	/* ENV. TEST */
-  	if (this.req.login == 'adm' && this.req.senha == 'adm') {
-  		this.navCtrl.push(ChatPage);
+  	if (data.login == 'adm' && data.senha == 'adm') {
+  		this.navCtrl.setRoot(ChatPage);
   		return;
   	} 
 
-    this.loginProvider.sendPostResquest(this.req).then((result) => {
-      if (result['authenticated']) this.navCtrl.push(ChatPage);
-  		else this.res = result['originalResponse'] + ' (' + result['msg'] + ')';
-      console.log(result);
+    this.loginProvider.sendPostResquest(data).then((result) => {
+      if (result['authenticated']) this.navCtrl.setRoot(ChatPage);
+  		else this.errorMsgs.serverResponseError = result['originalResponse'] + ' (' + result['msg'] + ')';
   	  }, (err) => {
-  	    console.log(err);
-  	    this.res = 'Falha na requisição';
+  	    this.errorMsgs.serverResponseError = 'Falha na requisição';
   	});
   }
 
