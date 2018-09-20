@@ -30,7 +30,7 @@ export class LoginPage {
   	          public loginProvider: LoginProvider,
               private formBuilder: FormBuilder) {
     this.formLogin = this.formBuilder.group({
-      login: ['', [Validators.required, Validators.pattern('[0-9]')]],
+      login: ['', [Validators.required, Validators.pattern('[0-9]*')]],
       senha: ['', Validators.required],
     });
   }
