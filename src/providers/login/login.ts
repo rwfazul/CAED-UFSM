@@ -10,14 +10,14 @@ import { Injectable } from '@angular/core';
 
 const httpOptions = {
   headers: new HttpHeaders({
-    'Content-Type': 'application/json; charset=UTF-8'
+      'Content-Type': 'application/json',
   })
 };
 
 @Injectable()
 export class LoginProvider {
 
-  private apiUrl = 'https://portal.ufsm.br';
+  // private apiUrl = 'http://caedusfm.herokuapp.com';
 
   constructor(public http: HttpClient) {
     console.log('Hello LoginProvider Provider');
@@ -25,7 +25,7 @@ export class LoginProvider {
 
   sendPostResquest(data) {
 	  return new Promise((resolve, reject) => {	  	
-	    this.http.post(this.apiUrl + '/mobile/webservice/generateToken', JSON.stringify(data), httpOptions)
+	    this.http.post('/authenticate', JSON.stringify(data), httpOptions)
 	      .subscribe(res => {
 	        resolve(res);
 	      }, (err) => {
