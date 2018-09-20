@@ -20,9 +20,9 @@ export class LoginPage {
   public formLogin : FormGroup;
 
   public errorMsgs = {
-    matriculaRequiredError: 'Por favor digite sua matrícula',
+    matriculaRequiredError: 'Por favor, digite sua matrícula',
     matriculaPatternError: 'Mátricula apenas pode conter números',
-    senhaRequiredError: 'Por favor digite sua senha',
+    senhaRequiredError: 'Por favor, digite sua senha',
     serverResponseError: ''
   }
 
