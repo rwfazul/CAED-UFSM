@@ -52,13 +52,13 @@ O **CAED-UFSM** será um canal de comunicação entre alunos e servidores com o 
     </tr>
     <tr>
        <td>Integração API GoogleSheets - Testes</td>
-       <td>&#9744;</td>
+       <td>&#9745;</td>
        <td rowspan="2">20/09/2018</td>
     </tr>
     <tr>
       <td rowspan="3">Serviço Mensagens Instantâneas</td>
        <td>Implementação front-end (Interfaces)</td>
-       <td>&#9744;</td>
+       <td>&#9745;</td>
     </tr>
     <tr>
        <td>Módulo Chat - Testes com clientes/usuários</td>
