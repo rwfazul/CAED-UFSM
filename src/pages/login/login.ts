@@ -21,7 +21,7 @@ export class LoginPage {
 
   public errorMsgs = {
     matriculaRequiredError: 'Por favor, digite sua matrícula',
-    matriculaPatternError: 'Mátricula apenas pode conter números',
+    matriculaPatternError: 'Matricula apenas pode conter números',
     senhaRequiredError: 'Por favor, digite sua senha',
     serverResponseError: ''
   }

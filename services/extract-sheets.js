@@ -9,6 +9,7 @@ const TOKEN_PATH = 'token.json';
 // Load client secrets from a local file.
 var getResponses = function(callback) {
   fs.readFile('credentials.json', (err, content) => {
+    console.log(content);
     var credentials = JSON.parse(content);
     const {client_secret, client_id, redirect_uris} = credentials.installed;
     const oAuth2Client = new google.auth.OAuth2(client_id, client_secret, redirect_uris[0]);
