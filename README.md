@@ -62,21 +62,21 @@ O **CAED-UFSM** será um canal de comunicação entre alunos e servidores com o 
     </tr>
     <tr>
        <td>Módulo Chat - Testes com clientes/usuários</td>
-       <td>&#9744;</td>
+       <td>&#9745;</td>
        <td rowspan="4">27/09/2018</td> 
     </tr> 
     <tr>
        <td>API Login - Testes com usuários</td>
-       <td>&#9744;</td>
+       <td>&#9745;</td>
     </tr> 
     <tr>
        <td rowspan="4">Serviço Solicitação/Agendamento Atendimentos</td>
        <td>Protótipo inicial Interfaces</td>
-       <td>&#9744;</td>
+       <td>&#9745;</td>
     </tr>  
      <tr>
        <td>Implementação inicial back-end</td>
-       <td>&#9744;</td>
+       <td>&#9745;</td>
     </tr>
     <tr>
        <td>Implementação front-end (Interfaces)</td>
@@ -140,4 +140,4 @@ O **CAED-UFSM** será um canal de comunicação entre alunos e servidores com o 
   </tbody>
 </table>
 
-<p align="right"><em>Backlog last updated on September 16, 2018.</em></p>
+<p align="right"><em>Backlog last updated on October 03, 2018.</em></p>
