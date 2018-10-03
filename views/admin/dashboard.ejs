@@ -8,15 +8,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <!--Materialize-->
-  <link href="/css/materialize.css" type="text/css" rel="stylesheet">
-  <link href="/css/style.css" type="text/css" rel="stylesheet">
-  <link href="/css/style.min.css" type="text/css" rel="stylesheet" media="screen,projection">
-  <!-- Custome CSS-->
-  <link href="/css/custom/custom.css" type="text/css" rel="stylesheet">
-  <!-- INCLUDED PLUGIN CSS ON THIS PAGE -->
-  <link href="/vendors/perfect-scrollbar/perfect-scrollbar.css" type="text/css" rel="stylesheet">
-
-</head>
+<link href="/css/materialize.css" type="text/css" rel="stylesheet">
+<link href="/css/style.css" type="text/css" rel="stylesheet">
+<link href="/css/style.min.css" type="text/css" rel="stylesheet" media="screen,projection">
+<!--fullcalendar-->
+<link rel='stylesheet' href='/fullcalendar/fullcalendar.css' />
+<link href='/fullcalendar/fullcalendar.min.css' rel='stylesheet' />
+<link href='/fullcalendar/fullcalendar.print.min.css' rel='stylesheet' media='print' />
+<!-- Custome CSS-->
+<link href="/css/custom/custom.css" type="text/css" rel="stylesheet">
+<!-- INCLUDED PLUGIN CSS ON THIS PAGE -->
+<link href="/vendors/perfect-scrollbar/perfect-scrollbar.css" type="text/css" rel="stylesheet">
 
 <body>
   <!-- Start Page Loading -->
@@ -122,31 +124,37 @@
                   <span class="nav-text">Dashboard</span>
                 </a>
               </li>
-              <li class="bold">
+              <li id="list-servidores" class="item-menu bold">
                 <a href="#" class="waves-effect waves-cyan">
                   <i class="material-icons">group</i>
                   <span class="nav-text">Servidores</span>
                 </a>
               </li>
-              <li class="bold">
+              <li id="list-salas" class="item-menu bold">
                 <a href="#" class="waves-effect waves-cyan">
                   <i class="material-icons">format_list_numbered</i>
                   <span class="nav-text">Salas</span>
                 </a>
               </li>
-              <li class="bold">
-                <a href="extract-sheets" class="waves-effect waves-cyan">
+              <li id="list-solicitacoes" class="item-menu bold">
+                <a href="#" class="waves-effect waves-cyan">
                   <i class="material-icons">list</i>
                   <span class="nav-text">Solicitações</span>
                 </a>
               </li>
-              <li class="bold">
-                <a href="agenda" class="waves-effect waves-cyan">
+              <li id="list-encaminhamentos" class="item-menu bold">
+                <a href="#" class="waves-effect waves-cyan">
+                  <i class="material-icons">list</i>
+                  <span class="nav-text">Encaminhamentos</span>
+                </a>
+              </li>
+              <li id="agenda" class="item-menu bold">
+                <a href="#" class="waves-effect waves-cyan">
                   <i class="material-icons">event_note</i>
                   <span class="nav-text">Agenda</span>
                 </a>
               </li>
-              <li class="bold">
+              <li id="relatorios" class="bold">
                 <a href="#" class="waves-effect waves-cyan">
                   <i class="material-icons">trending_up</i>
                   <span class="nav-text">Relatórios</span>
@@ -204,6 +212,11 @@
       ================================================ -->
   <!-- jQuery Library -->
   <script src='/fullcalendar/lib/jquery.min.js'></script>
+  <!--Calendar-->
+  <script src='/fullcalendar/lib/jquery-ui.min.js'></script>
+  <script src='/fullcalendar/lib/moment.min.js'></script>
+  <script src='/fullcalendar/fullcalendar.js'></script>
+  <script src="/fullcalendar/locale/pt-br.js"></script>
   <!--materialize js-->
   <script type="text/javascript" src="/js/materialize.min.js"></script>
   <!--scrollbar-->
@@ -213,6 +226,7 @@
   <!--custom-script.js - Add your own theme custom JS-->
   <script type="text/javascript" src="/js/custom-script.js"></script>
 
+  
 
 </body>
 
