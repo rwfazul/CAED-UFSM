@@ -48,8 +48,40 @@ app.get('/admin/agenda', function (req, res) {
 	});
 });
 
-app.get('/admin/solicitacoes', function (req, res) {
-	res.render('agenda');
+app.get('/admin/list-salas', function (req, res) {
+	extract(function (result, error) {
+		if (error) result.render('list-salas', { data: error });
+		else {
+			res.render('list-salas', { data: result });
+		}
+	});
+});
+
+app.get('/admin/list-servidores', function (req, res) {
+	extract(function (result, error) {
+		if (error) result.render('list-servidores', { data: error });
+		else {
+			res.render('list-servidores', { data: result });
+		}
+	});
+});
+
+app.get('/admin/list-solicitacoes', function (req, res) {
+	extract(function (result, error) {
+		if (error) result.render('list-solicitacoes', { data: error });
+		else {
+			res.render('list-solicitacoes', { data: result });
+		}
+	});
+});
+
+app.get('/admin/list-encaminhamentos', function (req, res) {
+	extract(function (result, error) {
+		if (error) result.render('list-encaminhamentos', { data: error });
+		else {
+			res.render('list-encaminhamentos', { data: result });
+		}
+	});
 });
 
 app.get('/admin/logout', function (req, res) {

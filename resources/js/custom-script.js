@@ -1,11 +1,23 @@
-/*================================================================================
-	Item Name: Materialize - Material Design Admin Template
-	Version: 4.0
-	Author: PIXINVENT
-	Author URL: https://themeforest.net/user/pixinvent/portfolio
-================================================================================
-
-NOTE:
-------
-PLACE HERE YOUR OWN JS CODES AND IF NEEDED.
-WE WILL RELEASE FUTURE UPDATES SO IN ORDER TO NOT OVERWRITE YOUR CUSTOM SCRIPT IT'S BETTER LIKE THIS. */
+$(document).ready(function () {
+	$(".item-menu").click(function () {
+	  var page = $(this).attr('id');
+	  $("#content").load(page);
+	  $('.item-menu').removeClass('active');
+	  $(this).addClass('active');
+	});
+  
+	/* Se for usado floating button
+	$(".action-btn").click(function () {
+	  var page = $(this).attr('id');
+	  $("#content").load(page + ".html");
+	})
+  
+	document.addEventListener('DOMContentLoaded', function () {
+	  var elems = document.querySelectorAll('.fixed-action-btn');
+	  var instances = M.FloatingActionButton.init(elems, {
+		direction: 'left'
+	  });
+	});
+	*/
+  });
+  
