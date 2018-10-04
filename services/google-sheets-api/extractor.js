@@ -5,22 +5,16 @@ const {google} = require('googleapis');
 // If modifying these scopes, delete token.json.
 const SCOPES = ['https://www.googleapis.com/auth/spreadsheets.readonly'];
 const CLIENT_SECRET_PATH = 'services/google-sheets-api/credentials/credentials.json';
+const TOKEN_PATH = 'services/google-sheets-api/credentials/token.json';
 
-var writeToken = function(token_path, token, callback) {
-  fs.writeFile(token_path, JSON.stringify(token), (err) => {
-    if (err) callback(err);
-  });
-}
-
-var authorize = function(credentials, tokenPath, callback) {
+var authorize = function(credentials, callback) {
+  // Check if we have previously stored a token.
   const {client_secret, client_id, redirect_uris} = credentials.installed;
   const oAuth2Client = new google.auth.OAuth2(
-      client_id, client_secret, redirect_uris[0]);
-
-  // Check if we have previously stored a token.
-  fs.readFile(tokenPath, (err, token) => {
+  client_id, client_secret, redirect_uris[0]);
+  fs.readFile(TOKEN_PATH, (err, token) => {
     if (err) {
-      callback({}, oAuth2Client.generateAuthUrl({
+      callback(oAuth2Client, oAuth2Client.generateAuthUrl({
         access_type: 'offline',
         scope: SCOPES,
       }));
@@ -34,26 +28,39 @@ var authorize = function(credentials, tokenPath, callback) {
 module.exports = {
 
   // Load client secrets from a local file.
-  getAuthClient : function(tokenInfo, callback) {
+  getAuthClient : function(callback) {
+    fs.readFile(CLIENT_SECRET_PATH, (err, content) => {
+      if (err) return callback({}, {}, 'Error loading client secret file:' + err);
+      // Authorize a client with credentials
+      authorize(JSON.parse(content), callback);
+    });
+  },
+
+  setToken : function(code, callback) {
     fs.readFile(CLIENT_SECRET_PATH, (err, content) => {
       if (err) return callback({}, {}, 'Error loading client secret file:' + err);
       // Authorize a client with credentials
       var credentials = JSON.parse(content);
-      if (tokenInfo.newToken) {
-        writeToken(tokenInfo.tokenPath, tokenInfo.newToken, function(err) {
-        if (err) return callback({}, {}, 'Error writing token file:' + err);
-          authorize(credentials, tokenInfo.tokenPath, callback)
+      const {client_secret, client_id, redirect_uris} = credentials.installed;
+      const oAuth2Client = new google.auth.OAuth2(
+      client_id, client_secret, redirect_uris[0]);
+      oAuth2Client.getToken(code, (err, token) => {
+        if (err) return console.error('Error while trying to retrieve access token', err);
+        // Store the token to disk for later program executions
+        fs.writeFile(TOKEN_PATH, JSON.stringify(token), (err) => {
+          if (err) callback('Error writing token file:' + err);
+          else callback();
         });
-      }
-      else authorize(credentials, tokenInfo.tokenPath, callback);
+      });
     });
+
   },
 
   readSheet : function(auth, sheetInfo, cb) {
     const sheets = google.sheets({version: 'v4', auth});
     sheets.spreadsheets.values.get({
-      spreadsheetId: sheetInfo.id,
-      range: sheetInfo.range,
+      spreadsheetId: sheetInfo.sheetId,
+      range: sheetInfo.sheetRange,
     }, (err, res) => {
       if (err) return cb({}, 'The API returned an error: ' + err);
       const rows = res.data.values;
