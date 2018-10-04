@@ -1,4 +1,4 @@
-$(document).ready(function () {
+/*$(document).ready(function () {
 	$(".item-menu").click(function () {
 	  var page = $(this).attr('id');
 	  $("#content").load(page);
@@ -6,7 +6,7 @@ $(document).ready(function () {
 	  $(this).addClass('active');
 	});
   
-	/* Se for usado floating button
+	 Se for usado floating button
 	$(".action-btn").click(function () {
 	  var page = $(this).attr('id');
 	  $("#content").load(page + ".html");
@@ -18,6 +18,5 @@ $(document).ready(function () {
 		direction: 'left'
 	  });
 	});
-	*/
   });
-  
+  	*/
