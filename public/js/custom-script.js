@@ -1,10 +1,4 @@
-/*$(document).ready(function () {
-	$(".item-menu").click(function () {
-	  var page = $(this).attr('id');
-	  $("#content").load(page);
-	  $('.item-menu').removeClass('active');
-	  $(this).addClass('active');
-	});
+
 
 	$(document).ready(function () {
     $('.modal').modal();
@@ -154,7 +148,7 @@
 
   });
   
-	 Se for usado floating button
+	/* Se for usado floating button
 	$(".action-btn").click(function () {
 	  var page = $(this).attr('id');
 	  $("#content").load(page + ".html");

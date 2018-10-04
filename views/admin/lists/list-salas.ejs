@@ -1,5 +1,5 @@
 <% if ( locals.authUrl ) { %>
-  <h4>É necessário autorizar o acesso a planilha!</h4>
+  <% include ../partials/read-token %>
 <% } else { %>
   <div id="hoverable-table">
     <h4 class="header">Salas</h4>
