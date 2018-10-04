@@ -35,6 +35,6 @@ Thumbs.db
 UserInterfaceState.xcuserstate
 
 # keys and pwds
-credentials.json
 curls/
-token.json
+services/google-sheets-api/credentials/
+services/google-sheets-api/tokens/
