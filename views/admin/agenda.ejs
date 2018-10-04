@@ -1,4 +1,27 @@
-       <!--start container-->
+<!DOCTYPE html>
+<html>
+<head>
+  <% include partials/head %>
+    <!-- Custome CSS -->
+  <link href="/css/custom/custom.css" type="text/css" rel="stylesheet">
+	<!-- Fullcalendar -->
+	<link href="/fullcalendar/fullcalendar.css" type="text/css" rel="stylesheet"/>
+	<link href="/fullcalendar/fullcalendar.min.css" type="text/css" rel="stylesheet" />
+	<link href="/fullcalendar/fullcalendar.print.min.css" type="text/css" rel="stylesheet" media="print" />
+</head>
+<body>
+  <% include partials/header %>
+
+  <!-- Main -->
+  <div id="main">
+    <!-- Wrapper -->
+    <div class="wrapper">
+      <!-- Left Sidebar Nav-->
+        <% include partials/aside %>
+      <!-- /Left Sidebar Nav-->
+      <!-- Content -->
+      <section id="content">
+ 				<!--start container-->
         <div class="container">
           <div class="section">
             <div class="divider"></div>
@@ -38,7 +61,19 @@
             </div>
           </div>
         </div>
+      </section>
+      <!-- /Content-->
+    </div>
+    <!-- /Wrapper -->
+  </div>
+  <!-- /Main -->
 
+  <% include partials/footer %>
+  <!--Calendar-->
+  <script src='/fullcalendar/lib/jquery-ui.min.js'></script>
+  <script src='/fullcalendar/lib/moment.min.js'></script>
+  <script src='/fullcalendar/fullcalendar.js'></script>
+  <script src="/fullcalendar/locale/pt-br.js"></script>
   <script>
     $(document).ready(function () {
 
@@ -200,7 +235,6 @@
     });
   </script>
 
-</body>
 <%# data.forEach(function(row) { %>
   <%# row.forEach(function(col) { %>
     <td>
@@ -208,5 +242,9 @@
     </td>
     <%# }); %>
       <%# }); %>
-
+</body>
 </html>
+
+
+
+      

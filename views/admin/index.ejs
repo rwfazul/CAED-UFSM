@@ -26,10 +26,15 @@
   <!-- CORE CSS-->
   <link href="/css/materialize.css" type="text/css" rel="stylesheet">
   <link href="/css/style.css" type="text/css" rel="stylesheet">
-  <!-- Custome CSS-->
-  <link href="/css/custom/custom.css" type="text/css" rel="stylesheet">
-  <!-- INCLUDED PLUGIN CSS ON THIS PAGE -->
-  <style>.material-icons{ margin-top: 10px; }</style>
+  <style>
+    .material-icons{ margin-top: 10px; }
+    .input-field i.prefix.active{ color: #009688 !important; }
+    .input-field input:focus:not([readonly]) + label { color: #009688 !important; }
+    .input-field input:focus:not([readonly]) {
+        border-bottom: 1px solid #009688 !important;
+        box-shadow: 0 1px 0 0 #009688 !important;
+    }
+  </style>
 </head>
 
 <body class="teal">
@@ -51,7 +56,7 @@
           <p class="center login-form-text">Login CAED-UFSM</p>
         </div>
       </div>
-      <form action="admin/login" method="POST" class="login-form">
+      <form action="/admin/login" method="POST" class="login-form">
         <div class="row margin">
           <div class="input-field col s12">
             <i class="material-icons prefix">person</i>
@@ -63,7 +68,7 @@
           <div class="input-field col s12">
             <i class="material-icons prefix">lock</i>            
             <input id="senha" name="senha" type="password" class="validate">
-            <label for="senha">Password</label>
+            <label for="senha">Senha</label>
           </div>
         </div>
         <div class="row">
@@ -93,8 +98,6 @@
   <script type="text/javascript" src="/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
   <!--plugins.js - Some Specific JS codes for Plugin Settings-->
   <script type="text/javascript" src="/js/plugins.js"></script>
-  <!--custom-script.js - Add your own theme custom JS-->
-  <script type="text/javascript" src="/js/custom-script.js"></script>
 </body>
 
 </html>
