@@ -1,24 +1,16 @@
-
-
 <!-- Header -->
 <header id="header" class="page-topbar">
   <!-- start header nav-->
   <div class="navbar-fixed">
     <nav class="navbar-color gradient-45deg-light-blue-cyan">
       <div class="nav-wrapper">
-        <ul class="left">
-          <li>
-            <h1 class="logo-wrapper">
-              <a href="index" class="brand-logo darken-1">
-                <span class="logo-text hide-on-med-and-down">CAED UFSM</span>
+          <div class="<%= locals.arrow %>">
+              <a href="<%= locals.next%>">
+                <i class="material-icons" style="display: inline-block; font-size: 36px;">
+                    keyboard_arrow_<%= locals.arrow %>
+                </i>
               </a>
-            </h1>
-          </li>
-        </ul>
-        <div class="header-search-wrapper hide-on-med-and-down">
-          <i class="material-icons">search</i>
-          <input type="text" name="Search" class="header-search-input z-depth-2" placeholder="Pesquisar" />
-        </div>
+          </div>
       </div>
     </nav>
   </div>
