@@ -6,6 +6,7 @@ var logger = require('morgan');
 
 var userRouter = require('./routes/user');
 var adminRouter = require('./routes/admin');
+var testsRouter = require('./routes/tests');
 
 var app = express();
 
@@ -22,6 +23,7 @@ app.use(express.static(path.join(__dirname, 'www')));
 
 app.use('/user', userRouter);
 app.use('/admin', adminRouter);
+app.use('/tests', testsRouter);
 
 // CORS (Cross-Origin Resource Sharing) headers to support Cross-site HTTP requests
 app.all('*', function (req, res, next) {
