@@ -1,10 +1,10 @@
 
 
 	$(document).ready(function () {
+
     $('.modal').modal();
     $('.collapsible').collapsible();
     $('.tooltipped').tooltip();
-
     // page is now ready, initialize the calendar...
 
     $('#calendar').fullCalendar({

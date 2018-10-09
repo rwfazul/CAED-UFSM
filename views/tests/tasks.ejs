@@ -39,7 +39,7 @@
                                                     </li>
                                                     <li>
                                                         <a class="modal-trigger" href="#modal_pwa">
-                                                            Instalar PWA (Caso o acesso seja mobile)
+                                                            Instalar PWA (caso o acesso seja mobile)
                                                         </a>
                                                     </li>
                                                     <li>
@@ -151,7 +151,7 @@
                                                             </a>
                                                     </li>
                                                     <li>
-                                                            <a href="https://caedufsm.herokuapp.com/admin/agenda" target="_blank">Gerar resumo semanal de futuros atendimentos em formato pdf)
+                                                            <a href="https://caedufsm.herokuapp.com/admin/agenda" target="_blank">Gerar resumo semanal de futuros atendimentos em formato PDF
                                                                 <i class="material-icons">open_in_new</i>
                                                             </a>
                                                     </li>
@@ -228,11 +228,12 @@
             </div>
 
             <% include partials/footer %>
-
 </body>
 
 <script>
     $(document).ready(function () {
+    	  $('.modal').modal();
+    		$('.collapsible').collapsible();
         $('.tooltipped').tooltip({ delay: 50 });
     });
 </script>
