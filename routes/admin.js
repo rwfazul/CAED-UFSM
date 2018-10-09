@@ -34,8 +34,8 @@ router
 	.get('/salas', function (req, res) {
 		return getSheetData(sheets.salas, 'list-salas', res);
 	})
-	.get('/servidores', function (req, res) {
-		return getSheetData(sheets.servidores, 'list-servidores', res);
+	.get('/profissionais', function (req, res) {
+		return getSheetData(sheets.servidores, 'list-profissionais', res);
 	})
 	.get('/solicitacoes', function (req, res) {
 		return getSheetData(sheets.solicitacoes, 'list-solicitacoes', res);

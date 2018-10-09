@@ -4,8 +4,9 @@
 <head>
     <% include partials/head %>
 </head>
+
 <body>
-  <% include partials/header %>
+    <% include partials/header %>
         <!-- Main -->
         <div id="main">
             <!-- Wrapper -->
@@ -14,18 +15,175 @@
                 <section id="content">
                     <div class="container">
                         <div class="section">
-                            <div class="col s12">
-                            <h4 class="center">Tarefas testes - CAED UFSM</h4>
+                            <div class="row">
+                                <div class="col s12 m4 l2"></div>
+                                <div class="col s12 m4 l8">
+                                    <h4 class="center">Tarefas - CAED UFSM</h4>
 
-                            <h5></h5>
-                            <p align="justify">
-                                
-                            </p>
-                            <h5></h5>
-                            <p align="justify">
+                                    <ul class="collapsible popout " data-collapsible="accordion">
+                                        <li>
+                                            <div class="collapsible-header gradient-45deg-indigo-light-blue white-text">
 
-                            </p>
-                        </div>
+                                                <h5>
+                                                    <i class="material-icons">phone_android</i>
+                                                    Tarefas aplicação PWA
+                                                </h5>
+                                            </div>
+                                            <div class="collapsible-body">
+                                                <span> Usuários: Alunos UFSM</span>
+                                                <ol>
+                                                    <li>
+                                                        <a href="https://caedufsm.herokuapp.com/" target="_blank">Acessar aplicação
+                                                            <i class="material-icons">open_in_new</i>
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a class="modal-trigger" href="#modal_pwa">
+                                                            Instalar PWA (Caso o acesso seja mobile)
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        Visualizar informações gerais do aplicativo
+                                                        <a class="tooltipped" data-position="bottom" data-tooltip='Itens "CAED" e "Sobre" no menu'>
+                                                            <i class="material-icons small">info_outline</i>
+                                                        </a>
+
+                                                    </li>
+                                                    <li>
+                                                        Solicitar atendimento por meio do formulário
+                                                        <a class="tooltipped" data-position="bottom" data-tooltip='Itens "Solicitar atendimento" no menu'>
+                                                            <i class="material-icons small">info_outline</i>
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        Serviço de mensagens instantâneas
+                                                        <a class="tooltipped" data-position="bottom" data-tooltip='Item "Conversar com alguém" no menu'>
+                                                            <i class="material-icons small">info_outline</i>
+                                                        </a>
+                                                        <ul>
+                                                            <li>
+                                                                <i class="material-icons small">arrow_forward</i>
+                                                                Fazer login com matrícula e senha do portal do aluno
+                                                            </li>
+                                                            <li>
+                                                                <i class="material-icons small">arrow_forward</i>
+                                                                Iniciar chat com profissionais da CAED
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+
+                                                </ol>
+
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="collapsible-header gradient-45deg-indigo-light-blue white-text">
+                                                <h5>
+                                                    <i class="material-icons">chat</i>
+                                                    Tarefas Chat - Dashboard Administrativo
+                                                </h5>
+                                            </div>
+                                            <div class="collapsible-body">
+                                                <span> Usuários: Profissinais CAED</span>
+                                                <ol>
+                                                    <li>
+                                                        <a href="https://dashboard.tawk.to/login" target="_blank">Acessar dasboard do chat e fazer login com usuário e senha pré-definidos
+                                                            <i class="material-icons">open_in_new</i>
+                                                        </a>
+                                                    </li>
+                                                    <li>Responder mensagens de alunos</li>
+                                                </ol>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="collapsible-header gradient-45deg-indigo-light-blue white-text">
+
+                                                <h5>
+                                                    <i class="material-icons">web</i>
+                                                    Tarefas Sistema Web - Administrativo
+                                                </h5>
+                                            </div>
+                                            <div class="collapsible-body">
+                                                <span> Usuários: Profissinais CAED</span>
+                                                <ol>
+                                                    <li>
+                                                        <a href="https://caedufsm.herokuapp.com/admin" target="_blank">Acessar o sistema com login e senha pré-definidos
+                                                            <i class="material-icons">open_in_new</i>
+                                                        </a>
+                                                    </li>
+                                                    <li>Visualizar grades de horários
+                                                        <ul>
+                                                            <li><i class="material-icons small">arrow_forward</i>
+                                                                <a href="https://caedufsm.herokuapp.com/admin/profissionais" target="_blank">Horários de profissionais
+                                                                    <i class="material-icons">open_in_new</i>
+                                                                </a>
+                                                            </li>
+                                                            <li><i class="material-icons small">arrow_forward</i>
+                                                                    <a href="https://caedufsm.herokuapp.com/admin/salas" target="_blank">Horários de salas
+                                                                        <i class="material-icons">open_in_new</i>
+                                                                    </a>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                    <li>
+                                                        Visualizar todas solicitações
+                                                        <ul>
+                                                            <li><i class="material-icons small">arrow_forward</i>
+                                                                <a href="https://caedufsm.herokuapp.com/admin/solicitacoes" target="_blank">Solicitações de alunos
+                                                                    <i class="material-icons">open_in_new</i>
+                                                                </a>
+                                                            </li>
+                                                            <li><i class="material-icons small">arrow_forward</i>
+                                                                    <a href="https://caedufsm.herokuapp.com/admin/encaminhamentos" target="_blank">Encaminhamentos de professores
+                                                                        <i class="material-icons">open_in_new</i>
+                                                                    </a>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                    <li>
+                                                            <a href="https://caedufsm.herokuapp.com/admin/agenda" target="_blank">Visualizar agenda atendimentos
+                                                                <i class="material-icons">open_in_new</i>
+                                                            </a>
+                                                    </li>
+                                                    <li>
+                                                            <a href="https://caedufsm.herokuapp.com/admin/agenda" target="_blank">Realizar agendamento de atendimentos
+                                                                <i class="material-icons">open_in_new</i>
+                                                            </a>
+                                                    </li>
+                                                    <li>
+                                                            <a href="https://caedufsm.herokuapp.com/admin/agenda" target="_blank">Gerar resumo semanal de futuros atendimentos em formato pdf)
+                                                                <i class="material-icons">open_in_new</i>
+                                                            </a>
+                                                    </li>
+                                                </ol>
+                                            </div>
+                                        </li>
+                                        <li>
+                                                <div class="collapsible-header gradient-45deg-indigo-light-blue white-text">
+                                                    <h5>
+                                                        <i class="material-icons">chat</i>
+                                                        Questionários aos usuários
+                                                    </h5>
+                                                </div>
+                                                <div class="collapsible-body">
+                                                    <ol>
+                                                        <li>
+                                                            <a href="https://goo.gl/rKh4x1" target="_blank">Questionário alunos
+                                                                <i class="material-icons">open_in_new</i>
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                                <a href="https://goo.gl/4iRDzG" target="_blank">Questionário profissionais CAED
+                                                                    <i class="material-icons">open_in_new</i>
+                                                                </a>
+                                                            </li>
+                                                    </ol>
+                                                </div>
+                                            </li>
+                                    </ul>
+                                </div>
+                                <div class="col s12 m4 l2"></div>
+                            </div>
                         </div>
                     </div>
                 </section>
@@ -34,6 +192,51 @@
             <!-- /Wrapper -->
         </div>
         <!-- /Main -->
+        <div id="modal_pwa" class="modal">
+            <div class="modal-content">
+                <ul class="collapsible" data-collapsible="accordion">
+                    <li>
+                        <div class="collapsible-header">
+                            <h5>O que é um PWA?</h5>
+                        </div>
+                        <div class="collapsible-body">
+                            <p>PWAs (Progressive Web Apps), são aplicações web, que podem ser acessadas em várias plataforms
+                                através de um browser, mas que também podem ser instaladas em seu celular.
+                            </p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="collapsible-header">
+                            <h5>Como instalar PWAs em seu celular?</h5>
+                        </div>
+                        <div class="collapsible-body">
+                            <p>Ao acessar a aplicação no seu browser, você poderá instalar de duas formas. Caso apareça a opção
+                                da primeira imagem no seu primeiro acesso, basta clicar. Se não, você deve clicar no menu
+                                de opções do seu navegador e selecionar a opção "Adicionar à tela inicial", como consta na
+                                segunda imagem.
+                            </p>
+                            <div class="col s12">
+                                <img src="/images/pwa_1.svg" width="49%" />
+                                <img src="/images/pwa_2.svg" width="49%" />
+                            </div>
+                    </li>
+                </ul>
+                </div>
+                <div class="modal-footer">
+                    <a href="#!" class="modal-close waves-effect waves-green btn-flat">Ok</a>
+                </div>
+            </div>
+
+            <% include partials/footer %>
+
 </body>
+
+<script src='/fullcalendar/lib/jquery-ui.min.js'></script>
+<script src="/js/custom-script.js"></script>
+<script>
+    $(document).ready(function () {
+        $('.tooltipped').tooltip({ delay: 50 });
+    });
+</script>
 
 </html>
