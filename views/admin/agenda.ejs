@@ -71,7 +71,6 @@
             <div class="col s12">
 
                 <table class="layout display responsive-table bordered">
-                  <!-- 
                   <tr>
                       <th>Horários</th>
                       <th>Segunda-feira</th>
@@ -80,18 +79,20 @@
                       <th>Quinta-feira</th>
                       <th>Sexta-feira</th>
                     </tr>
-                  -->
                     <% for (var row = 1	; row < data.length; row++) { %>
                       <tr>
-                        <td>
-                          <%= data[row][0] %>
-                        </td>
-                        <% for (var a = 0; a < data[row].length; a++) { %>
                           <td>
-                            <%= data[row][col][a] %>                          
-                          </td>
+                              <%= data[row][0] %>
+                            </td>
+                    
+                        <% for (var a = 0; a < data[row][col].length; a++) { %>
+                            <% if(data[row][col][a]) {%> 
+                              <td class="center green lighten-3 white-text"><i class="material-icons">check_circle</i></td>
+                              <% } else {%>  
+                                <td class="center red lighten-3 white-text"><i class="material-icons">cancel</i></td>
+                                <% } %>
                           <% }; %>
-                      </tr>
+                        </tr>
                       <% }; %>
                   </table>
 

@@ -59,7 +59,8 @@ $(document).ready(function () {
       title: $.trim($(this).text()), // use the element's text as the event title
       duration: "01:00",
       stick: true, // maintain when user navigates (see docs on the renderEvent method)
-      color: '#2196f3'
+      color: '#2196f3', 
+      constraint: $.trim($(this).text())
     });
     // make the event draggable using jQuery UI
     $(this).draggable({
