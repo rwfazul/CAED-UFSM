@@ -32,24 +32,10 @@ router
 		res.render('admin/dashboard-base');
 	})
 	.get('/salas', function (req, res) {
-		return getSheetData(sheets.salas, 'list-salas', res);
+		return getSheetDataFormat(sheets.salas, 'list-salas', res);
 	})
 	.get('/profissionais', function (req, res) {
-		extractor.getAuthClient(function (authClient, authUrl, credentialsErr) {
-			if (credentialsErr) { console.log('credentialsErr:', credentialsErr); }
-			else if (authUrl) {
-				console.log('*** has url ***');
-				return res.render('admin/dashboard-base', { page: "list-profissionais", authUrl: authUrl });
-			}
-			else {
-				console.log('*** find token ***');
-				extractor.readSheet(authClient, sheets.servidores, function (result, err) {
-					if (err) { console.log('extract err:', err); }
-					console.log('*** find data ***');
-					return res.render('admin/dashboard-base', { page: "list-profissionais", data: formatResult(result) });
-				})
-			}
-		});
+		return getSheetDataFormat(sheets.servidores, 'list-profissionais', res);
 	})
 	.get('/solicitacoes', function (req, res) {
 		return getSheetData(sheets.solicitacoes, 'list-solicitacoes', res);
@@ -106,9 +92,11 @@ function formatResult(result) {
 
 	if (result.length) {
 		for (var row = 0; row < result.length; row++) {
-			for (var col = 1; col < result[row].length; col++) {
+			for (var col = 0; col < result[row].length; col++) {
 				switch (result[0][col]) {
 					case "Nome completo":
+						nomes[row] = result[row][col];
+					case "Nome sala":
 						nomes[row] = result[row][col];
 					case "Horários livres [08h - 09h]":
 						h1[row] = result[row][col].split(",");
@@ -237,6 +225,24 @@ function getSheetData(sheet, page, res) {
 				if (err) { console.log('extract err:', err); }
 				console.log('*** find data ***');
 				return res.render('admin/dashboard-base', { page: page, data: result });
+			})
+		}
+	});
+}
+
+function getSheetDataFormat(sheet, page, res) {
+	extractor.getAuthClient(function (authClient, authUrl, credentialsErr) {
+		if (credentialsErr) { console.log('credentialsErr:', credentialsErr); }
+		else if (authUrl) {
+			console.log('*** has url ***');
+			return res.render('admin/dashboard-base', { page: page, authUrl: authUrl });
+		}
+		else {
+			console.log('*** find token ***');
+			extractor.readSheet(authClient, sheet, function (result, err) {
+				if (err) { console.log('extract err:', err); }
+				console.log('*** find data ***');
+				return res.render('admin/dashboard-base', { page: page, data: formatResult(result) });
 			})
 		}
 	});
