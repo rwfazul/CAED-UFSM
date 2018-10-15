@@ -48,7 +48,7 @@ router
 	})
 	.get('/solicitacoes', function (req, res) {
 		extractor.getSheetData(sheets.solicitacoes, function(result, err) {
-			if (err) return errorHandler(err);
+			if (err) return errorHandler(res, err);
 			returnResponse(result, res, 'dashboard-base', listBase + 'solicitacoes');
 		});	
 	})
@@ -58,10 +58,16 @@ router
 			returnResponse(result, res, 'dashboard-base', listBase + 'encaminhamentos');
 		});
 	})
-	.get('/agenda', function (req, res) {
+	.get('/agenda-salas', function (req, res) {
+		extractor.getSheetData(sheets.servidores, function(result, err) {
+			if (err) return errorHandler(res, err);
+			returnResponse(formatter(result), res, 'agenda-salas');
+		});	
+	})
+	.get('/agenda-atendimentos', function (req, res) {
 		extractor.getSheetData(sheets.solicitacoes, function(result, err) {
 			if (err) return errorHandler(res, err);
-			returnResponse(formatter(result), res, 'agenda');
+			returnResponse(formatter(result), res, 'agenda-atendimentos');
 		});	
 	});
 
