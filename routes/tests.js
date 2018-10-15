@@ -7,6 +7,9 @@ router
 	})
 	.get('/tasks', function (req, res) {
 		res.render('tests/tasks', {next: '/tests', arrow: 'left'});
+	})
+	.get('/tasks-staff', function (req, res) {
+		res.render('tests/tasks-staff', {next: '/tests', arrow: 'left'});
 	});
 
 module.exports = router;
