@@ -17,8 +17,8 @@
       <section id="content">
         <div class="container">
           <div class="section">
-            <% if (locals.page) { %>
-              <%- include('lists/' + page) -%>
+            <% if (locals.partial) { %>
+              <%- include(locals.partial) -%>
             <% } %>  
           </div>
         </div>
@@ -30,5 +30,6 @@
   <!-- /Main -->
 
   <% include partials/footer %>
+  
 </body>
 </html>
