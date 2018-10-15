@@ -1,5 +1,3 @@
-
-
 $(document).ready(function () {
 
   $('.modal').modal();
@@ -72,19 +70,15 @@ $(document).ready(function () {
   });
 
   $('#external-events').on('mousedown', '.fc-event', function(){
-    $('#calendar').fullCalendar('renderEvent', {
-      id: "restricao",
-      start: '10:00:00',
-      end: '12:00:00',
-      dow: [1, 2, 3],
-      rendering: 'background'
+    var schedule = JSON.parse($(this).attr('data-schedule'));
+    schedule.forEach(function(event) {
+      $('#calendar').fullCalendar('renderEvent', event);
     });
   });
 
   $('#external-events').on('mouseup', '.fc-event', function(){
-    $('#calendar').fullCalendar('removeEvents', [
-      "restricao"
-    ]);
+    var id = $(this).attr('data-id');
+    $('#calendar').fullCalendar('removeEvents', id);
   });
 
 });
