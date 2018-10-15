@@ -36,13 +36,13 @@ router
 	})
 	.get('/salas', function (req, res) {
 		extractor.getSheetData(sheets.salas, function(result, err) {
-			if (err) return errorHandler(err);
+			if (err) return errorHandler(res, err);
 			returnResponse(formatter(result), res, 'dashboard-base', listBase + 'salas');
 		});	
 	})
 	.get('/profissionais', function (req, res) {
 		extractor.getSheetData(sheets.servidores, function(result, err) {
-			if (err) return errorHandler(err);
+			if (err) return errorHandler(res, err);
 			returnResponse(formatter(result), res, 'dashboard-base', listBase +'profissionais');
 		});	
 	})
@@ -54,13 +54,13 @@ router
 	})
 	.get('/encaminhamentos', function (req, res) {
 		extractor.getSheetData(sheets.encaminhamentos, function(result, err) {
-			if (err) return errorHandler(err);
+			if (err) return errorHandler(res, err);
 			returnResponse(result, res, 'dashboard-base', listBase + 'encaminhamentos');
 		});
 	})
 	.get('/agenda', function (req, res) {
 		extractor.getSheetData(sheets.solicitacoes, function(result, err) {
-			if (err) return errorHandler(err);
+			if (err) return errorHandler(res, err);
 			returnResponse(formatter(result), res, 'agenda');
 		});	
 	});
@@ -90,7 +90,7 @@ function returnResponse(result, res, page, partial) {
 	res.render('admin/' + page, response);
 }
 
-function errorHandler(err) {
+function errorHandler(res, err) {
 	res.render('errors/error_template', { page: 'extract-data', message: err });
 }
 
