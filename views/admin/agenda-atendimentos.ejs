@@ -59,47 +59,8 @@
   </div>
   <!-- /Main -->
 
-  <% if ( locals.data ) { %>
-    <% for (var col = 1; col < data[0].length; col++) { %>
-      <!-- Modal Structure -->
-      <div id="modal<%=col%>" class="modal">
-        <div class="modal-content">
-          <h4>Horários Livres
-            <%= data[0][col] %>
-          </h4>
-          <div class="col s12">
-            <table class="layout display responsive-table bordered">
-              <tr>
-                <th>Horários</th>
-                <th>Segunda-feira</th>
-                <th>Terça-feira</th>
-                <th>Quarta-feira</th>
-                <th>Quinta-feira</th>
-                <th>Sexta-feira</th>
-              </tr>
-              <% for (var row = 1	; row < data.length - 1; row++) { %>
-                <tr>
-                  <td>
-                    <%= data[row][0] %>
-                  </td>
-                  <% for (var a = 0; a < data[row][col].length; a++) { %>
-                    <% if(data[row][col][a]) {%> 
-                      <td class="center green lighten-3 white-text"><i class="material-icons">check_circle</i></td>
-                    <% } else {%>  
-                      <td class="center red lighten-3 white-text"><i class="material-icons">cancel</i></td>
-                    <% }; %>
-                  <% }; %>
-                </tr>
-              <% }; %>
-            </table>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <a href="#!" class="modal-close waves-effect waves-green btn-flat">Ok</a>
-        </div>
-      </div>
-    <% }; %>
-  <% }; %>
+  <% include partials/modal_horarios %>
+
 
   <% include partials/footer %>
 

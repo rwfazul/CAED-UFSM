@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var extractor = require('../services/google-sheets-api/extractor');
 var formatter = require('../services/google-sheets-api/formatter');
+var list_formatter = require('../services/google-sheets-api/list_formatter');
 
 const dashboardTemplate = 'dashboard_base';
 const listBase = 'lists/list-';
@@ -49,13 +50,13 @@ router
 	.get('/solicitacoes', function (req, res) {
 		extractor.getSheetData(sheets.solicitacoes, function(result, err) {
 			if (err) return errorHandler(res, err);
-			returnResponse(result, res, 'dashboard-base', listBase + 'solicitacoes');
+			returnResponse(list_formatter(result), res, 'dashboard-base', listBase + 'solicitacoes');
 		});	
 	})
 	.get('/encaminhamentos', function (req, res) {
 		extractor.getSheetData(sheets.encaminhamentos, function(result, err) {
 			if (err) return errorHandler(res, err);
-			returnResponse(result, res, 'dashboard-base', listBase + 'encaminhamentos');
+			returnResponse(list_formatter(result), res, 'dashboard-base', listBase + 'encaminhamentos');
 		});
 	})
 	.get('/agenda-salas', function (req, res) {

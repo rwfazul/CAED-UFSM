@@ -21,6 +21,7 @@ function formatResult(result) {
 	var h7 = [];
 	var h8 = [];
 	var h9 = [];
+	var h10 = [];
 	var matrix = [];
 
 	if (result.length) {
@@ -49,6 +50,8 @@ function formatResult(result) {
 						h8[row] = result[row][col].split(",");
 					case "Horários livres [17h - 18h]":
 						h9[row] = result[row][col].split(",");
+					case "Horários livres [18h - 19h]":
+						h10[row] = result[row][col].split(",");
 				}
 			}
 
@@ -64,6 +67,7 @@ function formatResult(result) {
 		matrix.push(arrayDaysBoolean(h7));
 		matrix.push(arrayDaysBoolean(h8));
 		matrix.push(arrayDaysBoolean(h9));
+		matrix.push(arrayDaysBoolean(h10));
 
 		/*for (var row = 0; row < matrix.length; row++) {
 			for (var col = 0; col < matrix[row].length; col++) {
@@ -71,7 +75,7 @@ function formatResult(result) {
 			}
 		}*/
 
-		constraints = createArrayObjects(nomes, h1, h2, h3, h4, h5, h6, h7, h8, h9);
+		constraints = createArrayObjects(nomes, h1, h2, h3, h4, h5, h6, h7, h8, h9, h10);
 		matrix.push(constraints);
 
 	}
@@ -99,7 +103,7 @@ function arrayDaysBoolean(array) {
 	return a;
 }
 
-function createArrayObjects(nomes, h1, h2, h3, h4, h5, h6, h7, h8, h9) {
+function createArrayObjects(nomes, h1, h2, h3, h4, h5, h6, h7, h8, h9, h10) {
 	var objects = [];
 	objects.push('constraints');
 	for (var r = 1; r < nomes.length; r++) {
@@ -113,6 +117,7 @@ function createArrayObjects(nomes, h1, h2, h3, h4, h5, h6, h7, h8, h9) {
 		disp.push(createObjects(nomes[r], "15:00", arrayDaysInt(h7)[r]));
 		disp.push(createObjects(nomes[r], "16:00", arrayDaysInt(h8)[r]));
 		disp.push(createObjects(nomes[r], "17:00", arrayDaysInt(h9)[r]));
+		disp.push(createObjects(nomes[r], "18:00", arrayDaysInt(h10)[r]));
 		objects.push(disp);
 	}
 	return objects;
@@ -125,7 +130,7 @@ function createObjects(nome, hour, days) {
 	object.duration = "01:00";
 	object.rendering = "inverse-background";
 	object.dow = days;
-	object.color =  '#ff9f89'
+	object.color = '#ff9f89'
 	return object;
 }
 
