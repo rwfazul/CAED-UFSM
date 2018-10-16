@@ -3,28 +3,32 @@
 
 <head>
     <% include partials/head %>
-    <style>
-    	.collapsible-header h5 {
-    		  text-align: left;
-    		  font-size: 23px;
-    	}
-    	i.material-icons {
-    		margin-right: 2px;
-    	}
-    	#main {
-      	padding-left: 0%;
-      	padding-right: 0%;
-    	}
-    	.modal .modal-content {
-				padding: 10px;
-			}
-    	@media only screen and (max-width: 992px) {
-	    	.modal {
-				  width: 95%;
-				  max-height: 90%;
-				}
-			}
-    </style>
+        <style>
+            .collapsible-header h5 {
+                text-align: left;
+                font-size: 23px;
+            }
+
+            i.material-icons {
+                margin-right: 2px;
+            }
+
+            #main {
+                padding-left: 0%;
+                padding-right: 0%;
+            }
+
+            .modal .modal-content {
+                padding: 10px;
+            }
+
+            @media only screen and (max-width: 992px) {
+                .modal {
+                    width: 95%;
+                    max-height: 90%;
+                }
+            }
+        </style>
 </head>
 
 <body>
@@ -107,72 +111,82 @@
                                                 </h5>
                                             </div>
                                             <div class="collapsible-body">
-                                                <span> Usuários: Profissinais CAED</span>
+                                                <span>Versão testável estará disponível dia 16/10/2018.</span>
                                                 <ol>
                                                     <li>
-                                                        <a href="https://caedufsm.herokuapp.com/admin" target="_blank">Acessar o sistema com login e senha pré-definidos
+                                                        <a href="/admin" target="_blank" class="tooltipped" data-position="bottom" data-tooltip='Solicitar aos desenvolvedores'>Acessar o sistema com login e senha pré-definidos.
                                                             <i class="material-icons">open_in_new</i>
                                                         </a>
                                                     </li>
                                                     <li>Visualizar grades de horários
                                                         <ul>
-                                                            <li><i class="material-icons small">arrow_forward</i>
-                                                                <a href="https://caedufsm.herokuapp.com/admin/profissionais" target="_blank">Horários de profissionais
+                                                            <li>
+                                                                <i class="material-icons small">arrow_forward</i>
+                                                                <a href="/admin/profissionais" target="_blank" class="tooltipped" data-position="bottom" data-tooltip='Item "Profissionais" no menu'>Horários de profissionais
                                                                     <i class="material-icons">open_in_new</i>
                                                                 </a>
                                                             </li>
-                                                            <li><i class="material-icons small">arrow_forward</i>
-                                                                    <a href="https://caedufsm.herokuapp.com/admin/salas" target="_blank">Horários de salas
-                                                                        <i class="material-icons">open_in_new</i>
-                                                                    </a>
+                                                            <li>
+                                                                <i class="material-icons small">arrow_forward</i>
+                                                                <a href="/admin/salas" target="_blank" class="tooltipped" data-position="bottom" data-tooltip='Item ""Salas" no menu'>Horários de salas
+                                                                    <i class="material-icons">open_in_new</i>
+                                                                </a>
                                                             </li>
                                                         </ul>
                                                     </li>
                                                     <li>
                                                         Visualizar todas solicitações
                                                         <ul>
-                                                            <li><i class="material-icons small">arrow_forward</i>
-                                                                <a href="https://caedufsm.herokuapp.com/admin/solicitacoes" target="_blank">Solicitações de alunos
+                                                            <li>
+                                                                <i class="material-icons small">arrow_forward</i>
+                                                                <a href="/admin/solicitacoes" target="_blank" class="tooltipped" data-position="bottom" data-tooltip='Item "Solicitações" no menu'>Solicitações de alunos
                                                                     <i class="material-icons">open_in_new</i>
                                                                 </a>
                                                             </li>
-                                                            <li><i class="material-icons small">arrow_forward</i>
-                                                                    <a href="https://caedufsm.herokuapp.com/admin/encaminhamentos" target="_blank">Encaminhamentos de professores
-                                                                        <i class="material-icons">open_in_new</i>
-                                                                    </a>
+                                                            <li>
+                                                                <i class="material-icons small">arrow_forward</i>
+                                                                <a href="/admin/encaminhamentos" target="_blank" class="tooltipped" data-position="bottom" data-tooltip='Item "Encaminhamentos" no menu'>Encaminhamentos de professores
+                                                                    <i class="material-icons">open_in_new</i>
+                                                                </a>
                                                             </li>
                                                         </ul>
                                                     </li>
-                                                    <li>
-                                                            <a href="https://caedufsm.herokuapp.com/admin/agenda" target="_blank">Visualizar e agendar atendimentos
-                                                                <i class="material-icons">open_in_new</i>
-                                                            </a>
+                                                    <li>Realizar agendamentos
+                                                        <ul>
+                                                            <li>
+                                                                <i class="material-icons small">arrow_forward</i>
+                                                                <a href="/admin/agenda-salas" target="_blank" class="tooltipped" data-position="bottom" data-tooltip='Item "Agenda Salas" no menu'>Visualizar e agendar horários dos profissionais nas salas
+                                                                    <i class="material-icons">open_in_new</i>
+                                                                </a>
+                                                            </li>
+                                                            <li>
+                                                                <i class="material-icons small">arrow_forward</i>
+                                                                <a href="/admin/agenda-atendimentos" target="_blank" class="tooltipped" data-position="bottom" data-tooltip='Item "Agenda Atendimentos" no menu'>Visualizar e agendar atendimentos aos alunos
+                                                                    <i class="material-icons">open_in_new</i>
+                                                                </a>
+                                                            </li>
+                                                        </ul>
                                                     </li>
                                                 </ol>
                                             </div>
                                         </li>
                                         <li>
-                                                <div class="collapsible-header gradient-45deg-indigo-light-blue white-text">
-                                                    <h5>
-                                                        <i class="material-icons">chat</i>
-                                                        Questionários aos usuários
-                                                    </h5>
-                                                </div>
-                                                <div class="collapsible-body">
-                                                    <ol>
-                                                        <li>
-                                                            <a href="https://goo.gl/rKh4x1" target="_blank">Questionário alunos
-                                                                <i class="material-icons">open_in_new</i>
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                                <a href="https://goo.gl/4iRDzG" target="_blank">Questionário profissionais CAED
-                                                                    <i class="material-icons">open_in_new</i>
-                                                                </a>
-                                                            </li>
-                                                    </ol>
-                                                </div>
-                                            </li>
+                                            <div class="collapsible-header gradient-45deg-indigo-light-blue white-text">
+                                                <h5>
+                                                    <i class="material-icons">chat</i>
+                                                    Questionário aos usuários
+                                                </h5>
+                                            </div>
+                                            <div class="collapsible-body">
+                                                <ol>
+                                                    <li>
+                                                        <a href="https://goo.gl/rKh4x1" target="_blank">Questionário alunos
+                                                            <i class="material-icons">open_in_new</i>
+                                                        </a>
+                                                    </li>
+                                                </ol>
+                                            </div>
+                                        </li>
                                     </ul>
                                 </div>
                                 <div class="col s12 m4 l2"></div>
@@ -225,8 +239,8 @@
 
 <script>
     $(document).ready(function () {
-    	  $('.modal').modal();
-    		$('.collapsible').collapsible();
+        $('.modal').modal();
+        $('.collapsible').collapsible();
         $('.tooltipped').tooltip({ delay: 50 });
     });
 </script>

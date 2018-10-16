@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var extractor = require('../services/google-sheets-api/extractor');
 var formatter = require('../services/google-sheets-api/formatter');
+var list_formatter = require('../services/google-sheets-api/list_formatter');
 
 const dashboardTemplate = 'dashboard_base';
 const listBase = 'lists/list-';
@@ -36,32 +37,38 @@ router
 	})
 	.get('/salas', function (req, res) {
 		extractor.getSheetData(sheets.salas, function(result, err) {
-			if (err) return errorHandler(err);
+			if (err) return errorHandler(res, err);
 			returnResponse(formatter(result), res, 'dashboard-base', listBase + 'salas');
 		});	
 	})
 	.get('/profissionais', function (req, res) {
 		extractor.getSheetData(sheets.servidores, function(result, err) {
-			if (err) return errorHandler(err);
+			if (err) return errorHandler(res, err);
 			returnResponse(formatter(result), res, 'dashboard-base', listBase +'profissionais');
 		});	
 	})
 	.get('/solicitacoes', function (req, res) {
 		extractor.getSheetData(sheets.solicitacoes, function(result, err) {
-			if (err) return errorHandler(err);
-			returnResponse(result, res, 'dashboard-base', listBase + 'solicitacoes');
+			if (err) return errorHandler(res, err);
+			returnResponse(list_formatter(result), res, 'dashboard-base', listBase + 'solicitacoes');
 		});	
 	})
 	.get('/encaminhamentos', function (req, res) {
 		extractor.getSheetData(sheets.encaminhamentos, function(result, err) {
-			if (err) return errorHandler(err);
-			returnResponse(result, res, 'dashboard-base', listBase + 'encaminhamentos');
+			if (err) return errorHandler(res, err);
+			returnResponse(list_formatter(result), res, 'dashboard-base', listBase + 'encaminhamentos');
 		});
 	})
-	.get('/agenda', function (req, res) {
+	.get('/agenda-salas', function (req, res) {
+		extractor.getSheetData(sheets.servidores, function(result, err) {
+			if (err) return errorHandler(res, err);
+			returnResponse(formatter(result), res, 'agenda-salas');
+		});	
+	})
+	.get('/agenda-atendimentos', function (req, res) {
 		extractor.getSheetData(sheets.solicitacoes, function(result, err) {
-			if (err) return errorHandler(err);
-			returnResponse(formatter(result), res, 'agenda');
+			if (err) return errorHandler(res, err);
+			returnResponse(formatter(result), res, 'agenda-atendimentos');
 		});	
 	});
 
@@ -90,7 +97,7 @@ function returnResponse(result, res, page, partial) {
 	res.render('admin/' + page, response);
 }
 
-function errorHandler(err) {
+function errorHandler(res, err) {
 	res.render('errors/error_template', { page: 'extract-data', message: err });
 }
 

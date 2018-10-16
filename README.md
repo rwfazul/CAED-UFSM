@@ -80,22 +80,22 @@ O **CAED-UFSM** será um canal de comunicação entre alunos e servidores com o 
     </tr>
     <tr>
        <td>Implementação front-end (Interfaces)</td>
-       <td>&#9744;</td>
+       <td>&#9745;</td>
        <td rowspan="2">04/10/2018</td>
     </tr>
     <tr>
        <td>Implementação back-end</td>
-       <td>&#9744;</td>
+       <td>&#9745;</td>
     </tr>  
     <tr>
       <td rowspan="4">Testes iniciais</td>
       <td>Finalização implementação - produto testável</td>
-       <td>&#9744;</td>
+       <td>&#9745;</td>
       <td rowspan="2">11/10/2018</td>
     </tr>
     <tr>
       <td>Planejamento testes com clientes/usuários</td>
-       <td>&#9744;</td>
+       <td>&#9745;</td>
     </tr> 
     <tr>
        <td>Realização testes com clientes/usuários</td>
@@ -140,4 +140,4 @@ O **CAED-UFSM** será um canal de comunicação entre alunos e servidores com o 
   </tbody>
 </table>
 
-<p align="right"><em>Backlog last updated on October 03, 2018.</em></p>
+<p align="right"><em>Backlog last updated on October 15, 2018.</em></p>

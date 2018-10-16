@@ -14,13 +14,13 @@
               <table class="layout display responsive-table bordered">
                 <tr>
                   <th>Horários</th>
-                  <th>Segunda-feira</th>
-                  <th>Terça-feira</th>
-                  <th>Quarta-feira</th>
-                  <th>Quinta-feira</th>
-                  <th>Sexta-feira</th>
+                  <th class="center">Segunda-feira</th>
+                  <th class="center">Terça-feira</th>
+                  <th class="center">Quarta-feira</th>
+                  <th class="center">Quinta-feira</th>
+                  <th class="center">Sexta-feira</th>
                 </tr>
-                <% for (var row = 1	; row < data.length; row++) { %>
+                <% for (var row = 1	; row < (data.length - 1); row++) { %>
                   <tr>
                     <td>
                       <%= data[row][0] %>

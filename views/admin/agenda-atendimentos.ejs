@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <% include partials/head %>
+  <!-- Custome CSS -->
+  <link href="/css/custom/custom.css" type="text/css" rel="stylesheet">
+  <!-- Fullcalendar -->
+  <link href="/fullcalendar/fullcalendar.css" type="text/css" rel="stylesheet" />
+  <link href="/fullcalendar/fullcalendar.min.css" type="text/css" rel="stylesheet" />
+  <link href="/fullcalendar/fullcalendar.print.min.css" type="text/css" rel="stylesheet" media="print" />
+</head>
+
+<body>
+  <% include partials/header %>
+
+  <!-- Main -->
+  <div id="main">
+    <!-- Wrapper -->
+    <div class="wrapper">
+      <!-- Left Sidebar Nav-->
+      <% include partials/aside %>
+      <!-- /Left Sidebar Nav-->
+      <!-- Content -->
+      <section id="content">
+        <!--start container-->
+        <div class="container">
+          <div class="section">
+            <h4 class="center">Agenda de atendimentos</h4>
+            <div id="full-calendar">
+              <div class="row">
+                <div class="col s12 m4 l3">
+                  <div id='external-events'>
+                    <h4 class="header">Solicitações</h4>
+                    <% if ( !locals.data ) { %>
+                        <p>Não há dados!</p>
+                    <% } else { %>
+                      <% for (var col = 1; col < data[0].length; col++) { %>
+                          <div>
+                            <a class="fc-event blue modal-trigger" href="#modal<%=col%>" data-id="<%- data[0][col] -%>" data-schedule='<%- JSON.stringify(locals.data[data.length - 1][col]); -%>'>
+                              <%= data[0][col] %>
+                            </a>
+                          </div>
+                      <% }; %>
+                    <% }; %>
+                  </div>
+                </div>
+                <div class="col s12 m8 l9">
+                  <div id='calendar' class="calendar"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- /Content-->
+    </div>
+    <!-- /Wrapper -->
+  </div>
+  <!-- /Main -->
+
+  <% include partials/modal_horarios %>
+
+
+  <% include partials/footer %>
+
+  <!--Calendar-->
+  <script src='/fullcalendar/lib/jquery-ui.min.js'></script>
+  <script src='/fullcalendar/lib/moment.min.js'></script>
+  <script src='/fullcalendar/fullcalendar.min.js'></script>
+  <script src="/fullcalendar/locale/pt-br.js"></script>
+  <script src="/js/custom-script.js"></script>
+
+</html>

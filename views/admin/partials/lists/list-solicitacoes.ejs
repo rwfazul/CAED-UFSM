@@ -2,78 +2,28 @@
 	<h4 class="header">Solicitações</h4>
 	<div class="row">
 		<div class="col s12">
-		<% if ( !locals.data ) { %>
-			<p>Não há dados!</p>
-		<% } else { %>
-			<table class="layout display responsive-table">
-				<thead>
+			<% if ( !locals.data ) { %>
+				<p>Não há dados!</p>
+			<% } else { %>
+					<table class="bordered striped centered highlight responsive-table">
 						<tr>
-							<th>
-								<%= data[0][1] %>
-							</th>
-							<th>
-								<%= data[0][2] %>
-							</th>
-							<th>
-								<%= data[0][3] %>
-							</th>
-							<th>
-								<%= data[0][4] %>
-							</th>
-							<th>09h-10h</th>
-							<th>10h-11h</th>
-							<th>11h-12h</th>
-							<th>13h-14h</th>
-							<th>14h-15h</th>
-							<th>15h-16h</th>
-							<th>16h-17h</th>
-							<th>17h-18h</th>
+							<% for (var col = 1; col < data[0].length; col++) { %>
+								<th>
+									<%= data[0][col] %>
+								</th>
+							<% }; %>
 						</tr>
-				</thead>
-				<tbody>
-				<% for (var row = 1; row < data.length; row++) { %>
-					<tr>
-						<td>
-							<%= data[row][1] %>
-						</td>
-						<td>
-							<%= data[row][2] %>
-						</td>
-						<td>
-							<%= data[row][3] %>
-						</td>
-						<td>
-							<%= data[row][4] %>
-						</td>
-						<td>
-							<%= data[row][13] %>
-						</td>
-						<td>
-							<%= data[row][14] %>
-						</td>
-						<td>
-							<%= data[row][15] %>
-						</td>
-						<td>
-							<%= data[row][16] %>
-						</td>
-						<td>
-							<%= data[row][17] %>
-						</td>
-						<td>
-							<%= data[row][18] %>
-						</td>
-						<td>
-							<%= data[row][19] %>
-						</td>
-						<td>
-							<%= data[row][20] %>
-						</td>
-					</tr>
-				<% }; %>
-				</tbody>
-			</table>
-		<% }; %>
+						<% for (var row = 1; row < (data.length - 1); row++) { %>
+							<tr>
+								<% for (var col = 1; col < data[row].length; col++) { %>
+									<td>
+										<%= data[row][col] %>
+									</td>
+								<% }; %>
+							</tr>
+						<% }; %>
+					</table>
+			<% }; %>
 		</div>
 	</div>
 </div>
