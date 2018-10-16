@@ -8,7 +8,7 @@ extractor.getSheetData(sheets.salas, function(result, err) {
 		    console.log('index', index);
 		    // ...
 		});
-}); */
+}); */	
 
 function formatResult(result) {
 	var nomes = [];
