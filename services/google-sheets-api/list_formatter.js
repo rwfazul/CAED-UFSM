@@ -1,4 +1,4 @@
-var formatter = require('../google-sheets-api/formatter');
+var formatter = require('./formatter');
 
 function listFormat(result) {
 	var matrix = [];
