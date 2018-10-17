@@ -36,5 +36,5 @@ UserInterfaceState.xcuserstate
 
 # keys and pwds
 curls/
-services/google-sheets-api/credentials/
-services/google-sheets-api/tokens/
+*credentials/
+*tokens/
