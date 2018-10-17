@@ -3,6 +3,7 @@ var router = express.Router();
 var extractor = require('../services/google-sheets-api/extractor');
 var formatter = require('../services/google-sheets-api/formatter');
 var list_formatter = require('../services/google-sheets-api/list_formatter');
+var firestore = require('../services/firestore-api/firestore')
 
 const dashboardTemplate = 'dashboard_base';
 const listBase = 'lists/list-';
@@ -88,6 +89,75 @@ router
 		});
 	});
 
+/* TODO: REFATORAR PARA ARQUIVO AGENDA.JS */
+router.get('/servidor/', function(req, res) {
+	var db = firestore.getDbInstace();
+	var colRef = db.collection('salax-servidores');
+	var allServidores = colRef.get()
+		.then(snapshot => {
+			var servidores = new Array();
+			snapshot.forEach(doc => {
+				// console.log(doc.id, '=>', doc.data());
+				servidores.push(doc.data());
+			});
+			res.status(200).json(servidores);
+    	})
+    	.catch(err => {
+     	 	console.log('Error getting documents', err);
+     	 	res.status(501).send(err);
+    	});
+});
+
+router.post('/servidor/save', function(req, res) {
+	var db = firestore.getDbInstace();
+	var colRef = db.collection('salax-servidores');
+	var addDoc = colRef.add({
+		title: req.body['title'],
+		start: req.body['start'],
+		end:   req.body['end']
+	}).then(ref => {
+		console.log('Added document with ID: ', ref.id);
+		res.status(201).send(ref.id);
+	}).catch(err => {
+		console.log('Error in adding documents: ', err);
+		res.status(501).send(err);
+	});
+});
+
+router.get('/atendimento/', function(req, res) {
+	var db = firestore.getDbInstace();
+	var colRef = db.collection('salax-atendimentos');
+	var allAtendimentos = colRef.get()
+		.then(snapshot => {
+			var atendimentos = new Array();
+			snapshot.forEach(doc => {
+				// console.log(doc.id, '=>', doc.data());
+				atendimentos.push(doc.data());
+			});
+			res.status(200).json(atendimentos);
+    	})
+    	.catch(err => {
+     	 	console.log('Error getting documents', err);
+     	 	res.status(501).send(err);
+    	});
+});
+
+router.post('/atendimento/save', function(req, res) {
+	var db = firestore.getDbInstace();
+	var colRef = db.collection('salax-atendimentos');
+	var addDoc = colRef.add({
+		title: req.body['title'],
+		start: req.body['start'],
+		end:   req.body['end']
+	}).then(ref => {
+		console.log('Added document with ID: ', ref.id);
+		res.status(201).send(ref.id);
+	}).catch(err => {
+		console.log('Error in adding documents: ', err);
+		res.status(501).send(err);
+	});
+});
+/* */
 
 function returnResponse(result, res, page, partial) {
 	var response = {};
