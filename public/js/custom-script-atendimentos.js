@@ -1,5 +1,30 @@
 $(document).ready(function () {
 
+  function showReponse(msg) {
+    var element = $('#responseMessage');
+    element.html(msg);
+    setTimeout(function() {
+      element.html('');
+    }, 2000);
+  }
+
+  function saveData(event) {
+    $.post({
+        url: '/admin/atendimento/save', 
+        data: {
+            title: event.title,
+            start: event.start.format(),
+            end: event.end.format()        
+        },
+        success: function() {
+          showReponse('Atendimento agendado com sucesso!');
+        },
+        error: function() {
+          alert('Erro ao salvar atendimento');
+        }
+    });
+  }
+
   $('.modal').modal();
   $('.collapsible').collapsible();
   $('.tooltipped').tooltip();
@@ -20,19 +45,15 @@ $(document).ready(function () {
     allDaySlot: false,
     minTime: '08:00:00',
     maxTime: '20:00:00',
-    events: [
-      {
-        /*
-        id: 'restricaoIsabella',
-        start: '10:00:00',
-        end: '16:00:00',
-        rendering: 'background'
-        */
-      }
-    ],
-    drop: function () {
+    eventSources: [{
+        url: '/admin/atendimento'      
+    }],
+    eventReceive: function( event ) {
+      saveData(event);
+    },
+    drop: function() { 
       // remove the element from the "Draggable Events" list
-      $(this).remove();
+      $(this).remove();     
     },
     selectable: true,
     selectHelper: true,
@@ -48,6 +69,15 @@ $(document).ready(function () {
         $('#calendar').fullCalendar('renderEvent', eventData, true); // stick? = true
       }
       $('#calendar').fullCalendar('unselect');
+    },
+    eventClick: function(event) {
+      var decision = confirm("Do you really want to do that?"); 
+      if (decision) {
+        /* https://codepen.io/subodhghulaxe/pen/qEXLLr */
+        /* https://fullcalendar.io/docs/eventReceive */
+        /* https://stackoverflow.com/questions/6952783/fullcalender-external-event-dragg-problem */
+        $('#calendar').fullCalendar('removeEvents', event.id);
+      }
     }
   });
 
