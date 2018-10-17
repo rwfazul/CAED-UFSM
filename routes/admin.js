@@ -71,6 +71,9 @@ router
 			if (err) return errorHandler(res, err);
 			returnResponse(formatter(result), res, 'agenda-atendimentos');
 		});	
+	})
+	.get('/relatorios', function (req, res) {
+		res.render('admin/relatorios');
 	});
 
 router

@@ -8,7 +8,7 @@ extractor.getSheetData(sheets.salas, function(result, err) {
 		    console.log('index', index);
 		    // ...
 		});
-}); */	
+}); */
 
 function formatResult(result) {
 	var nomes = [];
@@ -30,32 +30,42 @@ function formatResult(result) {
 				switch (result[0][col]) {
 					case "Nome completo":
 						nomes[row] = result[row][col];
+						break;
 					case "Nome sala":
 						nomes[row] = result[row][col];
+						break;
 					case "Horários livres [08h - 09h]":
 						h1[row] = result[row][col].split(",");
+						break;
 					case "Horários livres [09h - 10h]":
 						h2[row] = result[row][col].split(",");
+						break;
 					case "Horários livres [10h - 11h]":
 						h3[row] = result[row][col].split(",");
+						break;
 					case "Horários livres [11h - 12h]":
 						h4[row] = result[row][col].split(",");
+						break;
 					case "Horários livres [13h - 14h]":
 						h5[row] = result[row][col].split(",");
+						break;
 					case "Horários livres [14h - 15h]":
 						h6[row] = result[row][col].split(",");
+						break;
 					case "Horários livres [15h - 16h]":
 						h7[row] = result[row][col].split(",");
+						break;
 					case "Horários livres [16h - 17h]":
 						h8[row] = result[row][col].split(",");
+						break;
 					case "Horários livres [17h - 18h]":
 						h9[row] = result[row][col].split(",");
+						break;
 					case "Horários livres [18h - 19h]":
 						h10[row] = result[row][col].split(",");
+						break;
 				}
 			}
-
-
 		}
 		matrix.push(nomes);
 		matrix.push(arrayDaysBoolean(h1));
@@ -69,14 +79,15 @@ function formatResult(result) {
 		matrix.push(arrayDaysBoolean(h9));
 		matrix.push(arrayDaysBoolean(h10));
 
-		/*for (var row = 0; row < matrix.length; row++) {
+		/*
+		for (var row = 0; row < matrix.length; row++) {
 			for (var col = 0; col < matrix[row].length; col++) {
 				console.log("Linha ", row, "Coluna ", col, ":", matrix[row][col]);
 			}
 		}*/
-
 		constraints = createArrayObjects(nomes, h1, h2, h3, h4, h5, h6, h7, h8, h9, h10);
 		matrix.push(constraints);
+
 
 	}
 	return matrix;
@@ -86,18 +97,20 @@ function arrayDaysBoolean(array) {
 	var a = [array[0]];
 	for (var r = 1; r < array.length; r++) {
 		var v = [false, false, false, false, false];
-		array[r].forEach((c) => {
-			if (c.includes("Segunda-feira"))
-				v[0] = true;
-			if (c.includes("Terça-feira"))
-				v[1] = true;
-			if (c.includes("Quarta-feira"))
-				v[2] = true;
-			if (c.includes("Quinta-feira"))
-				v[3] = true;
-			if (c.includes("Sexta-feira"))
-				v[4] = true;
-		});
+		if((typeof(array[r]) != "undefined")){
+			array[r].forEach((c) => {
+				if (c.includes("Segunda-feira"))
+					v[0] = true;
+				if (c.includes("Terça-feira"))
+					v[1] = true;
+				if (c.includes("Quarta-feira"))
+					v[2] = true;
+				if (c.includes("Quinta-feira"))
+					v[3] = true;
+				if (c.includes("Sexta-feira"))
+					v[4] = true;
+			});
+		}
 		a[r] = v;
 	}
 	return a;
@@ -138,18 +151,20 @@ function arrayDaysInt(array) {
 	var a = [];
 	for (var r = 1; r < array.length; r++) {
 		var v = [];
-		array[r].forEach((c) => {
-			if (c.includes("Segunda-feira"))
-				v.push(1);
-			if (c.includes("Terça-feira"))
-				v.push(2);
-			if (c.includes("Quarta-feira"))
-				v.push(3);
-			if (c.includes("Quinta-feira"))
-				v.push(4);
-			if (c.includes("Sexta-feira"))
-				v.push(5);
-		});
+		if((typeof(array[r]) != "undefined")){
+			array[r].forEach((c) => {
+				if (c.includes("Segunda-feira"))
+					v.push(1);
+				if (c.includes("Terça-feira"))
+					v.push(2);
+				if (c.includes("Quarta-feira"))
+					v.push(3);
+				if (c.includes("Quinta-feira"))
+					v.push(4);
+				if (c.includes("Sexta-feira"))
+					v.push(5);
+			});
+		}
 		a[r] = v;
 	}
 	return a;
