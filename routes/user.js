@@ -1,4 +1,6 @@
 var express = require('express');
+var request = require('request');
+
 var router = express.Router();
 
 router.post('/authenticate', function (req, res) {
@@ -14,13 +16,13 @@ router.post('/authenticate', function (req, res) {
 
 	loginRequest.login = req.body['login'];
 	loginRequest.senha = req.body['senha'];
-
+	
 	var clientServerOptions = {
 		uri: apiUrl + '/mobile/webservice/generateToken',
 		body: JSON.stringify(loginRequest),
 		method: 'POST',
 		headers: {
-			'Content-Type': 'application/json; charset=UTF-8'
+		    'Content-type': 'application/json; charset=UTF-8'
 		}
 	}
 
@@ -32,7 +34,6 @@ router.post('/authenticate', function (req, res) {
 		responseFormatError: 'error at parsing response',
 		unableToValidate: 'unable to check response from server at ' + clientServerOptions.uri
 	}
-
 	request(clientServerOptions, function (error, response) {
 		var responseData = {
 			status: 200,
