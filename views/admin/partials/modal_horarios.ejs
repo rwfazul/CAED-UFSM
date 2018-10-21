@@ -21,6 +21,7 @@
                   <td>
                     <%= data[row][0] %>
                   </td>
+                  <% if(data[row][col] != null) { %>
                   <% for (var a = 0; a < data[row][col].length; a++) { %>
                     <% if(data[row][col][a]) {%> 
                       <td class="center green lighten-3 white-text"><i class="material-icons">check_circle</i></td>
@@ -28,6 +29,7 @@
                       <td class="center red lighten-3 white-text"><i class="material-icons">cancel</i></td>
                     <% }; %>
                   <% }; %>
+                  <% } %>
                 </tr>
               <% }; %>
             </table>
