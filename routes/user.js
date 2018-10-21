@@ -22,7 +22,7 @@ router.post('/authenticate', function (req, res) {
 		body: JSON.stringify(loginRequest),
 		method: 'POST',
 		headers: {
-		    'Content-type': 'application/json; charset=UTF-8'
+		    'Content-Type': 'application/json; charset=UTF-8'
 		}
 	}
 
