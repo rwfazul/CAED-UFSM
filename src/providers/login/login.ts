@@ -25,7 +25,7 @@ export class LoginProvider {
 
   sendPostResquest(data) {
 	  return new Promise((resolve, reject) => {	  	
-	    this.http.post('/authenticate', JSON.stringify(data), httpOptions)
+	    this.http.post('/user/authenticate', JSON.stringify(data), httpOptions)
 	      .subscribe(res => {
 	        resolve(res);
 	      }, (err) => {
