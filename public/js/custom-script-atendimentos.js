@@ -45,9 +45,10 @@ $(document).ready(function () {
     allDaySlot: false,
     minTime: '08:00:00',
     maxTime: '20:00:00',
-    eventSources: [{
-        url: '/admin/atendimento'      
-    }],
+    eventSources: [
+        '/admin/atendimento',
+        '/admin/servidor'   
+    ],
     eventReceive: function( event ) {
       saveData(event);
     },
