@@ -117,7 +117,8 @@ router.post('/servidor/save', function(req, res) {
 	var addDoc = colRef.add({
 		title: req.body['title'],
 		start: req.body['start'],
-		end:   req.body['end']
+		end:   req.body['end'],
+		color: "#ec407a"
 	}).then(ref => {
 		console.log('Added document with ID: ', ref.id);
 		res.status(201).send(ref.id);
@@ -151,7 +152,8 @@ router.post('/atendimento/save', function(req, res) {
 	var addDoc = colRef.add({
 		title: req.body['title'],
 		start: req.body['start'],
-		end:   req.body['end']
+		end:   req.body['end'],
+		color: "#3d5afe"
 	}).then(ref => {
 		console.log('Added document with ID: ', ref.id);
 		res.status(201).send(ref.id);

@@ -37,7 +37,7 @@
                     <% } else { %>
                       <% for (var col = 1; col < data[0].length; col++) { %>
                           <div>
-                            <a class="fc-event blue modal-trigger" href="#modal<%=col%>" data-id="<%- data[0][col] -%>" data-schedule='<%- JSON.stringify(locals.data[data.length - 1][col]); -%>'>
+                            <a class="fc-event indigo accent-2 modal-trigger" href="#modal<%=col%>" data-id="<%- data[0][col] -%>" data-schedule='<%- JSON.stringify(locals.data[data.length - 1][col]); -%>'>
                               <%= data[0][col] %>
                             </a>
                           </div>

@@ -71,24 +71,24 @@ $(document).ready(function () {
       }
       $('#calendar').fullCalendar('unselect');
     },
-    eventClick: function(event) {
+  /*  eventClick: function(event) {
       var decision = confirm("Do you really want to do that?"); 
       if (decision) {
         /* https://codepen.io/subodhghulaxe/pen/qEXLLr */
         /* https://fullcalendar.io/docs/eventReceive */
         /* https://stackoverflow.com/questions/6952783/fullcalender-external-event-dragg-problem */
-        $('#calendar').fullCalendar('removeEvents', event.id);
+  /*      $('#calendar').fullCalendar('removeEvents', event.id);
       }
-    }
+    } */
   });
 
-  $('#external-events .blue').each(function () {
+  $('#external-events .fc-event').each(function () {
     // store data so the calendar knows to render an event upon drop
     $(this).data('event', {
       title: $.trim($(this).text()), // use the element's text as the event title
       duration: "01:00",
       stick: true, // maintain when user navigates (see docs on the renderEvent method)
-      color: '#2196f3', 
+      color: "#3d5afe",
       constraint: $.trim($(this).text())
     });
     // make the event draggable using jQuery UI
