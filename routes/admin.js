@@ -100,7 +100,7 @@ router.get('/servidor/', function(req, res) {
 		.then(snapshot => {
 			var servidores = new Array();
 			snapshot.forEach(doc => {
-				// console.log(doc.id, '=>', doc.data());
+				//console.log(doc.id, '=>', doc.data());
 				servidores.push(doc.data());
 			});
 			res.status(200).json(servidores);
@@ -118,7 +118,7 @@ router.post('/servidor/save', function(req, res) {
 		title: req.body['title'],
 		start: req.body['start'],
 		end:   req.body['end'],
-		color: "#ec407a"
+		color: req.body['color']
 	}).then(ref => {
 		console.log('Added document with ID: ', ref.id);
 		res.status(201).send(ref.id);
@@ -127,6 +127,25 @@ router.post('/servidor/save', function(req, res) {
 		res.status(501).send(err);
 	});
 });
+
+router.post('/servidor/update', function(req, res) {
+	var db = firestore.getDbInstace();
+	var colRef = db.collection('salax-servidores');
+	var docRef = req.body['id'];
+	var doc = colRef.doc(docRef).set({
+		title: req.body['title'],
+		start: req.body['start'],
+		end:   req.body['end'],
+		color: req.body['color']
+	}).then(ref => {
+		console.log('Added document with ID: ', ref.id);
+		res.status(201).send(ref.id);
+	}).catch(err => {
+		console.log('Error in adding documents: ', err);
+		res.status(501).send(err);
+	});
+});
+
 
 router.get('/atendimento/', function(req, res) {
 	var db = firestore.getDbInstace();
@@ -154,6 +173,24 @@ router.post('/atendimento/save', function(req, res) {
 		start: req.body['start'],
 		end:   req.body['end'],
 		color: "#3d5afe"
+	}).then(ref => {
+		console.log('Added document with ID: ', ref.id);
+		res.status(201).send(ref.id);
+	}).catch(err => {
+		console.log('Error in adding documents: ', err);
+		res.status(501).send(err);
+	});
+});
+
+router.post('/atendimento/update', function(req, res) {
+	var db = firestore.getDbInstace();
+	var colRef = db.collection('salax-atendimentos');
+	var docRef = req.body['id'];
+	var doc = colRef.doc(docRef).set({
+		title: req.body['title'],
+		start: req.body['start'],
+		end:   req.body['end'],
+		color: req.body['color']
 	}).then(ref => {
 		console.log('Added document with ID: ', ref.id);
 		res.status(201).send(ref.id);
