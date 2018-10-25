@@ -99,12 +99,12 @@ O **CAED-UFSM** será um canal de comunicação entre alunos e servidores com o 
     </tr> 
     <tr>
        <td>Realização testes com clientes/usuários</td>
-       <td>&#9744;</td>
+       <td>&#9745;</td>
        <td rowspan="2">18/10/2018</td>
     </tr>    
     <tr>
        <td>Avaliação do estágio atual do sistema de acordo com clientes/usuários</td>
-       <td>&#9744;</td>
+       <td>&#9745;</td>
     </tr>    
     <tr>
        <td colspan="4">JAI</td>
@@ -140,4 +140,4 @@ O **CAED-UFSM** será um canal de comunicação entre alunos e servidores com o 
   </tbody>
 </table>
 
-<p align="right"><em>Backlog last updated on October 15, 2018.</em></p>
+<p align="right"><em>Backlog last updated on October 25, 2018.</em></p>
