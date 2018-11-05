@@ -3,78 +3,69 @@
 
 <head>
   <% include partials/head %>
-    <!-- Custome CSS -->
-    <link href="/css/custom/custom.css" type="text/css" rel="stylesheet">
-    <!-- Fullcalendar -->
-    <link href="/fullcalendar/fullcalendar.css" type="text/css" rel="stylesheet" />
-    <link href="/fullcalendar/fullcalendar.min.css" type="text/css" rel="stylesheet" />
-    <link href="/fullcalendar/fullcalendar.print.min.css" type="text/css" rel="stylesheet" media="print" />
+  <!-- Custome CSS -->
+  <link href="/css/custom/custom.css" type="text/css" rel="stylesheet" />
+  <!-- Fullcalendar -->
+  <link href="/fullcalendar/fullcalendar.css" type="text/css" rel="stylesheet" />
+  <link href="/fullcalendar/fullcalendar.min.css" type="text/css" rel="stylesheet" />
+  <link href="/fullcalendar/fullcalendar.print.min.css" type="text/css" rel="stylesheet" media="print" />
+  <link href="/css/jquery.toast.min.css" type="text/css" rel="stylesheet" />
 </head>
 
 <body>
   <% include partials/header %>
 
-    <!-- Main -->
-    <div id="main">
-      <!-- Wrapper -->
-      <div class="wrapper">
-        <!-- Left Sidebar Nav-->
-        <% include partials/aside %>
-          <!-- /Left Sidebar Nav-->
-          <!-- Content -->
-          <section id="content">
-            <!--start container-->
-            <div class="container">
-              <div class="section">
-                <h4 class="center">Agenda das salas</h4>
-                <div id="full-calendar">
-                  <div class="row">
-                    <div class="col s12 m4 l3">
-                      <div id='external-events'>
-                        <h4 class="header">Profissionais</h4>
-                        <% if ( !locals.data ) { %>
-                          <p>Não há dados!</p>
-                          <% } else { %>
-                            <% for (var col = 1; col < data[0].length; col++) { %>
-                              <div>
-                                <a class="fc-event pink lighten-2 modal-trigger" href="#modal<%=col%>" data-id="<%- data[0][col] -%>" data-schedule='<%- JSON.stringify(locals.data[data.length - 1][col]); -%>'>
-                                  <%= data[0][col] %>
-                                </a>
-                              </div>
-                              <% }; %>
-                                <% }; %>
-                      </div>
-                      <p id="responseMessage" style="color:green;"></p>
-                    </div>
-                    <div class="col s12 m8 l9">
-                      <div id="loader-events" style="display: block">
-                        <p>Aguarde, os agendamentos estão sendo carregados.</p>
-                        <div class="progress">
-                          <div class="indeterminate"></div>
-                        </div>
-                      </div>
-                      <div id='calendar' class="calendar"></div>
-                    </div>
+  <!-- Main -->
+  <div id="main">
+    <!-- Wrapper -->
+    <div class="wrapper">
+      <!-- Left Sidebar Nav-->
+      <% include partials/aside %>
+      <!-- /Left Sidebar Nav-->
+      <!-- Content -->
+      <section id="content">
+        <!--start container-->
+        <div class="container">
+          <div class="section">
+            <h4 class="center">Agenda de Salas</h4>
+            <div id="full-calendar">
+              <div class="row">
+                <div class="col s12 m4 l3">
+                  <div id='external-events'>
+                    <h4 class="header">Profissionais</h4>
                   </div>
+                  <p id="responseMessage" style="color:green;"></p>
                 </div>
+                <div class="col s12 m8 l9">
+                    <div id="loader-events" style="display: block">
+                      <p>Aguarde, as alocações estão sendo carregadas.</p>
+                      <div class="progress">
+                        <div class="indeterminate"></div>
+                      </div>
+                    </div>
+                    <div id='calendar' class="calendar"></div>
+                  </div>
               </div>
             </div>
-          </section>
-          <!-- /Content-->
-      </div>
-      <!-- /Wrapper -->
+          </div>
+        </div>
+      </section>
+      <!-- /Content-->
     </div>
-    <!-- /Main -->
+    <!-- /Wrapper -->
+  </div>
+  <!-- /Main -->
 
-    <% include partials/modal_horarios %>
+  <% include partials/modal_horarios %>
+  <% include partials/footer %>
 
-      <% include partials/footer %>
-
-        <!--Calendar-->
-        <script src='/fullcalendar/lib/jquery-ui.min.js'></script>
-        <script src='/fullcalendar/lib/moment.min.js'></script>
-        <script src='/fullcalendar/fullcalendar.min.js'></script>
-        <script src="/fullcalendar/locale/pt-br.js"></script>
-        <script src="/js/custom-script-salas.js"></script>
+  <!--Calendar-->
+  <script src='/fullcalendar/lib/jquery-ui.min.js'></script>
+  <script src='/fullcalendar/lib/moment.min.js'></script>
+  <script src='/fullcalendar/fullcalendar.min.js'></script>
+  <script src="/fullcalendar/locale/pt-br.js"></script>
+  <script src="/js/custom-format-schedule.js"></script>
+  <script src="/js/custom-script-salas.js"></script>
+  <script src="/js/jquery.toast.min.js"></script>
 
 </html>
