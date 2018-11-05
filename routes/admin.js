@@ -26,6 +26,15 @@ const sheets = {
 	}
 }
 
+
+/*
+// invoked for any requested passed to this router
+router.use(function(req, res, next) {
+  // middleware logic (auth)
+  next();
+});
+*/
+
 router
 	.get('/', function (req, res) {
 		res.render('admin/index');
@@ -61,16 +70,16 @@ router
 		});
 	})
 	.get('/agenda-salas', function (req, res) {
-		extractor.getSheetData(sheets.servidores, function(result, err) {
-			if (err) return errorHandler(res, err);
-			returnResponse(formatter(result), res, 'agenda-salas');
-		});	
+		//extractor.getSheetData(sheets.servidores, function(result, err) {
+			//if (err) return errorHandler(res, err);
+			returnResponse('', res, 'agenda-salas');
+		//});	
 	})
 	.get('/agenda-atendimentos', function (req, res) {
-		extractor.getSheetData(sheets.solicitacoes, function(result, err) {
-			if (err) return errorHandler(res, err);
-			returnResponse(formatter(result), res, 'agenda-atendimentos');
-		});	
+		//extractor.getSheetData(sheets.solicitacoes, function(result, err) {
+			//if (err) return errorHandler(res, err);
+			returnResponse('', res, 'agenda-atendimentos');
+		//});	
 	})
 	.get('/relatorios', function (req, res) {
 		res.render('admin/relatorios');
@@ -93,32 +102,55 @@ router
 	});
 
 /* TODO: REFATORAR PARA ARQUIVO AGENDA.JS */
-router.get('/servidor/', function(req, res) {
+router.get('/profissional', function(req, res) {
 	var db = firestore.getDbInstace();
-	var colRef = db.collection('salax-servidores');
-	var allServidores = colRef.get()
+	var colRef = db.collection('profissionais-caed');
+	var allDocs = colRef.get()
 		.then(snapshot => {
-			var servidores = new Array();
+			var profissionais = [];
 			snapshot.forEach(doc => {
-				//console.log(doc.id, '=>', doc.data());
-				servidores.push(doc.data());
+				// set 'id' key
+				var profissional = doc.data();
+				profissional.id = doc.id;
+				profissionais.push(profissional);
 			});
-			res.status(200).json(servidores);
-    	})
-    	.catch(err => {
-     	 	console.log('Error getting documents', err);
-     	 	res.status(501).send(err);
-    	});
+			res.status(200).json(profissionais);
+    })
+    .catch(err => {
+    	console.log('Error getting documents', err);
+     	 res.status(501).send(err);
+    });
 });
 
-router.post('/servidor/save', function(req, res) {
+router.get('/profissional/agenda', function(req, res) {
 	var db = firestore.getDbInstace();
-	var colRef = db.collection('salax-servidores');
+	var colRef = db.collection('salax-profissionais');
+	var allDocs = colRef.get()
+		.then(snapshot => {
+			var profissionais = [];
+			snapshot.forEach(doc => {
+				// set 'id' key
+				var profissional = doc.data();
+				profissional.id = doc.id;
+				profissionais.push(profissional);
+			});
+			res.status(200).json(profissionais);
+    })
+    .catch(err => {
+    	console.log('Error getting documents', err);
+     	 res.status(501).send(err);
+    });
+});
+
+router.post('/profissional/agenda/save', function(req, res) {
+	var db = firestore.getDbInstace();
+	var colRef = db.collection('salax-profissionais');
 	var addDoc = colRef.add({
 		title: req.body['title'],
 		start: req.body['start'],
-		end:   req.body['end'],
-		color: req.body['color']
+		end: req.body['end'],
+		color: req.body['color'],
+		_externalEventId: req.body['externalEventId']
 	}).then(ref => {
 		console.log('Added document with ID: ', ref.id);
 		res.status(201).send(ref.id);
@@ -128,41 +160,74 @@ router.post('/servidor/save', function(req, res) {
 	});
 });
 
-router.post('/servidor/update', function(req, res) {
+router.post('/profissional/agenda/update', function(req, res) {
 	var db = firestore.getDbInstace();
-	var colRef = db.collection('salax-servidores');
-	var docRef = req.body['id'];
-	var doc = colRef.doc(docRef).set({
-		title: req.body['title'],
+	var docRef = db.collection('salax-profissionais').doc(req.body['id']);
+	var updateSingle = docRef.update({
 		start: req.body['start'],
-		end:   req.body['end'],
-		color: req.body['color']
-	}).then(ref => {
-		console.log('Added document with ID: ', ref.id);
-		res.status(201).send(ref.id);
+		end: req.body['end'],
+	}).then(() => {
+    	console.log("Document successfully updated!");
+		res.status(200).send();
 	}).catch(err => {
-		console.log('Error in adding documents: ', err);
+    	console.error("Error updating document: ", err);
 		res.status(501).send(err);
 	});
 });
 
+router.post('/profissional/agenda/delete', function(req, res) {
+	var db = firestore.getDbInstace();
+	var docRef = db.collection('salax-profissionais').doc(req.body['id']);
 
-router.get('/atendimento/', function(req, res) {
+	var deleteDoc = docRef
+		.delete()
+		.then(() => {
+			console.log("Document successfully deleted!");
+			res.status(200).send();
+		}).catch(err => {
+			console.error("Error removing document: ", err);
+			res.status(501).send(err);
+		});
+});
+
+router.get('/solicitacao', function(req, res) {
+	var db = firestore.getDbInstace();
+	var colRef = db.collection('solicitacoes-atendimentos');
+	var allDocs = colRef.get()
+		.then(snapshot => {
+			var solicitacoes = [];
+			snapshot.forEach(doc => {
+				// set 'id' key
+				var solicitacao = doc.data();
+				solicitacao.id = doc.id;
+				solicitacoes.push(solicitacao);
+			});
+			res.status(200).json(solicitacoes);
+    })
+    .catch(err => {
+     	 console.log('Error getting documents', err);
+     	 res.status(501).send(err);
+    });
+});
+
+router.get('/atendimento', function(req, res) {
 	var db = firestore.getDbInstace();
 	var colRef = db.collection('salax-atendimentos');
-	var allAtendimentos = colRef.get()
+	var allDocs = colRef.get()
 		.then(snapshot => {
-			var atendimentos = new Array();
+			var atendimentos = [];
 			snapshot.forEach(doc => {
-				// console.log(doc.id, '=>', doc.data());
-				atendimentos.push(doc.data());
+				// set 'id' key
+				var atendimento = doc.data();
+				atendimento.id = doc.id;
+				atendimentos.push(atendimento);
 			});
 			res.status(200).json(atendimentos);
-    	})
-    	.catch(err => {
-     	 	console.log('Error getting documents', err);
-     	 	res.status(501).send(err);
-    	});
+    })
+    .catch(err => {
+    	console.log('Error getting documents', err);
+     	 res.status(501).send(err);
+    });
 });
 
 router.post('/atendimento/save', function(req, res) {
@@ -171,8 +236,9 @@ router.post('/atendimento/save', function(req, res) {
 	var addDoc = colRef.add({
 		title: req.body['title'],
 		start: req.body['start'],
-		end:   req.body['end'],
-		color: "#3d5afe"
+		end: req.body['end'],
+		color: req.body['color'],
+		_externalEventId: req.body['externalEventId']
 	}).then(ref => {
 		console.log('Added document with ID: ', ref.id);
 		res.status(201).send(ref.id);
@@ -184,16 +250,13 @@ router.post('/atendimento/save', function(req, res) {
 
 router.post('/atendimento/update', function(req, res) {
 	var db = firestore.getDbInstace();
-	var colRef = db.collection('salax-atendimentos');
-	var docRef = req.body['id'];
-	var doc = colRef.doc(docRef).set({
-		title: req.body['title'],
+	var docRef = db.collection('salax-atendimentos').doc(req.body['id']);
+	var setWithMerge = docRef.set({
 		start: req.body['start'],
-		end:   req.body['end'],
-		color: req.body['color']
-	}).then(ref => {
-		console.log('Added document with ID: ', ref.id);
-		res.status(201).send(ref.id);
+		end: req.body['end'],
+	}, { merge: true }).then(ref => {
+    console.log("Document successfully written!");
+		res.status(200).send();
 	}).catch(err => {
 		console.log('Error in adding documents: ', err);
 		res.status(501).send(err);
