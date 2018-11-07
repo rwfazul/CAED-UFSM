@@ -45,7 +45,7 @@ $(function() {
 
   // fetch external events
   (function() {
-    $.getJSON("/admin/solicitacao")
+    $.getJSON("/api/solicitacoes")
       .done(function(solicitacoes) {
         $.each(solicitacoes, function(i, solicitacao) {
           $external_events.append(createExternalEvent(solicitacao));
@@ -72,7 +72,7 @@ $(function() {
 
   function saveEvent(event) {
     $.post({
-      url: '/admin/atendimento/save',
+      url: '/api/atendimentos',
       data: {
         externalEventId: event._externalEventId,
         title: event.title,
@@ -93,8 +93,9 @@ $(function() {
   }
 
   function updateData(event) {
-    $.post({
-      url: '/admin/atendimento/update',
+    $.ajax({
+      method: 'PUT',
+      url: '/api/atendimentos',
       data: {
         id:    event.id,
         start: event.start.format(),
@@ -133,7 +134,7 @@ $(function() {
     selectHelper: true,
     /* render events from firebase */
     eventSources: [
-      '/admin/atendimento',
+      '/api/atendimentos',
       //'/admin/servidor'
     ],
     /* function loading: Triggered when event or resource fetching starts/stops. */

@@ -52,7 +52,7 @@ $(function() {
 
   // fetch external events
   (function() {
-    $.getJSON("/admin/profissional")
+    $.getJSON("/api/profissionais")
       .done(function(profissionais) {
         $.each(profissionais, function(i, profissional) {
           $external_events.append(createExternalEvent(profissional));
@@ -79,7 +79,7 @@ $(function() {
 
   function saveEvent(event) {
     $.post({
-      url: '/admin/profissional/agenda/save',
+      url: '/api/profissionais/agenda/salax-profissionais',
       data: {
         externalEventId: event._externalEventId,
         title: event.title,
@@ -104,10 +104,10 @@ $(function() {
   }
 
   function updateEvent(event) {
-    $.post({
-      url: '/admin/profissional/agenda/update',
+    $.ajax({
+      method: 'PUT',
+      url: '/api/profissionais/agenda/salax-profissionais/' + event.id,
       data: {
-        id:    event.id,
         start: event.start.format(),
         end:   event.end.format(),
       },
@@ -121,11 +121,9 @@ $(function() {
   }
 
   function removeEvent(event) {
-      $.post({
-      url: '/admin/profissional/agenda/delete',
-      data: {
-        id: event.id
-      },
+    $.ajax({
+      method: 'DELETE',
+      url: '/api/profissionais/agenda/salax-profissionais/' + event.id,
       success: function () {
         showReponse(`Alocação de '${event.title}' <b>removida</b> com sucesso!`, 'success');
         $('#calendar').fullCalendar('removeEvents', event.id);
@@ -193,7 +191,7 @@ $(function() {
     selectHelper: true,
     /* render events from firebase */
     eventSources: [
-      '/admin/profissional/agenda'
+      '/api/profissionais/agenda/salax-profissionais'
     ],
     /* function loading: Triggered when event or resource fetching starts/stops. */
     loading: function (isLoading) {
