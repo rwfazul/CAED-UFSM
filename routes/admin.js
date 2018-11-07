@@ -104,7 +104,7 @@ router
 /* TODO: REFATORAR PARA ARQUIVO AGENDA.JS */
 router.get('/profissional', function(req, res) {
 	var db = firestore.getDbInstace();
-	var colRef = db.collection('profissionais-caed');
+	var colRef = db.collection('caed-profissionais');
 	var allDocs = colRef.get()
 		.then(snapshot => {
 			var profissionais = [];
@@ -192,7 +192,7 @@ router.post('/profissional/agenda/delete', function(req, res) {
 
 router.get('/solicitacao', function(req, res) {
 	var db = firestore.getDbInstace();
-	var colRef = db.collection('solicitacoes-atendimentos');
+	var colRef = db.collection('caed-solicitacoes');
 	var allDocs = colRef.get()
 		.then(snapshot => {
 			var solicitacoes = [];
