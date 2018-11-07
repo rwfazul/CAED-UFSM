@@ -1,12 +1,13 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
+var createError  = require('http-errors');
+var express      = require('express');
+var path         = require('path');
 var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+var logger       = require('morgan');
 
-var userRouter = require('./routes/user');
-var adminRouter = require('./routes/admin');
-var testsRouter = require('./routes/tests');
+var userRouter   = require('./routes/user');
+var adminRouter  = require('./routes/admin');
+var apiRouter    = require('./routes/api');
+var testsRouter  = require('./routes/tests');
 
 var app = express();
 
@@ -23,6 +24,7 @@ app.use(express.static(path.join(__dirname, 'www')));
 
 app.use('/user', userRouter);
 app.use('/admin', adminRouter);
+app.use('/api', apiRouter);
 app.use('/tests', testsRouter);
 
 // CORS (Cross-Origin Resource Sharing) headers to support Cross-site HTTP requests
