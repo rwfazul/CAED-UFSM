@@ -50,17 +50,25 @@ router
 			returnResponse(list_formatter(result), res, 'dashboard-base', listBase + 'encaminhamentos');
 		//});
 	})
-	.get('/agenda-salas', function (req, res) {
+	.get('/agenda/profissionais', function (req, res) {
 		//extractor.getSheetData(sheets.servidores, function(result, err) {
 			//if (err) return errorHandler(res, err);
-			returnResponse('', res, 'agenda-salas');
+			returnResponse('', res, 'agenda-profissionais');
 		//});	
 	})
-	.get('/agenda-atendimentos', function (req, res) {
+	.post('/agenda/profissionais/sala/:uri', function(req, res) {
+		var data = { id: req.body['id'], nome: req.body['nome'] };
+		returnResponse({ sala: data }, res, 'agenda-profissionais-salas');
+	})
+	.get('/agenda/atendimentos', function (req, res) {
 		//extractor.getSheetData(sheets.solicitacoes, function(result, err) {
 			//if (err) return errorHandler(res, err);
 			returnResponse('', res, 'agenda-atendimentos');
 		//});	
+	})
+	.post('/agenda/atendimentos/sala/:uri',function(req, res) {
+		var data = { id: req.body['id'], nome: req.body['nome'] };
+		returnResponse({ sala: data }, res, 'agenda-atendimentos-salas');
 	})
 	.get('/relatorios', function (req, res) {
 		res.render('admin/relatorios');
@@ -82,11 +90,11 @@ router
 	//	});
 	});
 
-function returnResponse(result, res, page, partial) {
+function returnResponse(data, res, page, partial) {
 	var response = {};
-	if (result.authUrl) partial = 'read-token';
+	if (data.authUrl) partial = 'read-token';
 	if (partial) 	 	response.partial =  'partials/' + partial;
-	if (result) 		response.data = result;
+	if (data) 		    response.data = data;
 	res.render('admin/' + page, response);
 }
 
