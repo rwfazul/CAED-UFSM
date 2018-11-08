@@ -4,9 +4,10 @@ $(function() {
   $('.collapsible').collapsible();
   $('.tooltipped').tooltip();
 
-  var $calendar = $('#calendar');
-  var $external_events = $('#external-events');
- 
+  const $calendar = $('#calendar');
+  const $external_events = $('#external-events');
+  const salaId = $('#salaId').data('id');
+
   // TODO: Mudar para as cores certas
   const mapColors = { 
     'Psicopedagógico':         '#4259f4',
@@ -63,11 +64,6 @@ $(function() {
         showHideTransition: 'slide',
         icon: type
     })
-    /*var element = $('#responseMessage');
-    element.html(msg);
-    setTimeout(function () {
-      element.html('');
-    }, 2000);*/
   }
 
   function saveEvent(event) {

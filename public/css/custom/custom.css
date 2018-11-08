@@ -1,7 +1,34 @@
-    .calendar h2 {
-      font-size: 22px;
-    }
+.calendar h2 {
+  font-size: 22px;
+}
 
-    .calendar a[data-goto] {
-      color: #444;
-    }
+.calendar a[data-goto] {
+  color: #444;
+}
+
+.sala.card .card-action {
+  border-top: 1px solid #FFF !important;  
+}
+
+.sala.card .card-action button.link {
+	margin-right: 0;
+	background-color: transparent;
+	border: none;
+}
+
+.sala.card .card-action button.link:hover {
+	color: #333 !important;
+}
+
+.sala.card .card-action .material-icons {
+	font-size: 12px;
+}
+
+.preloader-wrapper.loader {
+	position: absolute;
+	top :0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	margin: auto;
+}

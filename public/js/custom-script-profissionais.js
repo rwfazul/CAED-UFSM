@@ -4,9 +4,10 @@ $(function() {
   $('.collapsible').collapsible();
   $('.tooltipped').tooltip();
 
-  var $calendar = $('#calendar');
-  var $external_events = $('#external-events');
- 
+  const $calendar = $('#calendar');
+  const $external_events = $('#external-events');
+  const salaId = $('#salaId').data('id');
+
   // TODO: Mudar para as cores certas
   const mapColors = { 
     'Psicopedagogia':          '#4259f4',
@@ -70,22 +71,17 @@ $(function() {
         showHideTransition: 'slide',
         icon: type
     })
-    /*var element = $('#responseMessage');
-    element.html(msg);
-    setTimeout(function () {
-      element.html('');
-    }, 2000);*/
   }
 
   function saveEvent(event) {
     $.post({
-      url: '/api/profissionais/agenda/salax-profissionais',
+      url: '/api/profissionais/agenda/' + salaId,
       data: {
         externalEventId: event._externalEventId,
         title: event.title,
         start: event.start.format(),
         end: event.end.format(),
-        color: event.color
+        color: event.color,
       },
       success: function(id) {
         event.id = id;
@@ -106,7 +102,7 @@ $(function() {
   function updateEvent(event) {
     $.ajax({
       method: 'PUT',
-      url: '/api/profissionais/agenda/salax-profissionais/' + event.id,
+      url: '/api/profissionais/agenda/' + salaId + '/' + event.id,
       data: {
         start: event.start.format(),
         end:   event.end.format(),
@@ -123,7 +119,7 @@ $(function() {
   function removeEvent(event) {
     $.ajax({
       method: 'DELETE',
-      url: '/api/profissionais/agenda/salax-profissionais/' + event.id,
+      url: '/api/profissionais/agenda/' + salaId + '/' + event.id,
       success: function () {
         showReponse(`Alocação de '${event.title}' <b>removida</b> com sucesso!`, 'success');
         $('#calendar').fullCalendar('removeEvents', event.id);
@@ -191,7 +187,7 @@ $(function() {
     selectHelper: true,
     /* render events from firebase */
     eventSources: [
-      '/api/profissionais/agenda/salax-profissionais'
+      '/api/profissionais/agenda/' + salaId
     ],
     /* function loading: Triggered when event or resource fetching starts/stops. */
     loading: function (isLoading) {
