@@ -22,6 +22,27 @@ module.exports = {
 		    });
 	},
 
+	getDocsWithQuery: function(collection, query, callback) {
+		var db = factory.getDbInstance();
+		var colRef = db.collection(collection);
+		var query = colRef.where( ...query )
+			.get()
+			.then(snapshot => {
+				var documents = [];
+				snapshot.forEach(doc => {
+					// set 'id' key
+					var data = doc.data();
+					data.id = doc.id;
+					documents.push(data);
+				});
+				callback(documents);
+		    })
+		    .catch(err => {
+		    	console.log('Error getting documents', err);
+		    	callback({}, err);
+		    });
+	},
+
 	addDoc: function(collection, doc, callback) {
     	var db = factory.getDbInstance();
 		var colRef = db.collection(collection);
