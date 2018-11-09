@@ -3,47 +3,53 @@ var router  = express.Router();
 
 var firestore = require('../../services/firestore-api/firestore');
 
+// collections
+const colProfissionais = 'caed-profissionais';
+const colAgenda = 'caed-agenda-profssionais';
+
 router.get('/', function(req, res) {
-	firestore.getAllDocs('caed-profissionais', function(docs, err) {
+	firestore.getAllDocs(colProfissionais, function(docs, err) {
 		if (err) res.status(500).send(err);
 		else     res.status(200).json(docs);
 	});
 });
 
-router.route('/agenda/:sala')
-	.get(function(req, res) {
-		firestore.getAllDocs(req.params.sala, function(docs, err) {
+router
+	.get('/agenda/:sala', function(req, res) {
+		var query = ['_salaId', '==', req.params['sala']];
+		firestore.getDocsWithQuery(colAgenda, query, function(docs, err) {
 			if (err) res.status(500).send(err);
 			else     res.status(200).json(docs);
 		});
 	})
-	.post(function(req, res) {
+	.post('/agenda', function(req, res) {
 		var doc = {
 			title: req.body['title'],
 			start: req.body['start'],
 			end:   req.body['end'],
 			color: req.body['color'],
-			_externalEventId: req.body['externalEventId']
+			_externalEventId: req.body['externalEventId'],
+			_salaId: req.body['salaId'],
 		};
-		firestore.addDoc(req.params.sala, doc, function(docId, err) {
+		firestore.addDoc(colAgenda, doc, function(docId, err) {
 			if (err) res.status(500).send(err);
 			else     res.status(201).json(docId);
 		});	
 	});
 
-router.route('/agenda/:sala/:id')
+router.route('/agenda/:id')
 	.put(function(req, res) {
 		var doc = {
-			start: req.body['start'],
-			end:   req.body['end']
+			start:  req.body['start'],
+			end:    req.body['end']
 		};
-		firestore.updateDoc(req.params.sala, req.params.id, doc, function(docId, err) {
+		firestore.updateDoc(colAgenda, req.params.id, doc, function(docId, err) {
 			if (err) res.status(500).send(err);
 			else     res.status(200).json(docId);
 		});	
 	})
 	.delete(function(req, res) {
-		firestore.deleteDoc(req.params.sala, req.params.id, function(docId, err) {
+		firestore.deleteDoc(colAgenda, req.params.id, function(docId, err) {
 			if (err) res.status(500).send(err);
 			else     res.status(200).json(docId);
 		});	
