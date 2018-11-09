@@ -6,13 +6,13 @@ $(function() {
 
   const $calendar = $('#calendar');
   const $external_events = $('#external-events');
-  const salaId = $('#salaId').data('id');
+  const _salaId = $('#salaId').data('id');
 
   // TODO: Mudar para as cores certas
   const mapColors = { 
-    'Psicopedagogia':          '#4259f4',
-    'Orientação Profissional': '#f4c141',
-    'Psicologia':              '#ee41f4',
+    'Psicopedagogia':          '#333',
+    'Orientação Profissional': '#333',
+    'Psicologia':              '#333',
   };
 
   const mapHeaders = {
@@ -75,13 +75,14 @@ $(function() {
 
   function saveEvent(event) {
     $.post({
-      url: '/api/profissionais/agenda/' + salaId,
+      url: '/api/profissionais/agenda',
       data: {
-        externalEventId: event._externalEventId,
         title: event.title,
         start: event.start.format(),
         end: event.end.format(),
         color: event.color,
+        externalEventId: event._externalEventId,
+        salaId: _salaId
       },
       success: function(id) {
         event.id = id;
@@ -102,7 +103,7 @@ $(function() {
   function updateEvent(event) {
     $.ajax({
       method: 'PUT',
-      url: '/api/profissionais/agenda/' + salaId + '/' + event.id,
+      url: '/api/profissionais/agenda/' + event.id,
       data: {
         start: event.start.format(),
         end:   event.end.format(),
@@ -119,7 +120,7 @@ $(function() {
   function removeEvent(event) {
     $.ajax({
       method: 'DELETE',
-      url: '/api/profissionais/agenda/' + salaId + '/' + event.id,
+      url: '/api/profissionais/agenda/' + event.id,
       success: function () {
         showReponse(`Alocação de '${event.title}' <b>removida</b> com sucesso!`, 'success');
         $('#calendar').fullCalendar('removeEvents', event.id);
@@ -187,7 +188,7 @@ $(function() {
     selectHelper: true,
     /* render events from firebase */
     eventSources: [
-      '/api/profissionais/agenda/' + salaId
+      '/api/profissionais/agenda/' + _salaId
     ],
     /* function loading: Triggered when event or resource fetching starts/stops. */
     loading: function (isLoading) {

@@ -6,7 +6,7 @@ $(function() {
 
   const $calendar = $('#calendar');
   const $external_events = $('#external-events');
-  const salaId = $('#salaId').data('id');
+  const _salaId = $('#salaId').data('id');
 
   // TODO: Mudar para as cores certas
   const mapColors = { 
@@ -68,13 +68,14 @@ $(function() {
 
   function saveEvent(event) {
     $.post({
-      url: '/api/atendimentos',
+      url: '/api/atendimentos/agenda',
       data: {
-        externalEventId: event._externalEventId,
         title: event.title,
         start: event.start.format(),
         end: event.end.format(),
-        color: event.color
+        color: event.color,
+        externalEventId: event._externalEventId,
+        salaId: _salaId
       },
       success: function(id) {
         event.id = id;
@@ -91,9 +92,8 @@ $(function() {
   function updateData(event) {
     $.ajax({
       method: 'PUT',
-      url: '/api/atendimentos',
+      url: '/api/atendimentos/agenda' + event.id,
       data: {
-        id:    event.id,
         start: event.start.format(),
         end:   event.end.format(),
       },
@@ -103,6 +103,20 @@ $(function() {
       error: function () {
         showReponse(`Erro ao atualizar atendimento de '${event.title}'.`, 'error');
         // alert(`Erro ao salvar atendimento de '${event.title}'`);
+      }
+    });
+  }
+
+  function removeEvent(event) {
+    $.ajax({
+      method: 'DELETE',
+      url: '/api/atendimentos/agenda/' + event.id,
+      success: function () {
+        showReponse(`Atendimento de '${event.title}' <b>removida</b> com sucesso!`, 'success');
+        $('#calendar').fullCalendar('removeEvents', event.id);
+      },
+      error: function () {
+        showReponse(`Erro ao <b>remover</b> atendimento de '${event.title}'.`, 'error');
       }
     });
   }
@@ -120,7 +134,7 @@ $(function() {
     droppable: true, // this allows things to be dropped onto the calendar
     eventLimit: true, // allow "more" link when too many events,
     eventDurationEditable: false,
-    eventStartEditable: true,
+    eventStartEditable: false,
     weekends: false,
     allDaySlot: false,
     minTime: '08:00:00',
@@ -130,8 +144,8 @@ $(function() {
     selectHelper: true,
     /* render events from firebase */
     eventSources: [
-      '/api/atendimentos',
-      //'/admin/servidor'
+      '/api/profissionais/agenda/' + _salaId,
+      '/api/atendimentos/agenda/' + _salaId
     ],
     /* function loading: Triggered when event or resource fetching starts/stops. */
     loading: function (isLoading) {
@@ -176,37 +190,11 @@ $(function() {
     },
     /* function eventClic: Triggered when the user clicks an event. */
     eventClick: function(event) {
-        var decision = confirm("Tem certeza que deseja cancelar esse agendamento?"); 
-        if (decision) {
-          /* https://codepen.io/subodhghulaxe/pen/qEXLLr */
-    /* https://fullcalendar.io/docs/eventReceive */
-    /* https://stackoverflow.com/questions/6952783/fullcalender-external-event-dragg-problem */
-          $('#calendar').fullCalendar('removeEvents', event.id);
-        }
-    },
-    // Triggered when event dragging begins.
-    eventDragStart: function( event, jsEvent, ui, view ) { 
-      // active contraints    
+        var decision = confirm("Tem certeza que deseja cancelar esse atendimento?"); 
+        if (decision)
+          removeEvent(event);
     }
-    /*eventDragStop: function(event, jsEvent, ui, view) {             
-      if(isEventOverDiv(jsEvent.clientX, jsEvent.clientY)) {
-        $calendar.fullCalendar('removeEvents', event._id);
-        createEvent(event).appendTo($external_events);
-      }
-    }*/
   });
-
- /*var isEventOverDiv = function(x, y) {
-    var offset = $external_events.offset();
-    offset.right = $external_events.width() + offset.left;
-    offset.bottom = $external_events.height() + offset.top;
-    // Compare
-    if (x >= offset.left
-        && y >= offset.top
-        && x <= offset.right
-        && y <= offset .bottom) { return true; }
-    return false;
-  }*/
 
   // render contraints events (defined in _constraints) of triggered external event
   $('#external-events').on('mousedown', '.fc-event', function () {
