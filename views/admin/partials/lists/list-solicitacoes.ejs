@@ -1,29 +1,25 @@
-<div id="hoverable-table">
-	<h4 class="header">Solicitações</h4>
-	<div class="row">
-		<div class="col s12">
-			<% if ( !locals.data ) { %>
-				<p>Não há dados!</p>
-			<% } else { %>
-					<table class="bordered striped centered highlight responsive-table">
-						<tr>
-							<% for (var col = 1; col < data[0].length; col++) { %>
-								<th>
-									<%= data[0][col] %>
-								</th>
-							<% }; %>
-						</tr>
-						<% for (var row = 1; row < (data.length - 1); row++) { %>
-							<tr>
-								<% for (var col = 1; col < data[row].length; col++) { %>
-									<td>
-										<%= data[row][col] %>
-									</td>
-								<% }; %>
-							</tr>
-						<% }; %>
-					</table>
-			<% }; %>
+<div class="row">
+	<div id="solicitacoes">
+	  <div class="col s12">
+		<h4 class="header">Solicitações de Atendimento</h4>
+		<table id="table-solicitacoes" class="layout display responsive-table bordered">
+		  <thead>
+			<tr>
+			  <th>Nome</th>
+			  <th>E-mail</th>
+			  <th>Curso</th>
+			  <th>Matrícula</th>
+			  <th>Telefone</th>
+			  <th>Motivo da procura</th>
+				<th>Tipo de atendimento</th>
+				<th>Horários livres</th>
+			</tr>
+		  </thead>
+		  <tbody>
+		  </tbody>
+		</table>
 		</div>
+		<% include ../loader %>
+
 	</div>
-</div>
+  </div>

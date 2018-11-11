@@ -27,46 +27,28 @@ router
 		res.render('admin/dashboard-base');
 	})
 	.get('/salas', function (req, res) {
-	//	extractor.getSheetData(sheets.salas, function(result, err) {
-	//		if (err) return errorHandler(res, err);
-			returnResponse(formatter(result), res, 'dashboard-base', listBase + 'salas');
-	//	});	
+		returnResponse('', res, 'dashboard-base', listBase + 'salas');
 	})
 	.get('/profissionais', function (req, res) {
-	//	extractor.getSheetData(sheets.servidores, function(result, err) {
-	//		if (err) return errorHandler(res, err);
-			returnResponse(formatter(result), res, 'dashboard-base', listBase +'profissionais');
-	//	});	
+		returnResponse('', res, 'dashboard-base', listBase + 'profissionais');
 	})
 	.get('/solicitacoes', function (req, res) {
-	//	extractor.getSheetData(sheets.solicitacoes, function(result, err) {
-	//		if (err) return errorHandler(res, err);
-			returnResponse(list_formatter(result), res, 'dashboard-base', listBase + 'solicitacoes');
-	//	});	
+		returnResponse('', res, 'dashboard-base', listBase + 'solicitacoes');
 	})
 	.get('/encaminhamentos', function (req, res) {
-		//extractor.getSheetData(sheets.encaminhamentos, function(result, err) {
-		//	if (err) return errorHandler(res, err);
-			returnResponse(list_formatter(result), res, 'dashboard-base', listBase + 'encaminhamentos');
-		//});
+		returnResponse('', res, 'dashboard-base', listBase + 'encaminhamentos');
 	})
 	.get('/agenda/profissionais', function (req, res) {
-		//extractor.getSheetData(sheets.servidores, function(result, err) {
-			//if (err) return errorHandler(res, err);
-			returnResponse('', res, 'agenda-profissionais');
-		//});	
+		returnResponse('', res, 'agenda-profissionais');
 	})
-	.post('/agenda/profissionais/sala/:uri', function(req, res) {
+	.post('/agenda/profissionais/sala/:uri', function (req, res) {
 		var data = { id: req.body['id'], nome: req.body['nome'] };
 		returnResponse({ sala: data }, res, 'agenda-profissionais-salas');
 	})
 	.get('/agenda/atendimentos', function (req, res) {
-		//extractor.getSheetData(sheets.solicitacoes, function(result, err) {
-			//if (err) return errorHandler(res, err);
-			returnResponse('', res, 'agenda-atendimentos');
-		//});	
+		returnResponse('', res, 'agenda-atendimentos');
 	})
-	.post('/agenda/atendimentos/sala/:uri',function(req, res) {
+	.post('/agenda/atendimentos/sala/:uri', function (req, res) {
 		var data = { id: req.body['id'], nome: req.body['nome'] };
 		returnResponse({ sala: data }, res, 'agenda-atendimentos-salas');
 	})
@@ -75,7 +57,7 @@ router
 	});
 
 router
-	.post('/login', function(req, res) {
+	.post('/login', function (req, res) {
 		var usuario = req.body['usuario'];
 		var senha = req.body['senha'];
 		if (usuario == "admin" && senha == "admin") {
@@ -84,17 +66,17 @@ router
 		res.render("admin/index", { msg: 'credentialsErr' });
 	})
 	.post('/storeToken', function (req, res) {
-	//	extractor.setToken(req.body['token'], function (err) {
-	//		if (err) return errorHandler(err);
-			res.redirect('/admin/solicitacoes');
-	//	});
+		//	extractor.setToken(req.body['token'], function (err) {
+		//		if (err) return errorHandler(err);
+		res.redirect('/admin/solicitacoes');
+		//	});
 	});
 
 function returnResponse(data, res, page, partial) {
 	var response = {};
 	if (data.authUrl) partial = 'read-token';
-	if (partial) 	 	response.partial =  'partials/' + partial;
-	if (data) 		    response.data = data;
+	if (partial) response.partial = 'partials/' + partial;
+	if (data) response.data = data;
 	res.render('admin/' + page, response);
 }
 

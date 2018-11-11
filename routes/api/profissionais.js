@@ -5,7 +5,7 @@ var firestore = require('../../services/firestore-api/firestore');
 
 // collections
 const colProfissionais = 'caed-profissionais';
-const colAgenda = 'caed-agenda-profssionais';
+const colAgenda = 'caed-agenda-profissionais';
 
 router.get('/', function(req, res) {
 	firestore.getAllDocs(colProfissionais, function(docs, err) {
