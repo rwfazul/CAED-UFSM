@@ -7,7 +7,7 @@
 }
 
 .sala.card .card-action {
-  border-top: 1px solid #FFF !important;  
+  border-top: 1px solid #FFF !important;  a
 }
 
 .sala.card .card-action button.link {
@@ -31,4 +31,8 @@
 	right: 0;
 	bottom: 0;
 	margin: auto;
+}
+
+a.modal-trigger:hover {
+	background-color: #26a69a;
 }
