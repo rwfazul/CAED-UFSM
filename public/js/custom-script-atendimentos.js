@@ -97,10 +97,10 @@ $(function() {
         start: event.start.format(),
         end:   event.end.format(),
       },
-      success: function () {
-        showReponse(`Atendimento de '${event.title}' atualizado com sucesso!`, 'success');
+      success: function() {
+          showReponse(`Atendimento de '${event.title}' atualizado com sucesso!`, 'success');
       },
-      error: function () {
+      error: function() {
         showReponse(`Erro ao atualizar atendimento de '${event.title}'.`, 'error');
         // alert(`Erro ao salvar atendimento de '${event.title}'`);
       }
@@ -111,11 +111,13 @@ $(function() {
     $.ajax({
       method: 'DELETE',
       url: '/api/atendimentos/agenda/' + event.id,
-      success: function () {
-        showReponse(`Atendimento de '${event.title}' <b>removida</b> com sucesso!`, 'success');
-        $('#calendar').fullCalendar('removeEvents', event.id);
+      success: function(id) {
+        if (id) {
+          showReponse(`Atendimento de '${event.title}' <b>removida</b> com sucesso!`, 'success');
+          $('#calendar').fullCalendar('removeEvents', event.id);
+        }
       },
-      error: function () {
+      error: function() {
         showReponse(`Erro ao <b>remover</b> atendimento de '${event.title}'.`, 'error');
       }
     });

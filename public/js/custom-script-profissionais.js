@@ -108,10 +108,10 @@ $(function() {
         start: event.start.format(),
         end:   event.end.format(),
       },
-      success: function () {
+      success: function() {
         showReponse(`Alocação de '${event.title}' <b>atualizada</b> com sucesso!`, 'success');
       },
-      error: function () {
+      error: function() {
         showReponse(`Erro ao <b>atualizar</b> alocação de '${event.title}'.`, 'error');
       }
     });
@@ -121,11 +121,11 @@ $(function() {
     $.ajax({
       method: 'DELETE',
       url: '/api/profissionais/agenda/' + event.id,
-      success: function () {
+      success: function() {
         showReponse(`Alocação de '${event.title}' <b>removida</b> com sucesso!`, 'success');
         $('#calendar').fullCalendar('removeEvents', event.id);
       },
-      error: function () {
+      error: function() {
         showReponse(`Erro ao <b>remover</b> alocação de '${event.title}'.`, 'error');
       }
     });
