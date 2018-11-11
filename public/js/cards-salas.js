@@ -11,7 +11,7 @@ $(function() {
 	        	var subPath = encodeURIComponent(sala['nome'].replace(/\s+/g, '-').toLowerCase());
 	        	cards.append( createCard(sala, salaUrl + subPath) );
 	        });
-	        $('#sala-loader').fadeOut('slow', function() {
+	        $('#loader-circle').fadeOut('slow', function() {
 		      $(this).remove();
 		    });
 	      })

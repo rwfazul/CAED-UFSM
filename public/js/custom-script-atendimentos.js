@@ -16,6 +16,13 @@ $(function() {
     'Encaminhamento':          '#f44141'
   };
 
+  const mapHeaders = {
+    'success': 'Sucesso',
+    'error': 'Erro',
+    'warning': 'Atenção',
+    'information': 'Alerta'
+  }
+
   function getColor(tipoAtendimento) {
     return mapColors[tipoAtendimento];
   }
@@ -59,7 +66,7 @@ $(function() {
 
   function showReponse(msg, type) {
     $.toast({
-        heading: 'Sucesso',
+        heading: mapHeaders[type],
         text: msg,
         showHideTransition: 'slide',
         icon: type
