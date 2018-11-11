@@ -30,13 +30,8 @@ function createTableHeader() {
 function createTableDataCell(available, colspan) {
   var col = $('<td class="center lighten-3 white-text">');
   var icon = $('<i class="small material-icons">');
-  if (available) {
-    icon.text("check_circle");
-    col.addClass("green");
-  } else {
-    icon.text("cancel");
-    col.addClass("red");      
-  }
+  icon.text(available ? "check_circle" : "cancel");
+  col.addClass(available ? "green" : "red");
   col.append(icon);
   if (colspan) col.attr('colspan', colspan);
   return col;
@@ -50,10 +45,7 @@ function createTableBody(horarios) {
     if (horarios[day]) {
       timesKeys.forEach(function(hour) {
         var availableHours = Object.values(horarios[day]);
-        if ($.inArray(hour, availableHours) > -1)
-          row.append(createTableDataCell(true));
-        else
-          row.append(createTableDataCell(false));
+        row.append(createTableDataCell( $.inArray(hour, availableHours) > -1 ));
       });
     } else
       row.append(createTableDataCell(false, timesKeys.length));
@@ -62,7 +54,7 @@ function createTableBody(horarios) {
   return tbody;
 }
 
-function tableAvailableHours(horarios) {
+function createScheduleTable(horarios) {
   var table = $('<table class="layout display responsive-table bordered">');
   table.append(createTableHeader());
   table.append(createTableBody(horarios));

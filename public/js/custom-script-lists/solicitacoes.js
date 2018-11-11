@@ -1,6 +1,6 @@
 $(function () {
   var $table = $('#table-solicitacoes');
-  var $modal = $('#solicitacoes');
+  var $container = $('#solicitacoes');
 
   $.getJSON("/api/solicitacoes") // a rota que ta em solicitacoes vai ter que fazer query pelo encaminhamento:false
     .done(function (solicitacoes) {
@@ -17,13 +17,14 @@ $(function () {
           + "<td><a class='modal-trigger waves-effect waves-green btn-flat' href='#" + solicitacao.id + "'>Clique aqui <i class='left material-icons'>search</i></a></td>"
           + "</tr>"
         );
-        $modal.append(
+        $container.append(
           "<div class='modal' id='" + solicitacao.id + "'>"
           + "<div class='modal-content'><div class='col s11'><h5>Horários Livres " + solicitacao.nome + "</h5></div>"
           + "<div class='col s1 right'><a href='#!' class='modal-close waves-effect waves-green btn-floating light-blue lighten-1 white-text'>"
           + "<i class='material-icons'>close</i></a></div>"
           + "</div></div>");
-        $('#' + solicitacao.id + '> .modal-content').append(tableAvailableHours(solicitacao.horarios)).modal();
+          $(`#${solicitacao.id} > .modal-content`)
+            .append(createScheduleTable(solicitacao.horarios));
       });
       $('.modal').modal(); 
       $('#loader-circle').fadeOut('fast', function () {
