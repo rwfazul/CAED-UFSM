@@ -2,7 +2,7 @@ $(function () {
   var $table = $('#table-solicitacoes');
   var $modal = $('#solicitacoes');
 
-  $.getJSON("/api/solicitacoes")
+  $.getJSON("/api/solicitacoes") // a rota que ta em solicitacoes vai ter que fazer query pelo encaminhamento:false
     .done(function (solicitacoes) {
       $.each(solicitacoes, function (i, solicitacao) {
         $table.append(
@@ -23,45 +23,15 @@ $(function () {
           + "<div class='col s1 right'><a href='#!' class='modal-close waves-effect waves-green btn-floating light-blue lighten-1 white-text'>"
           + "<i class='material-icons'>close</i></a></div>"
           + "</div></div>");
-
-
-        $('.modal').modal(); 
-        initDataTable();
-        $('#' + solicitacao.id + '> .modal-content').append(tableAvailableHours(solicitacao.horarios));
-        $('#loader-circle').fadeOut('fast', function () {
-          $(this).remove();
-        });
+        $('#' + solicitacao.id + '> .modal-content').append(tableAvailableHours(solicitacao.horarios)).modal();
       });
+      $('.modal').modal(); 
+      $('#loader-circle').fadeOut('fast', function () {
+        $(this).remove();
+      });
+      initDataTable($table, 'sala', 'salas'); // file initDataTable.js
     })
-    .fail(function () {
-      alert('Erro ao recuperar profissionais. Por favor, dentro de alguns instantes, tente recarregar a página.')
+    .fail(function() {
+      alert('Erro ao recuperar solicitações. Por favor, dentro de alguns instantes, tente recarregar a página.')
     });
-
-  function initDataTable() {
-    $table.DataTable({
-      "language": {
-        "sEmptyTable": "Nenhuma solicitação cadastrada",
-        "sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ solicitações",
-        "sInfoEmpty": "Mostrando 0 até 0 de 0 solicitações",
-        "sInfoFiltered": "(Filtrados de _MAX_ solicitações)",
-        "sInfoPostFix": "",
-        "sInfoThousands": ".",
-        "sLengthMenu": "_MENU_ resultados por página",
-        "sLoadingRecords": "Carregando...",
-        "sProcessing": "Processando...",
-        "sZeroRecords": "Nenhuma solicitação encontrada",
-        "sSearch": "Pesquisar",
-        "oPaginate": {
-          "sNext": "Próximo",
-          "sPrevious": "Anterior",
-          "sFirst": "Primeiro",
-          "sLast": "Último"
-        },
-        "oAria": {
-          "sSortAscending": ": Ordenar colunas de forma ascendente",
-          "sSortDescending": ": Ordenar colunas de forma descendente"
-        }
-      }
-    });
-  }
 });
