@@ -34,5 +34,18 @@
 }
 
 a.modal-trigger:hover {
-	background-color: #26a69a;
+	background-color: #03a5fc;
+	color: #fff;
+}
+
+table.dataTable.display tbody tr.odd > .sorting_1 {
+	background-color: #f9f9f9 !important;
+}
+
+table.dataTable.display tbody tr.even > .sorting_1 {
+	background-color: #fff !important;
+}
+
+.nav-expanded .brand-sidebar {
+	background-color: transparent !important;
 }
