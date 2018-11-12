@@ -26,6 +26,5 @@ function createConstraintEvents(id, horarios) {
 			});
 		}
 	});
-	console.log(constraintEvents);
     return constraintEvents;
 }
