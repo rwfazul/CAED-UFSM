@@ -1,8 +1,5 @@
 var express = require('express');
 var router = express.Router();
-var extractor = require('../services/google-sheets-api/extractor');
-var formatter = require('../services/google-sheets-api/formatter');
-var list_formatter = require('../services/google-sheets-api/list_formatter');
 var firestore = require('../services/firestore-api/firestore');
 
 const dashboardTemplate = 'dashboard_base';
@@ -24,33 +21,33 @@ router
 		res.render('admin/index');
 	})
 	.get('/dashboard', function (req, res) {
-		res.render('admin/dashboard-base');
+		res.render('admin/dashboard');
 	})
 	.get('/salas', function (req, res) {
-		returnResponse('', res, 'dashboard-base', listBase + 'salas');
+		returnResponse({ name: 'salas' }, res, 'list-base', listBase + 'salas');
 	})
 	.get('/profissionais', function (req, res) {
-		returnResponse('', res, 'dashboard-base', listBase + 'profissionais');
+		returnResponse({ name: 'profissionais' }, res, 'list-base', listBase + 'profissionais');
 	})
 	.get('/solicitacoes', function (req, res) {
-		returnResponse('', res, 'dashboard-base', listBase + 'solicitacoes');
+		returnResponse({ name: 'solicitacoes' }, res, 'list-base', listBase + 'solicitacoes');
 	})
 	.get('/encaminhamentos', function (req, res) {
-		returnResponse('', res, 'dashboard-base', listBase + 'encaminhamentos');
+		returnResponse({ name: 'encaminhamentos' }, res, 'list-base', listBase + 'encaminhamentos');
 	})
 	.get('/agenda/profissionais', function (req, res) {
-		returnResponse('', res, 'agenda-profissionais');
+		returnResponse('', res, 'agenda-sala-picker');
 	})
 	.post('/agenda/profissionais/sala/:uri', function (req, res) {
-		var data = { id: req.body['id'], nome: req.body['nome'] };
-		returnResponse({ sala: data }, res, 'agenda-profissionais-salas');
+		var sala = { id: req.body['id'], nome: req.body['nome'] };
+		returnResponse({ sala: sala }, res, 'agenda-profissionais');
 	})
 	.get('/agenda/atendimentos', function (req, res) {
-		returnResponse('', res, 'agenda-atendimentos');
+		returnResponse('', res, 'agenda-sala-picker');
 	})
 	.post('/agenda/atendimentos/sala/:uri', function (req, res) {
-		var data = { id: req.body['id'], nome: req.body['nome'] };
-		returnResponse({ sala: data }, res, 'agenda-atendimentos-salas');
+		var sala = { id: req.body['id'], nome: req.body['nome'] };
+		returnResponse({ sala: sala }, res, 'agenda-atendimentos');
 	})
 	.get('/relatorios', function (req, res) {
 		res.render('admin/relatorios');
@@ -64,17 +61,10 @@ router
 			res.render("admin/dashboard-base");
 		}
 		res.render("admin/index", { msg: 'credentialsErr' });
-	})
-	.post('/storeToken', function (req, res) {
-		//	extractor.setToken(req.body['token'], function (err) {
-		//		if (err) return errorHandler(err);
-		res.redirect('/admin/solicitacoes');
-		//	});
 	});
 
 function returnResponse(data, res, page, partial) {
 	var response = {};
-	if (data.authUrl) partial = 'read-token';
 	if (partial) response.partial = 'partials/' + partial;
 	if (data) response.data = data;
 	res.render('admin/' + page, response);
