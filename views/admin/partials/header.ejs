@@ -27,9 +27,11 @@
           </li>
           <li>
             <a href="javascript:void(0);" class="waves-effect waves-block waves-light notification-button" data-activates="notifications-dropdown">
-              <i class="material-icons">notifications_none
-                <small class="notification-badge">5</small>
-              </i>
+              <form method="POST" action="/auth/logoff">
+                <button type="submit" name="action" class="btn btn-logout">Sair
+                    <i class="material-icons right">exit_to_app</i>
+                  </button>
+              </form>
             </a>
           </li>
         </ul>
