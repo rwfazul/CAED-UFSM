@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- Materialize -->
+  <link href="/vendors/materialize/materialize.css" type="text/css" rel="stylesheet">
+  <link href="/vendors/materialize/style.css" type="text/css" rel="stylesheet">
+  <!-- Perfect Scrollbar -->
+  <link href="/vendors/perfect-scrollbar/perfect-scrollbar.css" type="text/css" rel="stylesheet"></link>
+  <!-- jQuery Toast -->
+  <link href="/vendors/jquery/jquery.toast.min.css" type="text/css" rel="stylesheet" />
+  <style>
+    .material-icons{ margin-top: 10px; }
+    .input-field i.prefix.active{ color: #0288d1 !important; }
+    .input-field input:focus:not([readonly]) + label { color: #0288d1 !important; }
+    .input-field input:focus:not([readonly]) { border-bottom: 1px solid #0288d1  !important; box-shadow: 0 1px 0 0 #0288d1  !important; }
+    .error { margin-left: 5%; }
+    .form-login-text { font-size: 16px; }
+    .valign { width:100%; }
+    .valign-wrapper { width:100%;height:100%;position:absolute; }
+  </style>
+</head>
+<body class="gradient-45deg-light-blue-cyan">
+  <!-- Page Loading -->
+  <div id="loader-wrapper">
+      <div id="loader"></div>        
+      <div class="loader-section section-left"></div>
+      <div class="loader-section section-right"></div>
+  </div>
+  <!-- ./Page Loading -->
+  <!-- Login Form -->
+  <div class="valign-wrapper">
+    <div class="valign">
+    <div id="login-page" class="row">
+      <div class="col s10 offset-s1 m4 offset-m4 z-depth-4 card-panel">
+        <div class="row">
+          <div class="input-field col s12 center">
+            <!-- <img src="images/login-logo.png" alt="" class="circle responsive-img valign profile-image-login"> -->
+            <p class="center form-login-text">Login CAED-UFSM</p>
+          </div>
+        </div>
+        <form action="/auth/login" method="POST" id="form-login" class="form-login">
+          <div class="row margin">
+            <div class="input-field col s12">
+              <i class="material-icons prefix">person</i>
+              <input id="username" type="text" name="username" autocomplete="username" class="validate" />
+              <label for="username" class="center-align">Usuário</label>
+            </div>
+          </div>
+          <div class="row margin">
+            <div class="input-field col s12">
+              <i class="material-icons prefix">lock</i>            
+              <input id="password" type="password" name="password" autocomplete="current-password" class="validate" />
+              <label for="senha">Senha</label>
+            </div>
+          </div>
+          <span id="form-error" class="error red-text text-darken-2"></span>
+          <div class="row">
+            <div class="input-field col s12">
+              <button type="submit" class="btn blue waves-effect waves-light col s12">Entrar</button>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s12 right-align">
+                <p class="margin right-align medium-small"><a href="page-forgot-password.html">Esqueceu sua senha?</a></p>
+            </div>          
+          </div>
+        </form>
+      </div>
+    </div>
+    </div>
+  </div>
+  <!-- ./Login Form -->
+  <!-- jQuery Library -->
+  <script src="/vendors/jquery/jquery.min.js"></script>
+  <!-- jQuery Toast -->
+  <script src="/vendors/jquery/jquery.toast.min.js"></script>
+  <!-- Materialize -->
+  <script src="/vendors/materialize/materialize.min.js"></script>
+  <!-- Perfect Scrollbar -->
+  <script src="/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+  <!-- Specific JS codes for Plugin Settings -->
+  <script src="/vendors/plugins/plugins.js"></script>
+
+  <% if (locals.logout) { %>
+  <script>
+    $(function() {
+      $.toast({
+        heading: 'Até breve!',
+        text: 'Saída realizada com sucesso.',
+        showHideTransition: 'slide',
+        icon: 'info'
+      });
+    });
+  </script>
+  <% } %>
+  <script>
+    $(function() {  
+      // TODO: local storage -> cookie
+      $("#form-login").submit(function(e) {
+        var form = $(this);
+        e.preventDefault(); 
+        $.ajax({
+          type:  form.attr('method'),
+          url: form.attr('action'),
+          data: form.serialize(),
+          success: function(data) {
+            // TODO: cookie -> local storage
+            window.location.href = "/admin/dashboard";
+          },
+          error: function(xhr, status, error) {
+            // TODO: delete both cookie and local storage
+            var data = JSON.parse(xhr.responseText);
+            $("#password").val('');
+            $('#form-error').text(`* ${data['message']}`);
+            var toastData = {
+              heading: 'Erro',
+              text: data['tip'] ? data['tip'] : data['message'],
+              showHideTransition: 'slide',
+              icon: 'error'
+            };
+            $.toast(toastData);
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>
