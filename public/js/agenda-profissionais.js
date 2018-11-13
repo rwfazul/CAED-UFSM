@@ -48,6 +48,11 @@ $(function() {
         _constraints: createConstraintEvents(profissional.id, profissional.horarios)
       })
       .css('background-color', color);
+    div.append(
+      `<span class="delete-external-event right"'>
+        <i class="material-icons">delete_forever</i>
+       </span>`
+    );
     return div;
   }
 
@@ -63,6 +68,22 @@ $(function() {
         alert('Erro ao recuperar profissionais. Por favor, dentro de alguns instantes, tente recarregar a página.')
       });
   })();
+
+  $($external_events).on('click', '.fc-event > .delete-external-event', function() {
+    var externalEvent = $(this).parent();
+    var event = $(externalEvent).data('event');
+    $.ajax({
+      method: 'DELETE',
+      url: '/api/profissionais/' + event._externalEventId,
+      success: function() {
+        showReponse(`Profissional '${event.title}' <b>removido</b> com sucesso!`, 'success');
+        $(externalEvent).remove();
+      },
+      error: function() {
+        showReponse(`Erro ao <b>remover</b> profissional '${event.title}'.`, 'error');
+      }
+    });
+  });
 
   function showReponse(msg, type) {
     $.toast({

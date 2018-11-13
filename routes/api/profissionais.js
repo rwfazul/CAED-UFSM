@@ -7,12 +7,22 @@ var firestore = require('../../services/firestore-api/firestore');
 const colProfissionais = 'caed-profissionais';
 const colAgenda = 'caed-agenda-profissionais';
 
-router.get('/', function(req, res) {
-	firestore.getAllDocs(colProfissionais, function(docs, err) {
-		if (err) res.status(500).send(err);
-		else     res.status(200).json(docs);
+router
+	.get('/', function(req, res) {
+		firestore.getAllDocs(colProfissionais, function(docs, err) {
+			if (err) res.status(500).send(err);
+			else     res.status(200).json(docs);
+		});
 	});
-});
+
+router
+	.delete('/:id', function(req, res) {	
+	console.log(req.params.id);	
+		firestore.deleteDoc(colProfissionais, req.params.id, function(docId, err) {
+			if (err) res.status(500).send(err);
+			else     res.status(200).json(docId);
+		});	
+	});
 
 router
 	.get('/agenda/:sala', function(req, res) {

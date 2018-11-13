@@ -68,3 +68,11 @@ button.btn.btn-logout > i {
 	font-size: 18px;
     line-height: 30px;
 }
+
+.fc-event > .delete-external-event > .material-icons {
+    line-height: 16px;
+}
+
+.fc-event > .delete-external-event > .material-icons:hover {
+	color: red;
+}
