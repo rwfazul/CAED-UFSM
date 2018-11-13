@@ -3,7 +3,7 @@ var router = express.Router();
 
 var firestore = require('../../services/firestore-api/firestore');
 
-const encaminhamentosCollection = 'caed-solicitacoes';
+const encaminhamentosCollection = 'caed-encaminhamentos';
 
 // GET: /api/encaminhamentos
 router.get('/', function(req, res) {

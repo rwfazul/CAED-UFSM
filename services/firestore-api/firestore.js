@@ -11,6 +11,7 @@ module.exports = {
 				snapshot.forEach(doc => {
 					// set 'id' key
 					var data = doc.data();
+					data.timestamp = ((data.timestamp).toDate()).toLocaleDateString();
 					data.id = doc.id;
 					documents.push(data);
 				});
@@ -21,11 +22,12 @@ module.exports = {
 		    	callback({}, err);
 		    });
 	},
+	
 
 	getDocsWithQuery: function(collection, query, callback) {
 		var db = factory.getDbInstance();
 		var colRef = db.collection(collection);
-		var query = colRef.where( ...query )
+		var query = colRef.where( ...query ).orderBy()
 			.get()
 			.then(snapshot => {
 				var documents = [];

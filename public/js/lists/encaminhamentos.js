@@ -3,17 +3,18 @@ $(function () {
   var $tbody = $table.find('tbody');
   var $container = $('#encaminhamentos');
 // document.createElement
-  $.getJSON("/api/solicitacoes") // a rota que ta em encaminhamentos vai ter que fazer query pelo encaminhamento:true
+  $.getJSON("/api/encaminhamentos") // a rota que ta em encaminhamentos vai ter que fazer query pelo encaminhamento:true
     .done(function (encaminhamentos) {
       $.each(encaminhamentos, function (i, encaminhamento) {
         $tbody.append(
           "<tr>"
+          + "<td>" + moment(encaminhamento.timestamp, "YYYY-MM-DD").format("DD/MM/YYYY") + "</td>"
           + "<td>" + encaminhamento.nome + "</td>"
           + "<td>" + encaminhamento.email + "</td>"
           + "<td>" + encaminhamento.curso + "</td>"
           + "<td>" + encaminhamento.matricula + "</td>"
-          + "<td>" + encaminhamento.telefone + "</td>"
-          + "<td>" + encaminhamento.motivoProcura + "</td>"
+          + "<td>" + encaminhamento.servidor_nome + "</td>"
+          + "<td>" + encaminhamento.siape + "</td>"
           + "<td>" + encaminhamento.tipoAtendimento + "</td>"
           + "<td><a class='modal-trigger waves-effect waves-green btn-flat' href='#" + encaminhamento.id + "'>Clique aqui <i class='left material-icons'>search</i></a></td>"
           + "</tr>"
