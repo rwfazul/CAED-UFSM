@@ -5,7 +5,10 @@ $(function() {
   $('.tooltipped').tooltip();
 
   const $calendar = $('#calendar');
-  const $external_events = $('#external-events');
+  const $external_events = $('.external-events');
+  const $external_solicitacoes = $('#external-events-solicitacoes');
+  const $external_encaminhamentos = $('#external-events-encaminhamentos');
+
   const _salaId = $('#salaId').data('id');
 
   // TODO: Mudar para as cores certas
@@ -27,10 +30,10 @@ $(function() {
     return mapColors[tipoAtendimento];
   }
 
-  function createExternalEvent(solicitacao) {
-    var color = getColor(solicitacao.tipoAtendimento) || '#333333';
+  function createExternalEvent(event, type) {
+    var color = getColor(event.tipoAtendimento) || '#333333';
     var div = $('<div>')
-      .text(solicitacao.nome)
+      .text($.trim(event.nome))
       .addClass('fc-event')
       .draggable({     // make the event draggable using jQuery UI
         zIndex: 999,
@@ -38,38 +41,99 @@ $(function() {
         revertDuration: 0  //  original position after the drag
       })
       .data('event', {     // store data so the calendar knows to render an event upon drop
-        title: $.trim(solicitacao.nome), // use the element's text as the event title
+        title: $.trim(event.nome), // use the element's text as the event title
         duration: "01:00",
         stick: true, // maintain when user navigates (see docs on the renderEvent method)
         color: color, // color when event has been dropped onto the calendar
-        constraint: solicitacao.id,
+        constraint: event.id,
         // additional data
-        _externalEventId: solicitacao.id,
-        _constraints: createConstraintEvents(solicitacao.id, solicitacao.horarios)
+        _externalEventId: event.id,
+        _constraints: createConstraintEvents(event.id, event.horarios)
       })
-      .css('background-color', color);
+      .data('type', type)
+      .css('background-color', color)
+      .append(
+        `<span class="delete-external-event right">
+          <i class="material-icons">delete_forever</i>
+         </span>`
+      );
     return div;
   }
 
+  const types = {
+    solicitacoes: {
+      collection: 'solicitacoes',
+      sing: 'solicitação',
+      plural: 'solicitações'
+    },
+    encaminhamentos: {
+      collection: 'encaminhamentos',
+      sing: 'encaminhamento',
+      plural: 'encaminhamentos'
+    }
+  }
+
   // fetch external events
-  (function() {
-    $.getJSON("/api/solicitacoes")
-      .done(function(solicitacoes) {
-        $.each(solicitacoes, function(i, solicitacao) {
-          $external_events.append(createExternalEvent(solicitacao));
+  function getExternalEvents($container, type) {
+    $.getJSON(`/api/${type.collection}`)
+      .done(function(events) {
+        $.each(events, function(i, event) {
+          $container.append(createExternalEvent(event, type.collection));
         });
       })
       .fail(function() {
-        alert('Erro ao recuperar solicitações. Por favor, dentro de alguns instantes, tente recarregar a página.')
-      });
-  })();
+        alert(`Erro ao recuperar ${type.plural}. Por favor, dentro de alguns instantes, tente recarregar a página.`)
+      }); 
+  }
+
+  getExternalEvents($external_solicitacoes, types.solicitacoes);
+  getExternalEvents($external_encaminhamentos, types.encaminhamentos);
+
+  $($external_events).on('click', '.fc-event > .delete-external-event', 
+    function() {
+      removeExternalEvent($(this).parent())
+
+    });
+
+  function removeExternalEvent(externalEvent) {
+    var event = $(externalEvent).data('event');
+    var type = types[$(externalEvent).data('type')];
+    $.ajax({
+      method: 'DELETE',
+      url: `/api/${type.collection}/${event._externalEventId}`,
+      success: function() {
+        var singCap = type.sing.charAt(0).toUpperCase() + type.sing.slice(1);
+        showReponse(`${singCap} '${event.title}' <b>removido</b> com sucesso!`, 'success');
+        $(externalEvent).remove();
+      },
+      error: function() {
+        showReponse(`Erro ao <b>remover</b> ${type.sing} '${event.title}'.`, 'error');
+      }
+    });
+  }
+
+  function removeEvent(event) {
+    $.ajax({
+      method: 'DELETE',
+      url: '/api/atendimentos/agenda/' + event.id,
+      success: function(id) {
+        if (id) {
+          showReponse(`Atendimento de '${event.title}' <b>removida</b> com sucesso!`, 'success');
+          $('#calendar').fullCalendar('removeEvents', event.id);
+        }
+      },
+      error: function() {
+        showReponse(`Erro ao <b>remover</b> atendimento de '${event.title}'.`, 'error');
+      }
+    });
+  }
 
   function showReponse(msg, type) {
     $.toast({
-        heading: mapHeaders[type],
-        text: msg,
-        showHideTransition: 'slide',
-        icon: type
+      heading: mapHeaders[type],
+      text: msg,
+      showHideTransition: 'slide',
+      icon: type
     });
   }
 
@@ -96,7 +160,7 @@ $(function() {
     });
   }
 
-  function updateData(event) {
+  function updateEvent(event) {
     $.ajax({
       method: 'PUT',
       url: '/api/atendimentos/agenda' + event.id,
@@ -110,22 +174,6 @@ $(function() {
       error: function() {
         showReponse(`Erro ao atualizar atendimento de '${event.title}'.`, 'error');
         // alert(`Erro ao salvar atendimento de '${event.title}'`);
-      }
-    });
-  }
-
-  function removeEvent(event) {
-    $.ajax({
-      method: 'DELETE',
-      url: '/api/atendimentos/agenda/' + event.id,
-      success: function(id) {
-        if (id) {
-          showReponse(`Atendimento de '${event.title}' <b>removida</b> com sucesso!`, 'success');
-          $('#calendar').fullCalendar('removeEvents', event.id);
-        }
-      },
-      error: function() {
-        showReponse(`Erro ao <b>remover</b> atendimento de '${event.title}'.`, 'error');
       }
     });
   }
@@ -157,34 +205,34 @@ $(function() {
       '/api/atendimentos/agenda/' + _salaId
     ],
     /* function loading: Triggered when event or resource fetching starts/stops. */
-    loading: function (isLoading) {
+    loading: function(isLoading) {
       $("#loader-events").css('display', 'block');
     },
     /* function eventAfterAllRender: Triggered after all events have finished rendering. */
-    eventAfterAllRender: function (view) {
+    eventAfterAllRender: function(view) {
       $("#loader-events").css('display', 'none');
     },
     /* function eventReceive: Called when a external event has been dropped onto the calendar. */
-    eventReceive: function (event) {
+    eventReceive: function(event) {
       saveEvent(event);
     },
     /* function eventDrop: Triggered when dragging stops and the event has moved to a different day/time. */
-    eventDrop: function (event) {
-      updateData(event);
+    eventDrop: function(event) {
+      updateEvent(event);
     },
     /* function drop: Called when a valid external jQuery UI draggable has been dropped onto the calendar. */
-    drop: function () {
+    drop: function() {
       // remove the element from the "Draggable Events" list
       $(this).remove();
     },
     /* function eventResize: Triggered when resizing stops and the event has changed in duration. */
-    eventResize: function (event) {
+    eventResize: function(event) {
       alert(event.title + " end is now " + event.end.format());
       /*updateData funciona corretamente, só necessita recuperar o id do evento do firebase*/
       //updateData(event);
     },
     /* select method: A method for programmatically selecting a period of time. */
-    select: function (start, end) {
+    select: function(start, end) {
       var title = prompt('Event Title:');
       var eventData;
       if (title) {
@@ -206,12 +254,12 @@ $(function() {
   });
 
   // render contraints events (defined in _constraints) of triggered external event
-  $('#external-events').on('mousedown', '.fc-event', function () {
+  $external_events.on('mousedown', '.fc-event', function() {
     $calendar.fullCalendar('renderEvents', $(this).data('event')._constraints);
   });
   
   // remove contraints events (with id defined in _externalEventId) of triggered external event
-  $('#external-events').on('mouseup', '.fc-event', function () {
+  $external_events.on('mouseup', '.fc-event', function() {
     $calendar.fullCalendar('removeEvents', $(this).data('event')._externalEventId);
   });
 

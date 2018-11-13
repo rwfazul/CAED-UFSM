@@ -47,12 +47,11 @@ $(function() {
         _externalEventId: profissional.id,
         _constraints: createConstraintEvents(profissional.id, profissional.horarios)
       })
-      .css('background-color', color);
-    div.append(
-      `<span class="delete-external-event right"'>
-        <i class="material-icons">delete_forever</i>
-       </span>`
-    );
+      .append(
+        `<span class="delete-external-event right"'>
+          <i class="material-icons">delete_forever</i>
+         </span>`
+      );
     return div;
   }
 
@@ -87,10 +86,10 @@ $(function() {
 
   function showReponse(msg, type) {
     $.toast({
-        heading: mapHeaders[type],
-        text: msg,
-        showHideTransition: 'slide',
-        icon: type
+      heading: mapHeaders[type],
+      text: msg,
+      showHideTransition: 'slide',
+      icon: type
     });
   }
 

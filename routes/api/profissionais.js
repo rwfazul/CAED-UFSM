@@ -17,7 +17,6 @@ router
 
 router
 	.delete('/:id', function(req, res) {	
-	console.log(req.params.id);	
 		firestore.deleteDoc(colProfissionais, req.params.id, function(docId, err) {
 			if (err) res.status(500).send(err);
 			else     res.status(200).json(docId);
