@@ -2,18 +2,17 @@ $(function () {
   var $table = $('#table-solicitacoes');
   var $tbody = $table.find('tbody');
   var $container = $('#solicitacoes');
-
   $.getJSON("/api/solicitacoes") // a rota que ta em solicitacoes vai ter que fazer query pelo encaminhamento:false
     .done(function (solicitacoes) {
       $.each(solicitacoes, function (i, solicitacao) {
         $tbody.append(
           "<tr>"
+          + "<td>" + moment(solicitacao.timestamp, "YYYY-MM-DD").format("DD/MM/YYYY") + "</td>"
+          + "<td>" + solicitacao.matricula + "</td>"
           + "<td>" + solicitacao.nome + "</td>"
           + "<td>" + solicitacao.email + "</td>"
           + "<td>" + solicitacao.curso + "</td>"
-          + "<td>" + solicitacao.matricula + "</td>"
           + "<td>" + solicitacao.telefone + "</td>"
-          + "<td>" + solicitacao.motivoProcura + "</td>"
           + "<td>" + solicitacao.tipoAtendimento + "</td>"
           + "<td><a class='modal-trigger waves-effect waves-green btn-flat' href='#" + solicitacao.id + "'>Clique aqui <i class='left material-icons'>search</i></a></td>"
           + "</tr>"
@@ -31,7 +30,7 @@ $(function () {
       $('#loader-circle').fadeOut('fast', function () {
         $(this).remove();
       });
-      initDataTable($table, 'sala', 'salas'); // file init-datatable.js
+      initDataTable($table, 'solicitação', 'solicitações'); // file init-datatable.js
     })
     .fail(function() {
       alert('Erro ao recuperar solicitações. Por favor, dentro de alguns instantes, tente recarregar a página.')
