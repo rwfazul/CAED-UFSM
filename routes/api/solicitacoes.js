@@ -3,14 +3,21 @@ var router = express.Router();
 
 var firestore = require('../../services/firestore-api/firestore');
 
-const solicitacoesCollection = 'caed-solicitacoes';
+const colSolicitacoes = 'caed-solicitacoes';
 
 // GET: /api/solicitacoes
 router.get('/', function(req, res) {
-	firestore.getAllDocs(solicitacoesCollection, function(docs, err) {
+	firestore.getAllDocs(colSolicitacoes, function(docs, err) {
 		if (err) res.status(500).send(err);
 		else     res.status(200).json(docs);
 	});
+});
+
+router.delete('/:id', function(req, res) {
+	firestore.deleteDoc(colSolicitacoes, req.params.id, function(docId, err) {
+		if (err) res.status(500).send(err);
+		else     res.status(200).json(docId);
+	});	
 });
 
 module.exports = router;
