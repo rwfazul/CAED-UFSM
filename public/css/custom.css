@@ -33,7 +33,8 @@
 	margin: auto;
 }
 
-a.modal-trigger:hover {
+a.modal-trigger:hover,
+a.modal-trigger:focus {
 	background-color: #03a5fc;
 	color: #fff;
 }
@@ -48,4 +49,22 @@ table.dataTable.display tbody tr.even > .sorting_1 {
 
 .nav-expanded .brand-sidebar {
 	background-color: transparent !important;
+}
+
+button.btn.btn-logout {
+	background-color: transparent;
+}
+
+button.btn.btn-logout:hover,
+button.btn.btn-logout:focus {
+	color: #333;
+}
+
+button.btn.btn-logout > i {
+	line-height: 36px;
+}
+
+.brand-sidebar .logo-wrapper a.navbar-toggler i {
+	font-size: 18px;
+    line-height: 30px;
 }

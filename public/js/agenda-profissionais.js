@@ -70,7 +70,7 @@ $(function() {
         text: msg,
         showHideTransition: 'slide',
         icon: type
-    })
+    });
   }
 
   function saveEvent(event) {
