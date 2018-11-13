@@ -1,3 +1,7 @@
+.side-nav .collapsible-body li a, .side-nav.fixed .collapsible-body li a {
+    padding: 0 23.5px 0 31px !important;
+}
+
 .calendar h2 {
   font-size: 22px;
 }
@@ -75,4 +79,13 @@ button.btn.btn-logout > i {
 
 .fc-event > .delete-external-event > .material-icons:hover {
 	color: red;
+}
+
+.external-events .fc-event {
+    color: #fff;
+    text-decoration: none;
+    padding: 5px;
+    margin-bottom: 10px;
+    cursor: all-scroll;
+    border: none;
 }
