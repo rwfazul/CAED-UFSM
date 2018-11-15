@@ -27,7 +27,7 @@ module.exports = {
 	getDocsWithQuery: function(collection, query, callback) {
 		var db = factory.getDbInstance();
 		var colRef = db.collection(collection);
-		var query = colRef.where( ...query ).orderBy()
+		var query = colRef.where( ...query )
 			.get()
 			.then(snapshot => {
 				var documents = [];
