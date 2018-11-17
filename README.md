@@ -112,12 +112,12 @@ O **CAED-UFSM** será um canal de comunicação entre alunos e servidores com o 
     <tr>
        <td rowspan="2">Implementação final</td>
        <td>Implementação final front-end</td>
-       <td>&#9744;</td>
+       <td>&#9745;</td>
        <td>01/11/2018</td>
     </tr>    
     <tr>
        <td>Implementação final back-end</td>
-       <td>&#9744;</td>
+       <td>&#9745;</td>
        <td>08/11/2018</td>
     </tr>
     <tr>
