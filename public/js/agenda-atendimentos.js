@@ -12,10 +12,10 @@ $(function () {
 
   // TODO: Mudar para as cores certas
   const mapColors = {
-    'Psicopedagógico': '#4259f4',
-    'Orientação Profissional': '#f4c141',
-    'Psicológico': '#ee41f4',
-    'Encaminhamento': '#f44141'
+    //tipo de atendimento
+    'Psicológico': '#2196f3', // azul fraco 
+    'Psicopedagógico': '#f57f17', //laranja
+    'Orientação Profissional': '#9e9e9e', //cinza 
   };
 
   const mapHeaders = {
@@ -30,7 +30,7 @@ $(function () {
   }
 
   function createExternalEvent(event, type) {
-    var color = getColor(event.tipoAtendimento) || '#333333';
+    var color = getColor(event.tipoAtendimento);
     var div = $('<div>')
       .text($.trim(event.nome))
       .addClass('fc-event')
