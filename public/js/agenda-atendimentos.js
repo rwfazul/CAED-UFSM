@@ -180,6 +180,7 @@ $(function () {
       url: '/api/atendimentos/agenda/' + event.id,
       success: function (id) {
         if (id) {
+          updateSolicitacao(event._externalEventId, false);
           showReponse(`Atendimento de '${event.title}' <b>removida</b> com sucesso!`, 'success');
           $('#calendar').fullCalendar('removeEvents', event.id);
         }
@@ -213,11 +214,26 @@ $(function () {
       success: function (id) {
         event.id = id;
         $calendar.fullCalendar('updateEvent', event);
+        updateSolicitacao(event._externalEventId, true);
         showReponse(`Atendimento de '${event.title}' agendado com sucesso!`, 'success');
       },
       error: function () {
         showReponse(`Erro ao salvar atendimento de '${event.title}'.`, 'error');
         // alert(`Erro ao salvar atendimento de '${event.title}'`);
+      }
+    });
+  }
+
+  function updateSolicitacao(id, ja_agendado) {
+    $.ajax({
+      method: 'PUT',
+      url: '/api/solicitacoes/' + id,
+      data: {
+        agendado: ja_agendado,
+      },
+      success: function () {
+      },
+      error: function () {
       }
     });
   }
