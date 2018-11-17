@@ -65,14 +65,16 @@ $(function () {
       sing: 'solicitação',
       plural: 'solicitações',
       external: $('#external-events-solicitacoes'),
-      pagination: $('#pagination-solicitacoes')
+      pagination: $('#pagination-solicitacoes'),
+      pages: 1
     },
     encaminhamentos: {
       collection: 'encaminhamentos',
       sing: 'encaminhamento',
       plural: 'encaminhamentos',
       external: $('#external-events-encaminhamentos'),
-      pagination: $('#pagination-encaminhamentos')
+      pagination: $('#pagination-encaminhamentos'),
+      pages: 1
     }
   }
 
@@ -92,10 +94,10 @@ $(function () {
       });
   }
 
-  function createPagination(type, pages) {
+  function createPagination(type) {
     $container = type.pagination;
     $container.append("<li id='left' class='get-events-page waves-effect'><a href='#!'><i class='material-icons'>chevron_left</i></a></li>");
-    for (var i = 1; i <= pages; i++) {
+    for (var i = 1; i <= type.pages; i++) {
       var li = $('<li>').attr("id", i).addClass("get-events-page").addClass("waves-effect");
       var a = $('<a>').attr("href", "#!").text(i);
       li.append(a);
@@ -105,12 +107,12 @@ $(function () {
     }
     $container.append("<li id='right' class='get-events-page waves-effect'><a href='#!'><i class='material-icons'>chevron_right</i></a></li>");
   }
-  
+
   function getPagesExternalEvents(type) {
     $.getJSON(`/api/${type.collection}`)
       .done(function (events) {
-        var pages = (events.length > 5) ? Math.ceil((events.length) / 5) : 1;
-        createPagination(type, pages);
+        type.pages = (events.length > 5) ? Math.ceil((events.length) / 5) : 1;
+        createPagination(type);
       })
       .fail(function () {
         alert(`Erro ao recuperar ${type.plural}. Por favor, dentro de alguns instantes, tente recarregar a página.`)
@@ -128,29 +130,31 @@ $(function () {
     });
 
   //get events from page
-  /*TODO: faltam alguns ajustes:
-  - desabilitar botões left e right
+  /*TODO:
+  - desabilitar botões prev ou next quando é a primeira ou a última página
   - adicionar botões intermediários (...) quando forem muitas páginas 
   */
   $pagination.on('click', '.get-events-page',
     function () {
-      var id;
-      var type;
-      if ($(this).parent().attr("id") == "pagination-solicitacoes")
-        type = types.solicitacoes;
-      else if ($(this).parent().attr("id") == "pagination-encaminhamentos")
-        type = types.encaminhamentos;
-      var anterior = $(this).parent().find('.active');
-      if ($(this).attr("id") == "left") {
-        id = parseInt(anterior.attr("id")) - 1;
-      } else if ($(this).attr("id") == "right") {
-        id = parseInt(anterior.attr("id")) + 1;
-      } else {
-        id = $(this).attr("id");
+      var page;
+      var id = $(this).attr("id");
+      var parent = $(this).parent();
+      var anterior = parent.find('.active');
+      var type = parent.attr("id") == "pagination-solicitacoes" ? types.solicitacoes : types.encaminhamentos;
+      switch(id){
+        case "left":
+          page = anterior.attr("id") > 1 ? parseInt(anterior.attr("id")) - 1 : 1;
+          break;
+        case "right":
+          page = anterior.attr("id") < type.pages ? parseInt(anterior.attr("id")) + 1 : type.pages;
+          break;
+        default:
+          page = id;
+          break;
       }
       anterior.removeClass('active');
-      $(this).parent().find('#' + id + "").addClass("active");
-      getExternalEvents(type, id);
+      parent.find('#' + page + "").addClass("active");
+      getExternalEvents(type, page);
     });
 
   function removeExternalEvent(externalEvent) {
