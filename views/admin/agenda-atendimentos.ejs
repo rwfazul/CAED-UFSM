@@ -3,71 +3,72 @@
 
 <head>
   <% include partials/head %>
-  <!-- Fullcalendar -->
-  <link href="/vendors/fullcalendar/fullcalendar.min.css" type="text/css" rel="stylesheet" />
-  <link href="/vendors/fullcalendar/fullcalendar.print.min.css" type="text/css" rel="stylesheet" media="print" />
-  <!-- jQuery Toast -->
-  <link href="/vendors/jquery/jquery.toast.min.css" type="text/css" rel="stylesheet" />
+    <!-- Fullcalendar -->
+    <link href="/vendors/fullcalendar/fullcalendar.min.css" type="text/css" rel="stylesheet" />
+    <link href="/vendors/fullcalendar/fullcalendar.print.min.css" type="text/css" rel="stylesheet" media="print" />
+    <!-- jQuery Toast -->
+    <link href="/vendors/jquery/jquery.toast.min.css" type="text/css" rel="stylesheet" />
 </head>
 
 <body>
   <% include partials/header %>
 
-  <!-- Main -->
-  <div id="main">
-    <!-- Wrapper -->
-    <div class="wrapper">
-      <!-- Left Sidebar Nav-->
-      <% include partials/aside %>
-      <!-- /Left Sidebar Nav-->
-      <!-- Content -->
-      <section id="content">
-        <!--start container-->
-        <div class="container">
-          <div class="section">
-            <h4 class="center"><%- data.sala.nome -%> - Agenda de atendimentos</h4>
-            <div id="salaId" data-id="<%- data.sala.id %>"></div>
-            <div id="full-calendar">
-              <div class="row">
-                <div class="col s12 m4 l3">
-                  <div id="external-events-solicitacoes" class="external-events">
-                    <h4 class="header">Solicitações</h4>
-                  </div>
-                  <div id="external-events-encaminhamentos" class="external-events">
-                    <h4 class="header">Encaminhamentos</h4>
-                  </div>
-                  <div id="pagination"></div>
-                </div>
-                <div class="col s12 m8 l9">
-                    <div id="loader-events" style="display: block">
-                      <p>Aguarde, os agendamentos estão sendo carregados.</p>
-                      <div class="progress">
-                        <div class="indeterminate"></div>
+    <!-- Main -->
+    <div id="main">
+      <!-- Wrapper -->
+      <div class="wrapper">
+        <!-- Left Sidebar Nav-->
+        <% include partials/aside %>
+          <!-- /Left Sidebar Nav-->
+          <!-- Content -->
+          <section id="content">
+            <!--start container-->
+            <div class="container">
+              <div class="section">
+                <h4 class="center">
+                  <%- data.sala.nome -%> - Agenda de atendimentos</h4>
+                <div id="salaId" data-id="<%- data.sala.id %>"></div>
+                <div id="full-calendar">
+                  <div class="row">
+                    <div class="col s12 m4 l3">
+                      <div id="external-events-solicitacoes" class="external-events">
                       </div>
+                      <div id="pagination-solicitacoes" class="pagination"></div>
+                      <div id="external-events-encaminhamentos" class="external-events">
+                      </div>
+                      <div id="pagination-encaminhamentos" class="pagination"></div>
                     </div>
-                    <div id='calendar' class="calendar"></div>
+                    <div class="col s12 m8 l9">
+                      <div id="loader-events" style="display: block">
+                        <p>Aguarde, os agendamentos estão sendo carregados.</p>
+                        <div class="progress">
+                          <div class="indeterminate"></div>
+                        </div>
+                      </div>
+                      <div id='calendar' class="calendar"></div>
+                    </div>
                   </div>
+                </div>
               </div>
             </div>
-          </div>
-        </div>
-      </section>
-      <!-- /Content-->
+          </section>
+          <!-- /Content-->
+      </div>
+      <!-- /Wrapper -->
     </div>
-    <!-- /Wrapper -->
-  </div>
-  <!-- /Main -->
+    <!-- /Main -->
 
-  <% include partials/footer %>
+    <% include partials/footer %>
 
-  <!-- Plugins -->
-  <script src='/vendors/jquery/jquery-ui.min.js'></script>
-  <script src="/vendors/jquery/jquery.toast.min.js"></script>
-  <script src='/vendors/moment/moment.min.js'></script>
-  <script src='/vendors/fullcalendar/fullcalendar.min.js'></script>
-  <script src="/vendors/moment/pt-br.js"></script>
-  <!-- Custom -->
-  <script src="/js/schedule-formatter.js"></script>
-  <script src="/js/agenda-atendimentos.js"></script>
+      <!-- Plugins -->
+      <script src='/vendors/jquery/jquery-ui.min.js'></script>
+      <script src="/vendors/jquery/jquery.toast.min.js"></script>
+      <script src='/vendors/moment/moment.min.js'></script>
+      <script src='/vendors/fullcalendar/fullcalendar.min.js'></script>
+      <script src="/vendors/moment/pt-br.js"></script>
+      <!-- Custom -->
+      <script src="/js/schedule-formatter.js"></script>
+      <script src="/js/agenda-atendimentos.js"></script>
 </body>
+
 </html>
