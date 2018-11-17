@@ -140,4 +140,4 @@ O **CAED-UFSM** será um canal de comunicação entre alunos e servidores com o 
   </tbody>
 </table>
 
-<p align="right"><em>Backlog last updated on October 25, 2018.</em></p>
+<p align="right"><em>Backlog last updated on November 17, 2018.</em></p>
