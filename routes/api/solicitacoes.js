@@ -6,12 +6,13 @@ var firestore = require('../../services/firestore-api/firestore');
 const colSolicitacoes = 'caed-solicitacoes';
 
 // GET: /api/solicitacoes
-router.get('/', function (req, res) {
-	firestore.getAllDocs(colSolicitacoes, function (docs, err) {
-		if (err) res.status(500).send(err);
-		else res.status(200).json(docs);
-	});
-})
+router
+	.get('/', function (req, res) {
+		firestore.getAllDocs(colSolicitacoes, function (docs, err) {
+			if (err) res.status(500).send(err);
+			else res.status(200).json(docs);
+		});
+	})
 	.get('/pagination/:page', function (req, res) {
 		firestore.getDocsPagination(colSolicitacoes, "timestamp", req.params['page'], function (docs, err) {
 			if (err) res.status(500).send(err);

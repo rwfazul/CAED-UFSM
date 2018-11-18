@@ -46,6 +46,7 @@ $(function () {
         color: color, // color when event has been dropped onto the calendar
         constraint: event.id,
         // additional data
+        _type: type,
         _externalEventId: event.id,
         _constraints: createConstraintEvents(event.id, event.horarios)
       })
@@ -180,7 +181,7 @@ $(function () {
       url: '/api/atendimentos/agenda/' + event.id,
       success: function (id) {
         if (id) {
-          updateSolicitacao(event._externalEventId, false);
+          updateSolicitacao(event, false);
           showReponse(`Atendimento de '${event.title}' <b>removida</b> com sucesso!`, 'success');
           $('#calendar').fullCalendar('removeEvents', event.id);
         }
@@ -214,7 +215,7 @@ $(function () {
       success: function (id) {
         event.id = id;
         $calendar.fullCalendar('updateEvent', event);
-        updateSolicitacao(event._externalEventId, true);
+        updateSolicitacao(event, true);
         showReponse(`Atendimento de '${event.title}' agendado com sucesso!`, 'success');
       },
       error: function () {
@@ -224,10 +225,10 @@ $(function () {
     });
   }
 
-  function updateSolicitacao(id, ja_agendado) {
+  function updateSolicitacao(event, ja_agendado) {
     $.ajax({
       method: 'PUT',
-      url: '/api/solicitacoes/' + id,
+      url: '/api/'+ event._type + '/' + event._externalEventId,
       data: {
         agendado: ja_agendado,
       },
