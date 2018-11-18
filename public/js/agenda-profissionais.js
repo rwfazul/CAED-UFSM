@@ -10,9 +10,11 @@ $(function() {
 
   // TODO: Mudar para as cores certas
   const mapColors = { 
-    'Psicopedagogia':          '#333',
-    'Orientação Profissional': '#333',
-    'Psicologia':              '#333',
+    //especialidade profissional
+    'Psicologia': '#f44336', //vermelho forte
+    'Psicopedagogia': '#9c27b0', //roxo forte
+    'Pedagogia': '#009688', //azul esverdeado
+    'Educação Especial': '#ffc107' //amarelo 
   };
 
   const mapHeaders = {
@@ -22,12 +24,12 @@ $(function() {
     'information': 'Alerta'
   }
 
-  function getColor(tipoAtendimento) {
-    return mapColors[tipoAtendimento];
+  function getColor(especialidade) {
+    return mapColors[especialidade];
   }
 
   function createExternalEvent(profissional) {
-    var color = getColor(profissional.especialidade) || '#333333';
+    var color = getColor(profissional.especialidade);
     var div = $('<div>')
       .text(profissional.nome)
       .addClass('fc-event')
@@ -47,6 +49,7 @@ $(function() {
         _externalEventId: profissional.id,
         _constraints: createConstraintEvents(profissional.id, profissional.horarios)
       })
+      .css('background-color', color)
       .append(
         `<span class="delete-external-event right"'>
           <i class="material-icons">delete_forever</i>
@@ -238,20 +241,6 @@ $(function() {
         if (decision)
           removeEvent(event);
     },
-    /* select method: A method for programmatically selecting a period of time. */
-    select: function (start, end) {
-      var title = prompt('Digite o nome do profissional:');
-      if (title) {
-        var eventData = {
-          title: title,
-          start: start,
-          end: end
-        };
-        $('#calendar').fullCalendar('renderEvent', eventData, true);
-        saveEvent(event);
-      }
-      $('#calendar').fullCalendar('unselect');
-    }
   });
 
   // render contraints events (defined in _constraints) of triggered external event

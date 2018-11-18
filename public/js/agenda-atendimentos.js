@@ -1,4 +1,4 @@
-$(function() {
+$(function () {
 
   $('.modal').modal();
   $('.collapsible').collapsible();
@@ -6,17 +6,16 @@ $(function() {
 
   const $calendar = $('#calendar');
   const $external_events = $('.external-events');
-  const $external_solicitacoes = $('#external-events-solicitacoes');
-  const $external_encaminhamentos = $('#external-events-encaminhamentos');
+  const $pagination = $('.pagination');
 
   const _salaId = $('#salaId').data('id');
 
   // TODO: Mudar para as cores certas
-  const mapColors = { 
-    'Psicopedagógico':         '#4259f4',
-    'Orientação Profissional': '#f4c141',
-    'Psicológico':             '#ee41f4',
-    'Encaminhamento':          '#f44141'
+  const mapColors = {
+    //tipo de atendimento
+    'Psicológico': '#2196f3', // azul fraco 
+    'Psicopedagógico': '#f57f17', //laranja
+    'Orientação Profissional': '#9e9e9e', //cinza 
   };
 
   const mapHeaders = {
@@ -31,7 +30,7 @@ $(function() {
   }
 
   function createExternalEvent(event, type) {
-    var color = getColor(event.tipoAtendimento) || '#333333';
+    var color = getColor(event.tipoAtendimento);
     var div = $('<div>')
       .text($.trim(event.nome))
       .addClass('fc-event')
@@ -47,6 +46,7 @@ $(function() {
         color: color, // color when event has been dropped onto the calendar
         constraint: event.id,
         // additional data
+        _type: type,
         _externalEventId: event.id,
         _constraints: createConstraintEvents(event.id, event.horarios)
       })
@@ -64,35 +64,98 @@ $(function() {
     solicitacoes: {
       collection: 'solicitacoes',
       sing: 'solicitação',
-      plural: 'solicitações'
+      plural: 'solicitações',
+      external: $('#external-events-solicitacoes'),
+      pagination: $('#pagination-solicitacoes'),
+      pages: 1
     },
     encaminhamentos: {
       collection: 'encaminhamentos',
       sing: 'encaminhamento',
-      plural: 'encaminhamentos'
+      plural: 'encaminhamentos',
+      external: $('#external-events-encaminhamentos'),
+      pagination: $('#pagination-encaminhamentos'),
+      pages: 1
     }
   }
 
   // fetch external events
-  function getExternalEvents($container, type) {
-    $.getJSON(`/api/${type.collection}`)
-      .done(function(events) {
-        $.each(events, function(i, event) {
+  function getExternalEvents(type, page) {
+    $.getJSON(`/api/${type.collection}/pagination/${page}`)
+      .done(function (events) {
+        $container = type.external;
+        $container.empty();
+        $container.append($('<h4>').addClass('header').text(type.plural));
+        $.each(events, function (i, event) {
           $container.append(createExternalEvent(event, type.collection));
         });
       })
-      .fail(function() {
+      .fail(function () {
         alert(`Erro ao recuperar ${type.plural}. Por favor, dentro de alguns instantes, tente recarregar a página.`)
-      }); 
+      });
   }
 
-  getExternalEvents($external_solicitacoes, types.solicitacoes);
-  getExternalEvents($external_encaminhamentos, types.encaminhamentos);
+  function createPagination(type) {
+    $container = type.pagination;
+    $container.append("<li id='left' class='get-events-page waves-effect'><a href='#!'><i class='material-icons'>chevron_left</i></a></li>");
+    for (var i = 1; i <= type.pages; i++) {
+      var li = $('<li>').attr("id", i).addClass("get-events-page").addClass("waves-effect");
+      var a = $('<a>').attr("href", "#!").text(i);
+      li.append(a);
+      if (i == 1)
+        li.addClass("active");
+      $container.append(li);
+    }
+    $container.append("<li id='right' class='get-events-page waves-effect'><a href='#!'><i class='material-icons'>chevron_right</i></a></li>");
+  }
 
-  $($external_events).on('click', '.fc-event > .delete-external-event', 
-    function() {
+  function getPagesExternalEvents(type) {
+    $.getJSON(`/api/${type.collection}`)
+      .done(function (events) {
+        type.pages = (events.length > 5) ? Math.ceil((events.length) / 5) : 1;
+        createPagination(type);
+      })
+      .fail(function () {
+        alert(`Erro ao recuperar ${type.plural}. Por favor, dentro de alguns instantes, tente recarregar a página.`)
+      });
+  }
+
+  getExternalEvents(types.solicitacoes, 1);
+  getPagesExternalEvents(types.solicitacoes)
+  getExternalEvents(types.encaminhamentos, 1);
+  getPagesExternalEvents(types.encaminhamentos)
+
+  $($external_events).on('click', '.fc-event > .delete-external-event',
+    function () {
       removeExternalEvent($(this).parent())
+    });
 
+  //get events from page
+  /*TODO:
+  - desabilitar botões prev ou next quando é a primeira ou a última página
+  - adicionar botões intermediários (...) quando forem muitas páginas 
+  */
+  $pagination.on('click', '.get-events-page',
+    function () {
+      var page;
+      var id = $(this).attr("id");
+      var parent = $(this).parent();
+      var anterior = parent.find('.active');
+      var type = parent.attr("id") == "pagination-solicitacoes" ? types.solicitacoes : types.encaminhamentos;
+      switch(id){
+        case "left":
+          page = anterior.attr("id") > 1 ? parseInt(anterior.attr("id")) - 1 : 1;
+          break;
+        case "right":
+          page = anterior.attr("id") < type.pages ? parseInt(anterior.attr("id")) + 1 : type.pages;
+          break;
+        default:
+          page = id;
+          break;
+      }
+      anterior.removeClass('active');
+      parent.find('#' + page + "").addClass("active");
+      getExternalEvents(type, page);
     });
 
   function removeExternalEvent(externalEvent) {
@@ -101,12 +164,12 @@ $(function() {
     $.ajax({
       method: 'DELETE',
       url: `/api/${type.collection}/${event._externalEventId}`,
-      success: function() {
+      success: function () {
         var singCap = type.sing.charAt(0).toUpperCase() + type.sing.slice(1);
         showReponse(`${singCap} '${event.title}' <b>removido</b> com sucesso!`, 'success');
         $(externalEvent).remove();
       },
-      error: function() {
+      error: function () {
         showReponse(`Erro ao <b>remover</b> ${type.sing} '${event.title}'.`, 'error');
       }
     });
@@ -116,13 +179,14 @@ $(function() {
     $.ajax({
       method: 'DELETE',
       url: '/api/atendimentos/agenda/' + event.id,
-      success: function(id) {
+      success: function (id) {
         if (id) {
+          updateSolicitacao(event, false);
           showReponse(`Atendimento de '${event.title}' <b>removida</b> com sucesso!`, 'success');
           $('#calendar').fullCalendar('removeEvents', event.id);
         }
       },
-      error: function() {
+      error: function () {
         showReponse(`Erro ao <b>remover</b> atendimento de '${event.title}'.`, 'error');
       }
     });
@@ -148,14 +212,29 @@ $(function() {
         externalEventId: event._externalEventId,
         salaId: _salaId
       },
-      success: function(id) {
+      success: function (id) {
         event.id = id;
         $calendar.fullCalendar('updateEvent', event);
+        updateSolicitacao(event, true);
         showReponse(`Atendimento de '${event.title}' agendado com sucesso!`, 'success');
       },
-      error: function() {
+      error: function () {
         showReponse(`Erro ao salvar atendimento de '${event.title}'.`, 'error');
         // alert(`Erro ao salvar atendimento de '${event.title}'`);
+      }
+    });
+  }
+
+  function updateSolicitacao(event, ja_agendado) {
+    $.ajax({
+      method: 'PUT',
+      url: '/api/'+ event._type + '/' + event._externalEventId,
+      data: {
+        agendado: ja_agendado,
+      },
+      success: function () {
+      },
+      error: function () {
       }
     });
   }
@@ -166,12 +245,12 @@ $(function() {
       url: '/api/atendimentos/agenda' + event.id,
       data: {
         start: event.start.format(),
-        end:   event.end.format(),
+        end: event.end.format(),
       },
-      success: function() {
-          showReponse(`Atendimento de '${event.title}' atualizado com sucesso!`, 'success');
+      success: function () {
+        showReponse(`Atendimento de '${event.title}' atualizado com sucesso!`, 'success');
       },
-      error: function() {
+      error: function () {
         showReponse(`Erro ao atualizar atendimento de '${event.title}'.`, 'error');
         // alert(`Erro ao salvar atendimento de '${event.title}'`);
       }
@@ -205,34 +284,34 @@ $(function() {
       '/api/atendimentos/agenda/' + _salaId
     ],
     /* function loading: Triggered when event or resource fetching starts/stops. */
-    loading: function(isLoading) {
+    loading: function (isLoading) {
       $("#loader-events").css('display', 'block');
     },
     /* function eventAfterAllRender: Triggered after all events have finished rendering. */
-    eventAfterAllRender: function(view) {
+    eventAfterAllRender: function (view) {
       $("#loader-events").css('display', 'none');
     },
     /* function eventReceive: Called when a external event has been dropped onto the calendar. */
-    eventReceive: function(event) {
+    eventReceive: function (event) {
       saveEvent(event);
     },
     /* function eventDrop: Triggered when dragging stops and the event has moved to a different day/time. */
-    eventDrop: function(event) {
+    eventDrop: function (event) {
       updateEvent(event);
     },
     /* function drop: Called when a valid external jQuery UI draggable has been dropped onto the calendar. */
-    drop: function() {
+    drop: function () {
       // remove the element from the "Draggable Events" list
       $(this).remove();
     },
     /* function eventResize: Triggered when resizing stops and the event has changed in duration. */
-    eventResize: function(event) {
+    eventResize: function (event) {
       alert(event.title + " end is now " + event.end.format());
       /*updateData funciona corretamente, só necessita recuperar o id do evento do firebase*/
       //updateData(event);
     },
     /* select method: A method for programmatically selecting a period of time. */
-    select: function(start, end) {
+    select: function (start, end) {
       var title = prompt('Event Title:');
       var eventData;
       if (title) {
@@ -246,20 +325,20 @@ $(function() {
       $('#calendar').fullCalendar('unselect');
     },
     /* function eventClic: Triggered when the user clicks an event. */
-    eventClick: function(event) {
-        var decision = confirm("Tem certeza que deseja cancelar esse atendimento?"); 
-        if (decision)
-          removeEvent(event);
+    eventClick: function (event) {
+      var decision = confirm("Tem certeza que deseja cancelar esse atendimento?");
+      if (decision)
+        removeEvent(event);
     }
   });
 
   // render contraints events (defined in _constraints) of triggered external event
-  $external_events.on('mousedown', '.fc-event', function() {
+  $external_events.on('mousedown', '.fc-event', function () {
     $calendar.fullCalendar('renderEvents', $(this).data('event')._constraints);
   });
-  
+
   // remove contraints events (with id defined in _externalEventId) of triggered external event
-  $external_events.on('mouseup', '.fc-event', function() {
+  $external_events.on('mouseup', '.fc-event', function () {
     $calendar.fullCalendar('removeEvents', $(this).data('event')._externalEventId);
   });
 

@@ -1,30 +1,34 @@
 const factory = require('./factory');
 
+
+var getDocs = function (query, callback) {
+	query.get()
+		.then(snapshot => {
+			var documents = [];
+			snapshot.forEach(doc => {
+				var data = doc.data();
+				data.id = doc.id;
+				data.timestamp = ((data.timestamp).toDate()).toLocaleDateString();
+				documents.push(data);
+			});
+			callback (documents);
+		})
+		.catch(err => {
+			console.log('Error getting documents', err);
+			callback ({}, err);
+		});
+};
+
 module.exports = {
 
-	getAllDocs: function(collection, callback) {
+	getAllDocs: function (collection, callback) {
 		var db = factory.getDbInstance();
 		var colRef = db.collection(collection);
-		var allDocs = colRef.get()
-			.then(snapshot => {
-				var documents = [];
-				snapshot.forEach(doc => {
-					// set 'id' key
-					var data = doc.data();
-					data.timestamp = ((data.timestamp).toDate()).toLocaleDateString();
-					data.id = doc.id;
-					documents.push(data);
-				});
-				callback(documents);
-		    })
-		    .catch(err => {
-		    	console.log('Error getting documents', err);
-		    	callback({}, err);
-		    });
+		var allDocs = colRef;
+		getDocs(allDocs, callback);
 	},
-	
 
-	getDocsWithQuery: function(collection, query, callback) {
+	getDocsWithQuery: function (collection, query, callback) {
 		var db = factory.getDbInstance();
 		var colRef = db.collection(collection);
 		var query = colRef.where( ...query )
@@ -38,15 +42,41 @@ module.exports = {
 					documents.push(data);
 				});
 				callback(documents);
-		    })
-		    .catch(err => {
-		    	console.log('Error getting documents', err);
-		    	callback({}, err);
-		    });
+			})
+			.catch(err => {
+				console.log('Error getting documents', err);
+				callback({}, err);
+			});
 	},
 
-	addDoc: function(collection, doc, callback) {
-    	var db = factory.getDbInstance();
+	getDocsPagination: function (collection, colOrder, page, callback) {
+		var db = factory.getDbInstance();
+		var colRef = db.collection(collection);
+		var limit = page > 1 ? ((page-1)*5) : 5;
+		var query = colRef
+			.orderBy(colOrder, "desc")
+			.limit(limit);
+		if (page == 1) {
+			getDocs(query, callback);
+		} else if (page > 1) {
+			query.get()
+				.then(documentSnapshots => {
+					var lastVisible = documentSnapshots.docs[documentSnapshots.docs.length - 1];
+					var next = colRef
+						.orderBy(colOrder, "desc")
+						.startAfter(lastVisible)
+						.limit(5);
+					getDocs(next, callback);
+				})
+				.catch(err => {
+					console.log('Error getting documents', err);
+					callback({}, err);
+				});
+		}
+	},
+
+	addDoc: function (collection, doc, callback) {
+		var db = factory.getDbInstance();
 		var colRef = db.collection(collection);
 		var addDoc = colRef.add(doc)
 			.then(ref => {
@@ -58,20 +88,20 @@ module.exports = {
 			});
 	},
 
-	updateDoc: function(collection, id, doc, callback) {
+	updateDoc: function (collection, id, doc, callback) {
 		var db = factory.getDbInstance();
 		var docRef = db.collection(collection).doc(id);
 		var updateSingle = docRef.update(doc)
 			.then(() => {
-		    	console.log("Document successfully updated!");
+				console.log("Document successfully updated!");
 				callback(id);
 			}).catch(err => {
-		    	console.error("Error updating document: ", err);
-		    	callback({}, err);
+				console.error("Error updating document: ", err);
+				callback({}, err);
 			});
 	},
 
-	deleteDoc: function(collection, id, callback) {
+	deleteDoc: function (collection, id, callback) {
 		var db = factory.getDbInstance();
 		var docRef = db.collection(collection).doc(id);
 		var deleteDoc = docRef.delete()

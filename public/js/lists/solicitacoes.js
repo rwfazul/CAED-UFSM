@@ -12,7 +12,6 @@ $(function () {
           + "<td>" + solicitacao.nome + "</td>"
           + "<td>" + solicitacao.email + "</td>"
           + "<td>" + solicitacao.curso + "</td>"
-          + "<td>" + solicitacao.telefone + "</td>"
           + "<td>" + solicitacao.tipoAtendimento + "</td>"
           + "<td><a class='modal-trigger waves-effect waves-green btn-flat' href='#" + solicitacao.id + "'>Clique aqui <i class='left material-icons'>search</i></a></td>"
           + "</tr>"
