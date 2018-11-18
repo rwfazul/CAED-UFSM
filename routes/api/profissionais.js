@@ -37,7 +37,6 @@ router
 			start: req.body['start'],
 			end:   req.body['end'],
 			color: req.body['color'],
-			_externalEventId: req.body['externalEventId'],
 			_salaId: req.body['salaId'],
 		};
 		firestore.addDoc(colAgenda, doc, function(docId, err) {

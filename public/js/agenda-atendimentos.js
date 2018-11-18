@@ -128,7 +128,8 @@ $(function () {
   $($external_events).on('click', '.fc-event > .delete-external-event',
     function () {
       removeExternalEvent($(this).parent())
-    });
+    }
+  );
 
   //get events from page
   /*TODO:
@@ -303,7 +304,7 @@ $(function () {
     drop: function () {
       // remove the element from the "Draggable Events" list
       $(this).remove();
-    }
+    },
     /* select method: A method for programmatically selecting a period of time. */
     select: function (start, end) {
       var title = prompt('Event Title:');
@@ -320,9 +321,11 @@ $(function () {
     },
     /* function eventClic: Triggered when the user clicks an event. */
     eventClick: function (event) {
-      var decision = confirm("Tem certeza que deseja cancelar esse atendimento?");
-      if (decision)
-        removeEvent(event);
+      if (event._externalEventId) { // if false = profissional
+        var decision = confirm("Tem certeza que deseja cancelar esse atendimento?");
+        if (decision)
+          removeEvent(event);
+      }
     }
   });
 

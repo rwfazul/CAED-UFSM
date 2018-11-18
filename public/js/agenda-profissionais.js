@@ -104,7 +104,6 @@ $(function() {
         start: event.start.format(),
         end: event.end.format(),
         color: event.color,
-        externalEventId: event._externalEventId,
         salaId: _salaId
       },
       success: function(id) {
