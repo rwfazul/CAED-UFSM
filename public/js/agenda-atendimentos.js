@@ -166,11 +166,11 @@ $(function () {
       url: `/api/${type.collection}/${event._externalEventId}`,
       success: function () {
         var singCap = type.sing.charAt(0).toUpperCase() + type.sing.slice(1);
-        showReponse(`${singCap} '${event.title}' <b>removido</b> com sucesso!`, 'success');
+        showResponse(`${singCap} '${event.title}' <b>removido</b> com sucesso!`, 'success');
         $(externalEvent).remove();
       },
       error: function () {
-        showReponse(`Erro ao <b>remover</b> ${type.sing} '${event.title}'.`, 'error');
+        showResponse(`Erro ao <b>remover</b> ${type.sing} '${event.title}'.`, 'error');
       }
     });
   }
@@ -182,17 +182,17 @@ $(function () {
       success: function (id) {
         if (id) {
           updateSolicitacao(event, false);
-          showReponse(`Atendimento de '${event.title}' <b>removida</b> com sucesso!`, 'success');
+          showResponse(`Atendimento de '${event.title}' <b>removida</b> com sucesso!`, 'success');
           $('#calendar').fullCalendar('removeEvents', event.id);
         }
       },
       error: function () {
-        showReponse(`Erro ao <b>remover</b> atendimento de '${event.title}'.`, 'error');
+        showResponse(`Erro ao <b>remover</b> atendimento de '${event.title}'.`, 'error');
       }
     });
   }
 
-  function showReponse(msg, type) {
+  function showResponse(msg, type) {
     $.toast({
       heading: mapHeaders[type],
       text: msg,
@@ -216,10 +216,10 @@ $(function () {
         event.id = id;
         $calendar.fullCalendar('updateEvent', event);
         updateSolicitacao(event, true);
-        showReponse(`Atendimento de '${event.title}' agendado com sucesso!`, 'success');
+        showResponse(`Atendimento de '${event.title}' agendado com sucesso!`, 'success');
       },
       error: function () {
-        showReponse(`Erro ao salvar atendimento de '${event.title}'.`, 'error');
+        showResponse(`Erro ao salvar atendimento de '${event.title}'.`, 'error');
         // alert(`Erro ao salvar atendimento de '${event.title}'`);
       }
     });
@@ -248,10 +248,10 @@ $(function () {
         end: event.end.format(),
       },
       success: function () {
-        showReponse(`Atendimento de '${event.title}' atualizado com sucesso!`, 'success');
+        showResponse(`Atendimento de '${event.title}' atualizado com sucesso!`, 'success');
       },
       error: function () {
-        showReponse(`Erro ao atualizar atendimento de '${event.title}'.`, 'error');
+        showResponse(`Erro ao atualizar atendimento de '${event.title}'.`, 'error');
         // alert(`Erro ao salvar atendimento de '${event.title}'`);
       }
     });
@@ -303,13 +303,7 @@ $(function () {
     drop: function () {
       // remove the element from the "Draggable Events" list
       $(this).remove();
-    },
-    /* function eventResize: Triggered when resizing stops and the event has changed in duration. */
-    eventResize: function (event) {
-      alert(event.title + " end is now " + event.end.format());
-      /*updateData funciona corretamente, só necessita recuperar o id do evento do firebase*/
-      //updateData(event);
-    },
+    }
     /* select method: A method for programmatically selecting a period of time. */
     select: function (start, end) {
       var title = prompt('Event Title:');

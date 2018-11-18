@@ -78,16 +78,16 @@ $(function() {
       method: 'DELETE',
       url: '/api/profissionais/' + event._externalEventId,
       success: function() {
-        showReponse(`Profissional '${event.title}' <b>removido</b> com sucesso!`, 'success');
+        showResponse(`Profissional '${event.title}' <b>removido</b> com sucesso!`, 'success');
         $(externalEvent).remove();
       },
       error: function() {
-        showReponse(`Erro ao <b>remover</b> profissional '${event.title}'.`, 'error');
+        showResponse(`Erro ao <b>remover</b> profissional '${event.title}'.`, 'error');
       }
     });
   });
 
-  function showReponse(msg, type) {
+  function showResponse(msg, type) {
     $.toast({
       heading: mapHeaders[type],
       text: msg,
@@ -114,11 +114,11 @@ $(function() {
         // only updateEvent doesn't allow event resizing/change
         $calendar.fullCalendar('removeEvents', event.id); 
         $calendar.fullCalendar('renderEvent', event);
-        showReponse(`Alocação de '${event.title}' <b>salva</b> com sucesso!`, 'success');
+        showResponse(`Alocação de '${event.title}' <b>salva</b> com sucesso!`, 'success');
       },
       error: function() {
         $calendar.fullCalendar('removeEvents', event.id); 
-        showReponse(`Erro ao <b>salvar</b> alocação de '${event.title}'.`, 'error');
+        showResponse(`Erro ao <b>salvar</b> alocação de '${event.title}'.`, 'error');
       }
     });
   }
@@ -132,10 +132,10 @@ $(function() {
         end:   event.end.format(),
       },
       success: function() {
-        showReponse(`Alocação de '${event.title}' <b>atualizada</b> com sucesso!`, 'success');
+        showResponse(`Alocação de '${event.title}' <b>atualizada</b> com sucesso!`, 'success');
       },
       error: function() {
-        showReponse(`Erro ao <b>atualizar</b> alocação de '${event.title}'.`, 'error');
+        showResponse(`Erro ao <b>atualizar</b> alocação de '${event.title}'.`, 'error');
       }
     });
   }
@@ -145,11 +145,11 @@ $(function() {
       method: 'DELETE',
       url: '/api/profissionais/agenda/' + event.id,
       success: function() {
-        showReponse(`Alocação de '${event.title}' <b>removida</b> com sucesso!`, 'success');
+        showResponse(`Alocação de '${event.title}' <b>removida</b> com sucesso!`, 'success');
         $('#calendar').fullCalendar('removeEvents', event.id);
       },
       error: function() {
-        showReponse(`Erro ao <b>remover</b> alocação de '${event.title}'.`, 'error');
+        showResponse(`Erro ao <b>remover</b> alocação de '${event.title}'.`, 'error');
       }
     });
   }
@@ -228,10 +228,15 @@ $(function() {
     /* function eventResize: Triggered when resizing stops and the event has changed in duration. */
     eventResize: function(event, delta, revertFunc) {
       var response = { maxResizeHour: '' };
+      if (event.end.minute() != 0) {
+        showResponse(`Alocação deve ser feita em horas cheias (${event.end.hour()}:${event.end.minute()} não é permitido).`, 'warning');
+        revertFunc();
+        return;
+      }
       if (isValidResize(event, response)) 
         updateEvent(event);
       else {
-        showReponse(`O profissional '${event.title} só tem disponibilidade até as ${response.maxResizeHour} horas.`, 'warning');
+        showResponse(`O profissional '${event.title} só tem disponibilidade até as ${response.maxResizeHour} horas.`, 'warning');
         revertFunc();
       }      
     },
@@ -240,7 +245,7 @@ $(function() {
         var decision = confirm("Tem certeza que deseja cancelar essa locação?"); 
         if (decision)
           removeEvent(event);
-    },
+    }
   });
 
   // render contraints events (defined in _constraints) of triggered external event
