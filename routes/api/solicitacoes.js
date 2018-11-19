@@ -13,8 +13,16 @@ router
 			else res.status(200).json(docs);
 		});
 	})
+	.get('/externalEvents', function (req, res) {
+		var filter = ['agendado', '==', false];
+		firestore.getDocsWithFilter(colSolicitacoes, filter, function (docs, err) {
+			if (err) res.status(500).send(err);
+			else res.status(200).json(docs);
+		});
+	})
 	.get('/pagination/:page', function (req, res) {
-		firestore.getDocsPagination(colSolicitacoes, "timestamp", req.params['page'], function (docs, err) {
+		var filter = ['agendado', '==', false];
+		firestore.getDocsPagination(colSolicitacoes, "timestamp", filter, req.params['page'], function (docs, err) {
 			if (err) res.status(500).send(err);
 			else res.status(200).json(docs);
 		});
@@ -29,7 +37,7 @@ router.route('/:id')
 	})
 	.put(function (req, res) {
 		var doc = {
-			agendado: req.body['agendado'],
+			agendado: req.body['agendado'] == "true" ? true : false,
 		};
 		firestore.updateDoc(colSolicitacoes, req.params.id, doc, function (docId, err) {
 			if (err) res.status(500).send(err);

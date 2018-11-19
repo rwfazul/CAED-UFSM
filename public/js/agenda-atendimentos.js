@@ -26,7 +26,7 @@ $(function () {
   }
 
   function getColor(tipoAtendimento) {
-    return mapColors[tipoAtendimento];
+    return mapColors[$.trim(tipoAtendimento)];
   }
 
   function createExternalEvent(event, type) {
@@ -110,9 +110,10 @@ $(function () {
   }
 
   function getPagesExternalEvents(type) {
-    $.getJSON(`/api/${type.collection}`)
+    $.getJSON(`/api/${type.collection}/externalEvents`)
       .done(function (events) {
         type.pages = (events.length > 5) ? Math.ceil((events.length) / 5) : 1;
+        type.pagination.empty();
         createPagination(type);
       })
       .fail(function () {
@@ -120,10 +121,14 @@ $(function () {
       });
   }
 
-  getExternalEvents(types.solicitacoes, 1);
-  getPagesExternalEvents(types.solicitacoes)
-  getExternalEvents(types.encaminhamentos, 1);
-  getPagesExternalEvents(types.encaminhamentos)
+  loadExternalEvents(types.solicitacoes);
+  loadExternalEvents(types.encaminhamentos);
+
+  //function to load and reload external events and pagination
+  function loadExternalEvents(type){
+    getPagesExternalEvents(type);
+    getExternalEvents(type, 1);
+  }
 
   $($external_events).on('click', '.fc-event > .delete-external-event',
     function () {
@@ -132,10 +137,6 @@ $(function () {
   );
 
   //get events from page
-  /*TODO:
-  - desabilitar botões prev ou next quando é a primeira ou a última página
-  - adicionar botões intermediários (...) quando forem muitas páginas 
-  */
   $pagination.on('click', '.get-events-page',
     function () {
       var page;
@@ -169,6 +170,7 @@ $(function () {
         var singCap = type.sing.charAt(0).toUpperCase() + type.sing.slice(1);
         showResponse(`${singCap} '${event.title}' <b>removido</b> com sucesso!`, 'success');
         $(externalEvent).remove();
+        loadExternalEvents(type);
       },
       error: function () {
         showResponse(`Erro ao <b>remover</b> ${type.sing} '${event.title}'.`, 'error');
@@ -183,8 +185,9 @@ $(function () {
       success: function (id) {
         if (id) {
           updateSolicitacao(event, false);
-          showResponse(`Atendimento de '${event.title}' <b>removida</b> com sucesso!`, 'success');
+          showReponse(`Atendimento de '${event.title}' <b>removido</b> com sucesso!`, 'success');
           $('#calendar').fullCalendar('removeEvents', event.id);
+          loadExternalEvents(types[event._type]);
         }
       },
       error: function () {
@@ -211,17 +214,18 @@ $(function () {
         end: event.end.format(),
         color: event.color,
         externalEventId: event._externalEventId,
-        salaId: _salaId
+        salaId: _salaId,
+        type: event._type
       },
       success: function (id) {
         event.id = id;
         $calendar.fullCalendar('updateEvent', event);
         updateSolicitacao(event, true);
+        loadExternalEvents(types[event._type]);
         showResponse(`Atendimento de '${event.title}' agendado com sucesso!`, 'success');
       },
       error: function () {
-        showResponse(`Erro ao salvar atendimento de '${event.title}'.`, 'error');
-        // alert(`Erro ao salvar atendimento de '${event.title}'`);
+        showReponse(`Erro ao salvar atendimento de '${event.title}'.`, 'error');
       }
     });
   }
@@ -231,7 +235,7 @@ $(function () {
       method: 'PUT',
       url: '/api/'+ event._type + '/' + event._externalEventId,
       data: {
-        agendado: ja_agendado,
+        agendado: ja_agendado
       },
       success: function () {
       },

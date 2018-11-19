@@ -26,7 +26,7 @@ router
 router
 	.get('/agenda/:sala', function(req, res) {
 		var query = ['_salaId', '==', req.params['sala']];
-		firestore.getDocsWithQuery(colAgenda, query, function(docs, err) {
+		firestore.getDocsWithFilter(colAgenda, query, function(docs, err) {
 			if (err) res.status(500).send(err);
 			else     res.status(200).json(docs);
 		});
