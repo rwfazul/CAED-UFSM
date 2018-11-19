@@ -80,8 +80,24 @@ button.btn.btn-logout > i {
 	color: red;
 }
 
+#table-buttons {
+	margin-bottom: 10px !important;
+}
+
+#table-buttons .dt-button {
+	font-size: 12px;
+}
+
+#table-buttons .dt-button:hover {
+	color: #2196F3;
+}
+
+#table-buttons .dt-button i.material-icons {
+	font-size: 17px;
+}
+
 a.btn-horarios {
-	background-color: #03a5fc;
+	background-color: #2196F3;
 	color: #fff;
 	margin-left: 5px;
 	padding: 0 20px 0 5px;

@@ -9,7 +9,7 @@ $(function () {
         $tbody.append(
           "<tr>"
           + "<td>" + sala.nome + "</td>"
-          + "<td><a class='modal-trigger waves-effect waves-green btn-flat' href='#" + sala.id + "'>Clique aqui <i class='left material-icons'>search</i></a></td>"
+          + "<td><a class='modal-trigger btn btn-horarios' href='#" + sala.id + "'>Clique aqui <i class='left material-icons'>search</i></a></td>"
           + "</tr>"
         );
         $container.append(

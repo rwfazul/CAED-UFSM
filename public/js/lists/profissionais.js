@@ -10,7 +10,7 @@ $(function () {
           "<tr>"
           + "<td>" + profissional.nome + "</td>"
           + "<td>" + profissional.especialidade + "</td>"
-          + "<td><a class='modal-trigger waves-effect waves-green btn-flat' href='#" + profissional.id + "'>Clique aqui <i class='left material-icons'>search</i></a></td>"
+          + "<td><a class='modal-trigger btn btn-horarios' href='#" + profissional.id + "'>Clique aqui <i class='left material-icons'>search</i></a></td>"
           + "</tr>"
         );
         $container.append(
