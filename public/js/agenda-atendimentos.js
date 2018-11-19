@@ -124,7 +124,7 @@ $(function () {
   loadExternalEvents(types.solicitacoes);
   loadExternalEvents(types.encaminhamentos);
 
-  //function for load and reload external events and pagination
+  //function to load and reload external events and pagination
   function loadExternalEvents(type){
     getPagesExternalEvents(type);
     getExternalEvents(type, 1);
@@ -186,7 +186,7 @@ $(function () {
           updateSolicitacao(event, false);
           showReponse(`Atendimento de '${event.title}' <b>removido</b> com sucesso!`, 'success');
           $('#calendar').fullCalendar('removeEvents', event.id);
-          //loadExternalEvents(event._type);
+          loadExternalEvents(types[event._type]);
         }
       },
       error: function () {
@@ -220,7 +220,7 @@ $(function () {
         event.id = id;
         $calendar.fullCalendar('updateEvent', event);
         updateSolicitacao(event, true);
-        //loadExternalEvents(event._type);
+        loadExternalEvents(types[event._type]);
         showReponse(`Atendimento de '${event.title}' agendado com sucesso!`, 'success');
       },
       error: function () {
