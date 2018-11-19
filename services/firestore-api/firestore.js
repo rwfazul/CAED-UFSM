@@ -8,7 +8,8 @@ var getDocs = function (query, callback) {
 			snapshot.forEach(doc => {
 				var data = doc.data();
 				data.id = doc.id;
-				data.timestamp = ((data.timestamp).toDate()).toLocaleDateString();
+				if(data.timestamp != null)
+					data.timestamp = ((data.timestamp).toDate()).toLocaleDateString();
 				documents.push(data);
 			});
 			callback (documents);
@@ -28,32 +29,19 @@ module.exports = {
 		getDocs(allDocs, callback);
 	},
 
-	getDocsWithQuery: function (collection, query, callback) {
+	getDocsWithFilter: function (collection, filter, callback) {
 		var db = factory.getDbInstance();
 		var colRef = db.collection(collection);
-		var query = colRef.where( ...query )
-			.get()
-			.then(snapshot => {
-				var documents = [];
-				snapshot.forEach(doc => {
-					// set 'id' key
-					var data = doc.data();
-					data.id = doc.id;
-					documents.push(data);
-				});
-				callback(documents);
-			})
-			.catch(err => {
-				console.log('Error getting documents', err);
-				callback({}, err);
-			});
+		var query = colRef.where(...filter);
+		getDocs(query, callback);
 	},
 
-	getDocsPagination: function (collection, colOrder, page, callback) {
+	getDocsPagination: function (collection, colOrder, filter, page, callback) {
 		var db = factory.getDbInstance();
 		var colRef = db.collection(collection);
 		var limit = page > 1 ? ((page-1)*5) : 5;
 		var query = colRef
+			.where(...filter)
 			.orderBy(colOrder, "desc")
 			.limit(limit);
 		if (page == 1) {
