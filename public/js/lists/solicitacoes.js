@@ -11,9 +11,15 @@ $(function () {
           + "<td>" + solicitacao.matricula + "</td>"
           + "<td>" + solicitacao.nome + "</td>"
           + "<td>" + solicitacao.email + "</td>"
-          + "<td>" + solicitacao.curso + "</td>"
           + "<td>" + solicitacao.tipoAtendimento + "</td>"
-          + "<td><a class='modal-trigger waves-effect waves-green btn-flat' href='#" + solicitacao.id + "'>Clique aqui <i class='left material-icons'>search</i></a></td>"
+          + "<td>" + solicitacao.curso + "</td>"
+          + "<td>" + solicitacao.telefone + "</td>"
+          + "<td>" + solicitacao.temDeficiencia + "</td>"
+          + "<td>" + solicitacao.ehIntercambista + "</td>"
+          + "<td>" + solicitacao.motivoProcura + "</td>"
+          + "<td>" + solicitacao.jaAtendido + "</td>"
+          + "<td>" + solicitacao.motivoEncerramento + "</td>" 
+          + "<td><a class='modal-trigger btn btn-horarios' href='#" + solicitacao.id + "'>Clique aqui <i class='left material-icons'>search</i></a></td>"         
           + "</tr>"
         );
         $container.append(

@@ -9,12 +9,19 @@ $(function () {
         $tbody.append(
           "<tr>"
           + "<td>" + moment(encaminhamento.timestamp, "YYYY-MM-DD").format("DD/MM/YYYY") + "</td>"
+          + "<td>" + encaminhamento.matricula + "</td>"
           + "<td>" + encaminhamento.nome + "</td>"
           + "<td>" + encaminhamento.email + "</td>"
-          + "<td>" + encaminhamento.curso + "</td>"
-          + "<td>" + encaminhamento.servidor_nome + "</td>"
           + "<td>" + encaminhamento.tipoAtendimento + "</td>"
-          + "<td><a class='modal-trigger waves-effect waves-green btn-flat' href='#" + encaminhamento.id + "'>Clique aqui <i class='left material-icons'>search</i></a></td>"
+          + "<td>" + encaminhamento.curso + "</td>"
+          + "<td>" + encaminhamento.telefone + "</td>"
+          + "<td>" + encaminhamento.temDeficiencia + "</td>"
+          + "<td>" + encaminhamento.ehIntercambista + "</td>"
+          + "<td>" + encaminhamento.servidor_nome + "</td>"
+          + "<td>" + encaminhamento.siape + "</td>"
+          + "<td>" + encaminhamento.servidor_email + "</td>"
+          + "<td>" + encaminhamento.motivoEncaminhamento + "</td>"
+          + "<td><a class='modal-trigger btn btn-horarios' href='#" + encaminhamento.id + "'>Clique aqui <i class='left material-icons'>search</i></a></td>"
           + "</tr>"
         );
         $container.append(

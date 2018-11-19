@@ -42,12 +42,6 @@
 	margin: auto;
 }
 
-a.modal-trigger:hover,
-a.modal-trigger:focus {
-	background-color: #03a5fc;
-	color: #fff;
-}
-
 table.dataTable.display tbody tr.odd > .sorting_1 {
 	background-color: #f9f9f9 !important;
 }
@@ -84,6 +78,18 @@ button.btn.btn-logout > i {
 
 .fc-event > .delete-external-event > .material-icons:hover {
 	color: red;
+}
+
+a.btn-horarios {
+	background-color: #03a5fc;
+	color: #fff;
+	margin-left: 5px;
+	padding: 0 20px 0 5px;
+}
+
+a.btn-horarios:hover {
+    background-color: #03a5fc;
+	color: #333;
 }
 
 .external-events .fc-event {
