@@ -156,11 +156,11 @@ $(function() {
   function agendarSemestreInteiro(event){
     var month = moment(event.start, "YYYY-MM-DD").format("M");
     var currentYear = moment().format("YYYY");
-    var max_month = month <= 6 ? 6 : 11;  //6 = july, 11 = december
-    var max_date = new Date(currentYear, max_month, 31);
+    var end_month = month <= 6 ? 6 : 11;  //6 = july, 11 = december
+    var end_date = new Date(currentYear, end_month, 31);
     var date_start = event.start;
     var date_end = event.end;
-    while(date_end < max_date){
+    while(date_end < end_date){
       date_start = moment(date_start).add(7, 'days');
       date_end = moment(date_end).add(7, 'days');
       event.start = date_start;
