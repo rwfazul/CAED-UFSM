@@ -227,7 +227,7 @@ $(function() {
     selectHelper: true,
     /* render events from firebase */
     eventSources: [
-      '/api/profissionais/agenda/' + id_sala
+      '/api/profissionais/agenda/' + _salaId
     ],
     /* function loading: Triggered when event or resource fetching starts/stops. */
     loading: function (isLoading) {
