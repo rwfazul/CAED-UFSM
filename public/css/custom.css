@@ -42,12 +42,13 @@
 	margin: auto;
 }
 
-table.dataTable.display tbody tr.odd > .sorting_1 {
-	background-color: #f9f9f9 !important;
+table.dataTable.display tbody tr.hasEvent > td {
+	background-color: #81C784 !important;
+	border-radius: 0px;
 }
 
-table.dataTable.display tbody tr.even > .sorting_1 {
-	background-color: #fff !important;
+table.dataTable.display tbody tr.odd.noEvent > .sorting_1 {
+	background-color: #fafafa !important;
 }
 
 .nav-expanded .brand-sidebar {
@@ -115,4 +116,8 @@ a.btn-horarios:hover {
     margin-bottom: 10px;
     cursor: all-scroll;
     border: none;
+}
+
+#modal-new-event.modal {
+	max-height: 100%;
 }

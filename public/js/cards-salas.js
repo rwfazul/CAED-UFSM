@@ -11,9 +11,7 @@ $(function() {
 	        	var subPath = encodeURIComponent(sala['nome'].replace(/\s+/g, '-').toLowerCase());
 	        	cards.append( createCard(sala, salaUrl + subPath) );
 	        });
-	        $('#loader-circle').fadeOut('slow', function() {
-		      $(this).remove();
-		    });
+ 			$("#loader-events").css('display', 'none');
 	      })
 	      .fail(function() {
 	        alert('Erro ao recuperar as salas. Por favor, dentro de alguns instantes, tente recarregar a página.')
