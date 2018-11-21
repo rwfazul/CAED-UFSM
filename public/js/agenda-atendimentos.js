@@ -240,6 +240,7 @@ $(function () {
         showResponse(`Atendimento de '${event.title}' agendado com sucesso!`, 'success');
       },
       error: function () {
+        $calendar.fullCalendar('removeEvents', event.id); 
         showResponse(`Erro ao salvar atendimento de '${event.title}'.`, 'error');
       }
     });
@@ -262,6 +263,7 @@ $(function () {
         showResponse(`'${event.title}' agendado com sucesso!`, 'success');
       },
       error: function () {
+        $calendar.fullCalendar('removeEvents', event.id); 
         showResponse(`Erro ao salvar '${event.title}'.`, 'error');
       }
     });

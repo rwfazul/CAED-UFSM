@@ -153,6 +153,22 @@ $(function() {
     });
   }
 
+  function agendarSemestreInteiro(event){
+    var month = moment(event.start, "YYYY-MM-DD").format("M");
+    var currentYear = moment().format("YYYY");
+    var end_month = month <= 6 ? 6 : 11;  //6 = july, 11 = december
+    var end_date = new Date(currentYear, end_month, 31);
+    var date_start = event.start;
+    var date_end = event.end;
+    while(date_end < end_date){
+      date_start = moment(date_start).add(7, 'days');
+      date_end = moment(date_end).add(7, 'days');
+      event.start = date_start;
+      event.end = date_end;
+      saveEvent(event);
+    }
+  }
+
   function getMaxContinuousHour(array, start) {
     var max = array[start];
     for (var i = start + 1; i < array.length; i++) {
@@ -224,6 +240,10 @@ $(function() {
     /* function eventReceive: Called when a external event has been dropped onto the calendar. */
     eventReceive: function (event) {
      saveEvent(event);
+     var decision = confirm("Agendar até o fim do semestre?");
+     if (decision){
+        agendarSemestreInteiro(event);
+     }
     },
     /* function eventResize: Triggered when resizing stops and the event has changed in duration. */
     eventResize: function(event, delta, revertFunc) {
