@@ -213,7 +213,6 @@ $(function() {
     defaultView: 'agendaWeek',
     navLinks: true, // can click day/week names to navigate views
     editable: true,
-    eventOverlap: true, // don't allow sobreposition
     droppable: true, // this allows things to be dropped onto the calendar
     eventLimit: true, // allow "more" link when too many events,
     eventDurationEditable: false,
@@ -230,15 +229,15 @@ $(function() {
       '/api/profissionais/agenda/' + _salaId
     ],
     /* function loading: Triggered when event or resource fetching starts/stops. */
-    loading: function (isLoading) {
+    loading: function(isLoading) {
       $("#loader-events").css('display', 'block');
     },
     /* function eventAfterAllRender: Triggered after all events have finished rendering. */
-    eventAfterAllRender: function (view) {
+    eventAfterAllRender: function(view) {
       $("#loader-events").css('display', 'none');
     },
     /* function eventReceive: Called when a external event has been dropped onto the calendar. */
-    eventReceive: function (event) {
+    eventReceive: function(event) {
      saveEvent(event);
      var decision = confirm("Agendar até o fim do semestre?");
      if (decision){

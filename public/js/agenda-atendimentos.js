@@ -150,6 +150,20 @@ $(function () {
     }
   );
 
+  $('#save-new-event').on('click', function() {
+    var type = $("#event-type").val();
+    var color = getColorNewEvent(type);
+    var eventData = {
+      title: $('#event-title').val(),
+      start: $('#event-start').val(),
+      end: $('#event-end').val(),
+      color: color,
+      type: type,
+      salaId: _salaId
+    };
+    saveEspecialEvent(eventData);
+  });
+
   //get events from page
   $pagination.on('click', '.get-events-page',
     function () {
@@ -233,11 +247,13 @@ $(function () {
         type: event._type
       },
       success: function (id) {
-        event.id = id;
-        $calendar.fullCalendar('updateEvent', event);
-        updateSolicitacao(event, true);
-        loadExternalEvents(types[event._type]);
-        showResponse(`Atendimento de '${event.title}' agendado com sucesso!`, 'success');
+        if (id) {
+          event.id = id;
+          $calendar.fullCalendar('updateEvent', event);
+          updateSolicitacao(event, true);
+          loadExternalEvents(types[event._type]);
+          showResponse(`Atendimento de '${event.title}' agendado com sucesso!`, 'success');
+        }
       },
       error: function () {
         $calendar.fullCalendar('removeEvents', event.id); 
@@ -246,21 +262,18 @@ $(function () {
     });
   }
   
-  function saveNewEvent(event){
+  function saveEspecialEvent(event) {
     $.post({
-      url: '/api/atendimentos/agenda/new',
-      data: {
-        title: event.title,
-        color: event.color,
-        start: event.start.format(),
-        end: event.end.format(),
-        type: event._type,
-        salaId: _salaId,
-      },
+      url: '/api/atendimentos/agenda',
+      data: event,
       success: function (id) {
-        event.id = id;
-        $calendar.fullCalendar('renderEvent', event, true); 
-        showResponse(`'${event.title}' agendado com sucesso!`, 'success');
+        if (id) {
+          event.id = id;
+          event._type = event.type;
+          delete event.type;
+          $calendar.fullCalendar('renderEvent', event); 
+          showResponse(`'${event.title}' agendado com sucesso!`, 'success');
+        }
       },
       error: function () {
         $calendar.fullCalendar('removeEvents', event.id); 
@@ -293,7 +306,6 @@ $(function () {
       },
       error: function () {
         showResponse(`Erro ao atualizar atendimento de '${event.title}'.`, 'error');
-        // alert(`Erro ao salvar atendimento de '${event.title}'`);
       }
     });
   }
@@ -325,19 +337,19 @@ $(function () {
       '/api/atendimentos/agenda/' + _salaId
     ],
     /* function loading: Triggered when event or resource fetching starts/stops. */
-    loading: function (isLoading) {
+    loading: function(isLoading) {
       $("#loader-events").css('display', 'block');
     },
     /* function eventAfterAllRender: Triggered after all events have finished rendering. */
-    eventAfterAllRender: function (view) {
+    eventAfterAllRender: function(view) {
       $("#loader-events").css('display', 'none');
     },
     /* function eventReceive: Called when a external event has been dropped onto the calendar. */
-    eventReceive: function (event) {
+    eventReceive: function(event) {
       saveEvent(event);
     },
     /* function eventDrop: Triggered when dragging stops and the event has moved to a different day/time. */
-    eventDrop: function (event) {
+    eventDrop: function(event) {
       updateEvent(event);
     },
     /* function drop: Called when a valid external jQuery UI draggable has been dropped onto the calendar. */
@@ -346,28 +358,16 @@ $(function () {
       $(this).remove();
     },
     /* select method: A method for programmatically selecting a period of time. */
-    select: function (start, end) {
+    select: function(start, end) {
       $modal_new_event.modal("open");
-      $("#event-start").val(start);
-      $("#event-end").val(end);
-      $("#save-new-event").on('click', function () {
-        var title = $("#event-title").val();
-        var type = $("#event-type").val();
-        var color = getColorNewEvent(type);
-        var eventData = {
-          title: title,
-          _type: type,
-          color: color,
-          start: start,
-          stick: true,
-          end: end
-        };
-        saveNewEvent(eventData);
-      });
+      var rounded = start.minute() != 0 ? start.clone().subtract(30, 'minute') : start; 
+      $("#event-start").val(rounded.format());
+      $("#event-end").val(rounded.clone().add(1, 'hour').format());
       $('#calendar').fullCalendar('unselect');
     },
     /* function eventClic: Triggered when the user clicks an event. */
-    eventClick: function (event) {
+    eventClick: function(event) {
+      console.log(event);
       if (event._type) { // if false = profissional
         var decision = confirm("Tem certeza que deseja cancelar esse atendimento?");
         if (decision)
