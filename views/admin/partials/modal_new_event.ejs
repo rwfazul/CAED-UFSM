@@ -1,0 +1,45 @@
+<!-- Modal Structure -->
+<div id="modal-new-event" class="modal">
+  <div class="modal-content">
+    <div class="row" style="margin:0">
+      <div class="col s11">
+        <h4 class="header">Novo evento</h4>
+      </div>
+      <div class='col s1 right'>
+        <a href='#!' class='modal-close waves-effect waves-green btn-floating light-blue lighten-1 white-text'>
+          <i class='material-icons'>close</i>
+        </a>
+      </div>
+    </div>
+    <div class="row">
+      <div class="input-field col s12">
+        <input type="text" id="event-title" required class="validate">
+        <label>Título/Nome aluno</label>
+      </div>
+      <div class="input-field col s12">
+        <select id="event-type">
+          <option value="" disabled selected>Escolha o tipo</option>
+          <option value="Reunião">Reunião</option>
+          <option value="Entrevista">Entrevista</option>
+          <option value="Resolução 33/2015">Resolução 33/2015</option>
+          <option value="Alunos Educação Especial">Alunos Educação Especial</option>
+        </select>
+        <label>Categoria da atividade</label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="input-field col s12 m6 l3">
+        <input type="text" id="event-start" required>
+        <label>Início</label>
+      </div>
+      <div class="input-field col s12 m6 l3">
+        <input type="text" id="event-end" required>
+        <label>Fim</label>
+      </div>
+    <div class="row">
+      <div class="col s12">
+        <button id="save-new-event" class="modal-close waves-effect waves-green btn">Salvar evento</button>
+      </div>
+    </div>
+  </div>
+</div>

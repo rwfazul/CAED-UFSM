@@ -197,7 +197,7 @@ $(function() {
     defaultView: 'agendaWeek',
     navLinks: true, // can click day/week names to navigate views
     editable: true,
-    eventOverlap: false, // don't allow sobreposition
+    eventOverlap: true, // don't allow sobreposition
     droppable: true, // this allows things to be dropped onto the calendar
     eventLimit: true, // allow "more" link when too many events,
     eventDurationEditable: false,
@@ -207,7 +207,7 @@ $(function() {
     minTime: '08:00:00',
     maxTime: '20:00:00',
     defaultTimedEventDuration: '01:00:00',
-    selectable: true,
+    selectable: false,
     selectHelper: true,
     /* render events from firebase */
     eventSources: [

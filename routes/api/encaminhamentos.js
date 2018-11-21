@@ -22,7 +22,8 @@ router
 	})
 	.get('/pagination/:page', function (req, res) {
 		var filter = ['agendado', '==', false];
-		firestore.getDocsPagination(colEncaminhamentos, "timestamp", filter, req.params.page, function (docs, err) {
+		var order = ['ultimaModificacao', 'timestamp'];
+		firestore.getDocsPagination(colEncaminhamentos, order, filter, req.params.page, function (docs, err) {
 			if (err) res.status(500).send(err);
 			else res.status(200).json(docs);
 		});
@@ -38,6 +39,7 @@ router.route('/:id')
 	.put(function (req, res) {
 		var doc = {
 			agendado: req.body['agendado'] == "true" ? true : false,
+			ultimaModificacao: req.body['ultimaModificacao']
 		};
 		firestore.updateDoc(colEncaminhamentos, req.params.id, doc, function (docId, err) {
 			if (err) res.status(500).send(err);

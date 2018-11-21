@@ -2,7 +2,7 @@ $(function () {
   var $table = $('#table-solicitacoes');
   var $tbody = $table.find('tbody');
   var $container = $('#solicitacoes');
-  $.getJSON("/api/solicitacoes") // a rota que ta em solicitacoes vai ter que fazer query pelo encaminhamento:false
+  $.getJSON("/api/solicitacoes") 
     .done(function (solicitacoes) {
       $.each(solicitacoes, function (i, solicitacao) {
         $tbody.append(

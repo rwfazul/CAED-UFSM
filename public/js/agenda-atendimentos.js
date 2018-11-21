@@ -3,19 +3,29 @@ $(function () {
   $('.modal').modal();
   $('.collapsible').collapsible();
   $('.tooltipped').tooltip();
+  $('select').material_select();
 
   const $calendar = $('#calendar');
   const $external_events = $('.external-events');
   const $pagination = $('.pagination');
+  const $modal_new_event = $('#modal-new-event');
 
   const _salaId = $('#salaId').data('id');
 
-  // TODO: Mudar para as cores certas
   const mapColors = {
     //tipo de atendimento
     'Psicológico': '#2196f3', // azul fraco 
     'Psicopedagógico': '#f57f17', //laranja
     'Orientação Profissional': '#9e9e9e', //cinza 
+  };
+
+  const mapColorsNewEvent = {
+    //tipo de atendimento
+    'Reunião': '#000000', // preto 
+    'Atividade': '#000000', //preto
+    'Entrevista': '#000000', // preto
+    'Resolução 33/2015': '#1a237e', //azul forte
+    'Alunos Educação Especial': '#1b5e20' //verde forte
   };
 
   const mapHeaders = {
@@ -27,6 +37,10 @@ $(function () {
 
   function getColor(tipoAtendimento) {
     return mapColors[$.trim(tipoAtendimento)];
+  }
+
+  function getColorNewEvent(tipo) {
+    return mapColorsNewEvent[tipo];
   }
 
   function createExternalEvent(event, type) {
@@ -125,7 +139,7 @@ $(function () {
   loadExternalEvents(types.encaminhamentos);
 
   //function to load and reload external events and pagination
-  function loadExternalEvents(type){
+  function loadExternalEvents(type) {
     getPagesExternalEvents(type);
     getExternalEvents(type, 1);
   }
@@ -144,7 +158,7 @@ $(function () {
       var parent = $(this).parent();
       var anterior = parent.find('.active');
       var type = parent.attr("id") == "pagination-solicitacoes" ? types.solicitacoes : types.encaminhamentos;
-      switch(id){
+      switch (id) {
         case "left":
           page = anterior.attr("id") > 1 ? parseInt(anterior.attr("id")) - 1 : 1;
           break;
@@ -184,9 +198,10 @@ $(function () {
       url: '/api/atendimentos/agenda/' + event.id,
       success: function (id) {
         if (id) {
-          updateSolicitacao(event, false);
-          showReponse(`Atendimento de '${event.title}' <b>removido</b> com sucesso!`, 'success');
+          showResponse(`Atendimento de '${event.title}' <b>removido</b> com sucesso!`, 'success');
           $('#calendar').fullCalendar('removeEvents', event.id);
+          if(types[event._type])
+            updateSolicitacao(event, false);
           loadExternalEvents(types[event._type]);
         }
       },
@@ -225,7 +240,29 @@ $(function () {
         showResponse(`Atendimento de '${event.title}' agendado com sucesso!`, 'success');
       },
       error: function () {
-        showReponse(`Erro ao salvar atendimento de '${event.title}'.`, 'error');
+        showResponse(`Erro ao salvar atendimento de '${event.title}'.`, 'error');
+      }
+    });
+  }
+  
+  function saveNewEvent(event){
+    $.post({
+      url: '/api/atendimentos/agenda/new',
+      data: {
+        title: event.title,
+        color: event.color,
+        start: event.start.format(),
+        end: event.end.format(),
+        type: event._type,
+        salaId: _salaId,
+      },
+      success: function (id) {
+        event.id = id;
+        $calendar.fullCalendar('renderEvent', event, true); 
+        showResponse(`'${event.title}' agendado com sucesso!`, 'success');
+      },
+      error: function () {
+        showResponse(`Erro ao salvar '${event.title}'.`, 'error');
       }
     });
   }
@@ -233,13 +270,10 @@ $(function () {
   function updateSolicitacao(event, ja_agendado) {
     $.ajax({
       method: 'PUT',
-      url: '/api/'+ event._type + '/' + event._externalEventId,
+      url: '/api/' + event._type + '/' + event._externalEventId,
       data: {
-        agendado: ja_agendado
-      },
-      success: function () {
-      },
-      error: function () {
+        agendado: ja_agendado,
+        ultimaModificacao: moment().format()
       }
     });
   }
@@ -311,21 +345,28 @@ $(function () {
     },
     /* select method: A method for programmatically selecting a period of time. */
     select: function (start, end) {
-      var title = prompt('Event Title:');
-      var eventData;
-      if (title) {
-        eventData = {
+      $modal_new_event.modal("open");
+      $("#event-start").val(start);
+      $("#event-end").val(end);
+      $("#save-new-event").on('click', function () {
+        var title = $("#event-title").val();
+        var type = $("#event-type").val();
+        var color = getColorNewEvent(type);
+        var eventData = {
           title: title,
+          _type: type,
+          color: color,
           start: start,
+          stick: true,
           end: end
         };
-        $('#calendar').fullCalendar('renderEvent', eventData, true); // stick? = true
-      }
+        saveNewEvent(eventData);
+      });
       $('#calendar').fullCalendar('unselect');
     },
     /* function eventClic: Triggered when the user clicks an event. */
     eventClick: function (event) {
-      if (event._externalEventId) { // if false = profissional
+      if (event._type) { // if false = profissional
         var decision = confirm("Tem certeza que deseja cancelar esse atendimento?");
         if (decision)
           removeEvent(event);

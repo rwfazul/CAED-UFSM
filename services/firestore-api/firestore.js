@@ -8,15 +8,15 @@ var getDocs = function (query, callback) {
 			snapshot.forEach(doc => {
 				var data = doc.data();
 				data.id = doc.id;
-				if(data.timestamp != null)
+				if (data.timestamp != null)
 					data.timestamp = ((data.timestamp).toDate()).toLocaleDateString();
 				documents.push(data);
 			});
-			callback (documents);
+			callback(documents);
 		})
 		.catch(err => {
 			console.log('Error getting documents', err);
-			callback ({}, err);
+			callback({}, err);
 		});
 };
 
@@ -39,10 +39,11 @@ module.exports = {
 	getDocsPagination: function (collection, colOrder, filter, page, callback) {
 		var db = factory.getDbInstance();
 		var colRef = db.collection(collection);
-		var limit = page > 1 ? ((page-1)*5) : 5;
+		var limit = page > 1 ? ((page - 1) * 5) : 5;
 		var query = colRef
 			.where(...filter)
-			.orderBy(colOrder, "desc")
+			.orderBy(colOrder[0], "desc")
+			.orderBy(colOrder[1], "desc")
 			.limit(limit);
 		if (page == 1) {
 			getDocs(query, callback);
@@ -51,7 +52,9 @@ module.exports = {
 				.then(documentSnapshots => {
 					var lastVisible = documentSnapshots.docs[documentSnapshots.docs.length - 1];
 					var next = colRef
-						.orderBy(colOrder, "desc")
+						.where(...filter)
+						.orderBy(colOrder[0], "desc")
+						.orderBy(colOrder[1], "desc")
 						.startAfter(lastVisible)
 						.limit(5);
 					getDocs(next, callback);
