@@ -1,6 +1,9 @@
 function initDataTable($table, nameSing, namePlural) {
+  $.fn.dataTable.moment('DD/MM/YYYY');
   var table = $table.DataTable({
     responsive: true,
+    ordering: true,
+    order: [[ 0, "desc" ]],
     language: {
       sEmptyTable: `Nenhum registro de ${nameSing} cadastrado`,
       sInfo: `Mostrando de _START_ até _END_ de _TOTAL_ ${namePlural}`,
