@@ -5,22 +5,23 @@ $(function () {
   $.getJSON("/api/solicitacoes") 
     .done(function (solicitacoes) {
       $.each(solicitacoes, function (i, solicitacao) {
+        var classAgendado = solicitacao.agendado ? 'hasEvent' : 'noEvent';
         $tbody.append(
-          "<tr>"
-          + "<td>" + moment(solicitacao.timestamp, "YYYY-MM-DD").format("DD/MM/YYYY") + "</td>"
-          + "<td>" + solicitacao.matricula + "</td>"
-          + "<td>" + solicitacao.nome + "</td>"
-          + "<td>" + solicitacao.email + "</td>"
-          + "<td>" + solicitacao.tipoAtendimento + "</td>"
-          + "<td>" + solicitacao.curso + "</td>"
-          + "<td>" + solicitacao.telefone + "</td>"
-          + "<td>" + solicitacao.temDeficiencia + "</td>"
-          + "<td>" + solicitacao.ehIntercambista + "</td>"
-          + "<td>" + solicitacao.motivoProcura + "</td>"
-          + "<td>" + solicitacao.jaAtendido + "</td>"
-          + "<td>" + solicitacao.motivoEncerramento + "</td>" 
-          + "<td><a class='modal-trigger btn btn-horarios' href='#" + solicitacao.id + "'>Clique aqui <i class='left material-icons'>search</i></a></td>"         
-          + "</tr>"
+          `<tr class="${classAgendado}">
+           <td>${moment(solicitacao.timestamp, "YYYY-MM-DD").format("DD/MM/YYYY")}</td>
+           <td>${solicitacao.matricula}</td>
+           <td>${solicitacao.nome}</td>
+           <td>${solicitacao.email}</td>
+           <td>${solicitacao.tipoAtendimento}</td>
+           <td>${solicitacao.curso}</td>
+           <td>${solicitacao.telefone}</td>
+           <td>${solicitacao.temDeficiencia}</td>
+           <td>${solicitacao.ehIntercambista}</td>
+           <td>${solicitacao.motivoProcura}</td>
+           <td>${solicitacao.jaAtendido}</td>
+           <td>${solicitacao.motivoEncerramento}</td>
+           <td><a class="modal-trigger btn btn-horarios" href="#${solicitacao.id}">Clique aqui <i class="left material-icons">search</i></a></td>         
+          </tr>`
         );
         $container.append(
           "<div class='modal' id='" + solicitacao.id + "'>"
@@ -36,6 +37,7 @@ $(function () {
         $(this).remove();
       });
       initDataTable($table, 'solicitação', 'solicitações'); // file init-datatable.js
+      $("#loader-events").css('display', 'none');
     })
     .fail(function() {
       alert('Erro ao recuperar solicitações. Por favor, dentro de alguns instantes, tente recarregar a página.')

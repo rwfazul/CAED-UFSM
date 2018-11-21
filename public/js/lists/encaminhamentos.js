@@ -2,27 +2,28 @@ $(function () {
   var $table = $('#table-encaminhamentos');
   var $tbody = $table.find('tbody');
   var $container = $('#encaminhamentos');
-// document.createElement
+
   $.getJSON("/api/encaminhamentos") // a rota que ta em encaminhamentos vai ter que fazer query pelo encaminhamento:true
     .done(function (encaminhamentos) {
       $.each(encaminhamentos, function (i, encaminhamento) {
+        var classAgendado = encaminhamento.agendado ? 'hasEvent' : 'noEvent';
         $tbody.append(
-          "<tr>"
-          + "<td>" + moment(encaminhamento.timestamp, "YYYY-MM-DD").format("DD/MM/YYYY") + "</td>"
-          + "<td>" + encaminhamento.matricula + "</td>"
-          + "<td>" + encaminhamento.nome + "</td>"
-          + "<td>" + encaminhamento.email + "</td>"
-          + "<td>" + encaminhamento.tipoAtendimento + "</td>"
-          + "<td>" + encaminhamento.curso + "</td>"
-          + "<td>" + encaminhamento.telefone + "</td>"
-          + "<td>" + encaminhamento.temDeficiencia + "</td>"
-          + "<td>" + encaminhamento.ehIntercambista + "</td>"
-          + "<td>" + encaminhamento.servidor_nome + "</td>"
-          + "<td>" + encaminhamento.siape + "</td>"
-          + "<td>" + encaminhamento.servidor_email + "</td>"
-          + "<td>" + encaminhamento.motivoEncaminhamento + "</td>"
-          + "<td><a class='modal-trigger btn btn-horarios' href='#" + encaminhamento.id + "'>Clique aqui <i class='left material-icons'>search</i></a></td>"
-          + "</tr>"
+          `<tr class="${classAgendado}">
+            <td>${moment(encaminhamento.timestamp, "YYYY-MM-DD").format("DD/MM/YYYY")}</td>
+            <td>${encaminhamento.matricula}</td>
+            <td>${encaminhamento.nome}</td>
+            <td>${encaminhamento.email}</td>
+            <td>${encaminhamento.tipoAtendimento}</td>
+            <td>${encaminhamento.curso}</td>
+            <td>${encaminhamento.telefone}</td>
+            <td>${encaminhamento.temDeficiencia}</td>
+            <td>${encaminhamento.ehIntercambista}</td>
+            <td>${encaminhamento.servidor_nome}</td>
+            <td>${encaminhamento.siape}</td>
+            <td>${encaminhamento.servidor_email}</td>
+            <td>${encaminhamento.motivoEncaminhamento}</td>
+            <td><a class="modal-trigger btn btn-horarios" href="#${encaminhamento.id}">Clique aqui <i class="left material-icons">search</i></a></td>
+          </tr>`
         );
         $container.append(
           "<div class='modal' id='" + encaminhamento.id + "'>"
@@ -34,10 +35,8 @@ $(function () {
             .append(createScheduleTable(encaminhamento.horarios));
       });
       $('.modal').modal(); 
-      $('#loader-circle').fadeOut('fast', function () {
-        $(this).remove();
-      });
       initDataTable($table, 'encaminhamento', 'encaminhamentos'); // file init-datatable.js
+      $("#loader-events").css('display', 'none');
     })
     .fail(function() {
       alert('Erro ao recuperar encaminhamentos. Por favor, dentro de alguns instantes, tente recarregar a página.')

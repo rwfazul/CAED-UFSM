@@ -22,10 +22,8 @@ $(function () {
             .append(createScheduleTable(sala.horarios));
       });
       $('.modal').modal(); 
-      $('#loader-circle').fadeOut('fast', function () {
-        $(this).remove();
-      });
       initDataTable($table, 'sala', 'salas'); // file init-datatable.js
+      $("#loader-events").css('display', 'none');
     })
     .fail(function() {
       alert('Erro ao recuperar profissionais. Por favor, dentro de alguns instantes, tente recarregar a página.')

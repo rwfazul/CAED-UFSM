@@ -27,6 +27,7 @@ $(function () {
         $(this).remove();
       });
       initDataTable($table, 'profissional', 'profissionais'); // file init-datatable.js
+      $("#loader-events").css('display', 'none');
     })
     .fail(function() {
       alert('Erro ao recuperar profissionais. Por favor, dentro de alguns instantes, tente recarregar a página.')
