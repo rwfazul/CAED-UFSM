@@ -53,8 +53,8 @@ module.exports = {
 					var lastVisible = documentSnapshots.docs[documentSnapshots.docs.length - 1];
 					var next = colRef
 						.where(...filter)
-						.orderBy(colOrder[0], "desc")
-						.orderBy(colOrder[1], "desc")
+						.orderBy(colOrder[0], 'desc')
+						.orderBy(colOrder[1], 'desc')
 						.startAfter(lastVisible)
 						.limit(5);
 					getDocs(next, callback);
