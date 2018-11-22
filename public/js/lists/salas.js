@@ -7,10 +7,12 @@ $(function () {
     .done(function (salas) {
       $.each(salas, function (i, sala) {
         $tbody.append(
-          "<tr>"
-          + "<td>" + sala.nome + "</td>"
-          + "<td><a class='modal-trigger btn btn-horarios' href='#" + sala.id + "'>Clique aqui <i class='left material-icons'>search</i></a></td>"
-          + "</tr>"
+          `<tr>
+              <td>${sala.nome}</td>
+              <td>
+                <a class="modal-trigger btn btn-horarios" href="#${sala.id}">Clique aqui <i class="left material-icons">search</i></a>
+              </td>
+           </tr>`
         );
         $container.append(
           "<div class='modal' id='" + sala.id + "'>"

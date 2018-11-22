@@ -21,7 +21,7 @@ $(function() {
 	function createCard(sala, path) {
 		return (`
 		    <div class="col s12 m4">
-		      <div class="sala card cyan darken-1 z-depth-3">
+		      <div class="sala card base-color z-depth-3">
 		        <div class="card-content blac white-text">
 		          <span class="card-title">${sala.nome}</span>
 		        </div>

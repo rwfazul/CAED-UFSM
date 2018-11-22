@@ -1,5 +1,34 @@
-.side-nav .collapsible-body li a, .side-nav.fixed .collapsible-body li a {
+.base-color {
+	background-color: #204C90 !important;
+}
+
+.base-color:hover {
+	color: #CC8F00 !important;
+}
+
+.base-color-dark {
+	background-color: #21376C !important;
+}
+
+.detail-color {
+	color: #CC8F00 !important;
+}
+
+.side-nav .collapsible-body li a, 
+.side-nav.fixed .collapsible-body li a {
     padding: 0 23.5px 0 31px !important;
+}
+
+.brand-sidebar h1 span.logo-text {
+	padding-left: 0px;
+}
+
+.brand-sidebar h1.logo-wrapper {
+	padding-left: 14px;
+}
+
+.nav-collapsed .brand-sidebar .brand-logo span {
+	visibility: hidden;
 }
 
 .calendar h2 {
@@ -26,7 +55,7 @@
 }
 
 .sala.card .card-action button.link:hover {
-	color: #333 !important;
+	color: #CC8F00 !important;
 }
 
 .sala.card .card-action .material-icons {
@@ -47,9 +76,7 @@ table.dataTable.display tbody tr.hasEvent > td {
 	border-radius: 0px;
 }
 
-table.dataTable.display tbody tr.odd.noEvent > .sorting_1 {
-	background-color: #fafafa !important;
-}
+
 
 .nav-expanded .brand-sidebar {
 	background-color: transparent !important;
@@ -61,7 +88,7 @@ button.btn.btn-logout {
 
 button.btn.btn-logout:hover,
 button.btn.btn-logout:focus {
-	color: #333;
+	color: #CC8F00;
 }
 
 button.btn.btn-logout > i {
@@ -90,7 +117,7 @@ button.btn.btn-logout > i {
 }
 
 #table-buttons .dt-button:hover {
-	color: #2196F3;
+	color: #CC8F00;
 }
 
 #table-buttons .dt-button i.material-icons {
@@ -98,15 +125,16 @@ button.btn.btn-logout > i {
 }
 
 a.btn-horarios {
-	background-color: #2196F3;
+	background-color: #204C90;
 	color: #fff;
 	margin-left: 5px;
 	padding: 0 20px 0 5px;
 }
 
-a.btn-horarios:hover {
-    background-color: #03a5fc;
-	color: #333;
+a.btn-horarios:hover,
+a.btn-horarios:focus {
+	background-color: #204C90;
+	color: #CC8F00;
 }
 
 .external-events .fc-event {
