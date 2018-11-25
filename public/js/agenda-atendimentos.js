@@ -94,7 +94,7 @@ $(function () {
 
   // fetch external events
   function getExternalEvents(type, page) {
-    $.getJSON(`/api/${type.collection}/pagination/${page}`)
+    $.getJSON(`/api/${type.collection}/${page}`)
       .done(function (events) {
         $container = type.external;
         $container.empty();
@@ -121,7 +121,7 @@ $(function () {
   }
 
   function getPagesExternalEvents(type) {
-    $.getJSON(`/api/${type.collection}/externalEvents`)
+    $.getJSON(`/api/${type.collection}/getpages`)
       .done(function (events) {
         type.pages = (events.length > 5) ? Math.ceil((events.length) / 5) : 1;
         type.pagination.empty();

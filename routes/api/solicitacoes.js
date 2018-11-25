@@ -13,14 +13,14 @@ router
 			else res.status(200).json(docs);
 		});
 	})
-	.get('/externalEvents', function (req, res) {
+	.get('/getpages', function (req, res) {
 		var filter = ['agendado', '==', false];
 		firestore.getDocsWithFilter(colSolicitacoes, filter, function (docs, err) {
 			if (err) res.status(500).send(err);
 			else res.status(200).json(docs);
 		});
 	})
-	.get('/pagination/:page', function (req, res) {
+	.get('/:page', function (req, res) {
 		var filter = ['agendado', '==', false];
 		var order = ['ultimaModificacao', 'timestamp'];
 		firestore.getDocsPagination(colSolicitacoes, order, filter, req.params['page'], function (docs, err) {
