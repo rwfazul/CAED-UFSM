@@ -40,23 +40,34 @@ module.exports = {
 		var db = factory.getDbInstance();
 		var colRef = db.collection(collection);
 		var limit = page > 1 ? ((page - 1) * 5) : 5;
-		var query = colRef
-			.where(...filter)
-			.orderBy(colOrder[0], "desc")
-			.orderBy(colOrder[1], "desc")
-			.limit(limit);
+		if (colOrder && filter) {
+			var query = colRef
+				.where(...filter)
+				.orderBy(colOrder[0], "desc")
+				.orderBy(colOrder[1], "desc")
+				.limit(limit);
+		} else {
+			var query = colRef
+				.limit(limit);
+		}
 		if (page == 1) {
 			getDocs(query, callback);
 		} else if (page > 1) {
 			query.get()
 				.then(documentSnapshots => {
 					var lastVisible = documentSnapshots.docs[documentSnapshots.docs.length - 1];
-					var next = colRef
-						.where(...filter)
-						.orderBy(colOrder[0], 'desc')
-						.orderBy(colOrder[1], 'desc')
-						.startAfter(lastVisible)
-						.limit(5);
+					if (colOrder && filter) {
+						var next = colRef
+							.where(...filter)
+							.orderBy(colOrder[0], 'desc')
+							.orderBy(colOrder[1], 'desc')
+							.startAfter(lastVisible)
+							.limit(5);
+					} else {
+						var next = colRef
+							.startAfter(lastVisible)
+							.limit(5);
+					}
 					getDocs(next, callback);
 				})
 				.catch(err => {

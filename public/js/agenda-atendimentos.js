@@ -7,7 +7,6 @@ $(function () {
 
   const $calendar = $('#calendar');
   const $external_events = $('.external-events');
-  const $pagination = $('.pagination');
   const $modal_new_event = $('#modal-new-event');
 
   const _salaId = $('#salaId').data('id');
@@ -95,7 +94,7 @@ $(function () {
 
   // fetch external events
   function getExternalEvents(type, page) {
-    $.getJSON(`/api/${type.collection}/pagination/${page}`)
+    $.getJSON(`/api/${type.collection}/${page}`)
       .done(function (events) {
         $container = type.external;
         $container.empty();
@@ -110,21 +109,19 @@ $(function () {
   }
 
   function createPagination(type) {
-    $container = type.pagination;
-    $container.append("<li id='left' class='get-events-page waves-effect'><a href='#!'><i class='material-icons'>chevron_left</i></a></li>");
-    for (var i = 1; i <= type.pages; i++) {
-      var li = $('<li>').attr("id", i).addClass("get-events-page").addClass("waves-effect");
-      var a = $('<a>').attr("href", "#!").text(i);
-      li.append(a);
-      if (i == 1)
-        li.addClass("active");
-      $container.append(li);
-    }
-    $container.append("<li id='right' class='get-events-page waves-effect'><a href='#!'><i class='material-icons'>chevron_right</i></a></li>");
+    type.pagination.materializePagination({
+      align: 'left',
+      lastPage: type.pages,
+      firstPage: 1,
+      useUrlParameter: false,
+      onClickCallback: function (requestedPage) {
+        getExternalEvents(type, requestedPage);
+      }
+    });
   }
 
   function getPagesExternalEvents(type) {
-    $.getJSON(`/api/${type.collection}/externalEvents`)
+    $.getJSON(`/api/${type.collection}/getpages`)
       .done(function (events) {
         type.pages = (events.length > 5) ? Math.ceil((events.length) / 5) : 1;
         type.pagination.empty();
@@ -135,14 +132,14 @@ $(function () {
       });
   }
 
-  loadExternalEvents(types.solicitacoes);
-  loadExternalEvents(types.encaminhamentos);
-
   //function to load and reload external events and pagination
   function loadExternalEvents(type) {
-    getPagesExternalEvents(type);
     getExternalEvents(type, 1);
+    getPagesExternalEvents(type);
   }
+
+  loadExternalEvents(types.solicitacoes);
+  loadExternalEvents(types.encaminhamentos);
 
   $($external_events).on('click', '.fc-event > .delete-external-event',
     function () {
@@ -150,7 +147,7 @@ $(function () {
     }
   );
 
-  $('#save-new-event').on('click', function() {
+  $('#save-new-event').on('click', function () {
     var type = $("#event-type").val();
     var color = getColorNewEvent(type);
     var eventData = {
@@ -163,30 +160,6 @@ $(function () {
     };
     saveEspecialEvent(eventData);
   });
-
-  //get events from page
-  $pagination.on('click', '.get-events-page',
-    function () {
-      var page;
-      var id = $(this).attr("id");
-      var parent = $(this).parent();
-      var anterior = parent.find('.active');
-      var type = parent.attr("id") == "pagination-solicitacoes" ? types.solicitacoes : types.encaminhamentos;
-      switch (id) {
-        case "left":
-          page = anterior.attr("id") > 1 ? parseInt(anterior.attr("id")) - 1 : 1;
-          break;
-        case "right":
-          page = anterior.attr("id") < type.pages ? parseInt(anterior.attr("id")) + 1 : type.pages;
-          break;
-        default:
-          page = id;
-          break;
-      }
-      anterior.removeClass('active');
-      parent.find('#' + page + "").addClass("active");
-      getExternalEvents(type, page);
-    });
 
   function removeExternalEvent(externalEvent) {
     var event = $(externalEvent).data('event');
@@ -214,7 +187,7 @@ $(function () {
         if (id) {
           showResponse(`Atendimento de '${event.title}' <b>removido</b> com sucesso!`, 'success');
           $('#calendar').fullCalendar('removeEvents', event.id);
-          if(types[event._type])
+          if (types[event._type])
             updateSolicitacao(event, false);
           loadExternalEvents(types[event._type]);
         }
@@ -256,12 +229,12 @@ $(function () {
         }
       },
       error: function () {
-        $calendar.fullCalendar('removeEvents', event.id); 
+        $calendar.fullCalendar('removeEvents', event.id);
         showResponse(`Erro ao salvar atendimento de '${event.title}'.`, 'error');
       }
     });
   }
-  
+
   function saveEspecialEvent(event) {
     $.post({
       url: '/api/atendimentos/agenda',
@@ -271,12 +244,12 @@ $(function () {
           event.id = id;
           event._type = event.type;
           delete event.type;
-          $calendar.fullCalendar('renderEvent', event); 
+          $calendar.fullCalendar('renderEvent', event);
           showResponse(`'${event.title}' agendado com sucesso!`, 'success');
         }
       },
       error: function () {
-        $calendar.fullCalendar('removeEvents', event.id); 
+        $calendar.fullCalendar('removeEvents', event.id);
         showResponse(`Erro ao salvar '${event.title}'.`, 'error');
       }
     });
@@ -337,19 +310,19 @@ $(function () {
       '/api/atendimentos/agenda/' + _salaId
     ],
     /* function loading: Triggered when event or resource fetching starts/stops. */
-    loading: function(isLoading) {
+    loading: function (isLoading) {
       $("#loader-events").css('display', 'block');
     },
     /* function eventAfterAllRender: Triggered after all events have finished rendering. */
-    eventAfterAllRender: function(view) {
+    eventAfterAllRender: function (view) {
       $("#loader-events").css('display', 'none');
     },
     /* function eventReceive: Called when a external event has been dropped onto the calendar. */
-    eventReceive: function(event) {
+    eventReceive: function (event) {
       saveEvent(event);
     },
     /* function eventDrop: Triggered when dragging stops and the event has moved to a different day/time. */
-    eventDrop: function(event) {
+    eventDrop: function (event) {
       updateEvent(event);
     },
     /* function drop: Called when a valid external jQuery UI draggable has been dropped onto the calendar. */
@@ -358,15 +331,15 @@ $(function () {
       $(this).remove();
     },
     /* select method: A method for programmatically selecting a period of time. */
-    select: function(start, end) {
+    select: function (start, end) {
       $modal_new_event.modal("open");
-      var rounded = start.minute() != 0 ? start.clone().subtract(30, 'minute') : start; 
+      var rounded = start.minute() != 0 ? start.clone().subtract(30, 'minute') : start;
       $("#event-start").val(rounded.format());
       $("#event-end").val(rounded.clone().add(1, 'hour').format());
       $('#calendar').fullCalendar('unselect');
     },
     /* function eventClic: Triggered when the user clicks an event. */
-    eventClick: function(event) {
+    eventClick: function (event) {
       console.log(event);
       if (event._type) { // if false = profissional
         var decision = confirm("Tem certeza que deseja cancelar esse atendimento?");

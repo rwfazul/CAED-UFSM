@@ -1,4 +1,4 @@
-$(function() {
+$(function () {
 
   $('.modal').modal();
   $('.collapsible').collapsible();
@@ -6,10 +6,11 @@ $(function() {
 
   const $calendar = $('#calendar');
   const $external_events = $('#external-events');
+  const $pagination = $('#pagination-profissionais');
   const _salaId = $('#salaId').data('id');
 
   // TODO: Mudar para as cores certas
-  const mapColors = { 
+  const mapColors = {
     //especialidade profissional
     'Psicologia': '#f44336', //vermelho forte
     'Psicopedagogia': '#9c27b0', //roxo forte
@@ -59,29 +60,63 @@ $(function() {
   }
 
   // fetch external events
-  (function() {
-    $.getJSON("/api/profissionais")
-      .done(function(profissionais) {
-        $.each(profissionais, function(i, profissional) {
+  function getExternalEvents(page) {
+    $.getJSON(`/api/profissionais/${page}`)
+      .done(function (profissionais) {
+        $external_events.empty();
+        $external_events.append($('<h4>').addClass('header').text("Profissionais"));
+        $.each(profissionais, function (i, profissional) {
           $external_events.append(createExternalEvent(profissional));
         });
       })
-      .fail(function() {
+      .fail(function () {
         alert('Erro ao recuperar profissionais. Por favor, dentro de alguns instantes, tente recarregar a página.')
       });
-  })();
+  }
 
-  $($external_events).on('click', '.fc-event > .delete-external-event', function() {
+  function createPagination(pages) {
+    $pagination.materializePagination({
+      align: 'left',
+      lastPage: pages,
+      firstPage: 1,
+      useUrlParameter: false,
+      onClickCallback: function (requestedPage) {
+        getExternalEvents(requestedPage);
+      }
+    });
+  }
+
+  function getPagesExternalEvents() {
+    $.getJSON(`/api/profissionais`)
+      .done(function (events) {
+        var pages = (events.length > 5) ? Math.ceil((events.length) / 5) : 1;
+        $pagination.empty();
+        createPagination(pages);
+      })
+      .fail(function () {
+        alert(`Erro ao recuperar profissionais. Por favor, dentro de alguns instantes, tente recarregar a página.`)
+      });
+  }
+
+  //function to load and reload external events and pagination
+  function loadExternalEvents() {
+    getExternalEvents(1);
+    getPagesExternalEvents();
+  }
+
+  loadExternalEvents();
+
+  $($external_events).on('click', '.fc-event > .delete-external-event', function () {
     var externalEvent = $(this).parent();
     var event = $(externalEvent).data('event');
     $.ajax({
       method: 'DELETE',
       url: '/api/profissionais/' + event._externalEventId,
-      success: function() {
+      success: function () {
         showResponse(`Profissional '${event.title}' <b>removido</b> com sucesso!`, 'success');
         $(externalEvent).remove();
       },
-      error: function() {
+      error: function () {
         showResponse(`Erro ao <b>remover</b> profissional '${event.title}'.`, 'error');
       }
     });
@@ -139,8 +174,8 @@ function saveRecurringEvent(event) {
           showResponse(`Alocação de '${event.title}' <b>salva</b> com sucesso!`, 'success');
         }
       },
-      error: function() {
-        $calendar.fullCalendar('removeEvents', event.id); 
+      error: function () {
+        $calendar.fullCalendar('removeEvents', event.id);
         showResponse(`Erro ao <b>salvar</b> alocação de '${event.title}'.`, 'error');
       }
     });
@@ -152,12 +187,12 @@ function saveRecurringEvent(event) {
       url: '/api/profissionais/agenda/' + event.id,
       data: {
         start: event.start.format(),
-        end:   event.end.format(),
+        end: event.end.format(),
       },
-      success: function() {
+      success: function () {
         showResponse(`Alocação de '${event.title}' <b>atualizada</b> com sucesso!`, 'success');
       },
-      error: function() {
+      error: function () {
         showResponse(`Erro ao <b>atualizar</b> alocação de '${event.title}'.`, 'error');
       }
     });
@@ -167,11 +202,11 @@ function saveRecurringEvent(event) {
     $.ajax({
       method: 'DELETE',
       url: '/api/profissionais/agenda/' + event.id,
-      success: function() {
+      success: function () {
         showResponse(`Alocação de '${event.title}' <b>removida</b> com sucesso!`, 'success');
         $('#calendar').fullCalendar('removeEvents', event.id);
       },
-      error: function() {
+      error: function () {
         showResponse(`Erro ao <b>remover</b> alocação de '${event.title}'.`, 'error');
       }
     });
@@ -210,13 +245,13 @@ function saveRecurringEvent(event) {
     var constraints = event._constraints;
     var dowHours = [];
     // find all constraints' start hours in the day of this event
-    constraints.forEach(function(constraint) {
+    constraints.forEach(function (constraint) {
       if (constraint.dow[0] == event.end.day()) {
         var constraintStartHour = parseInt(constraint.start.substring(0, 2));
         dowHours.push(constraintStartHour);
       }
     });
-    dowHours.sort(function(a, b){ return a - b }); // sort ascending
+    dowHours.sort(function (a, b) { return a - b }); // sort ascending
     var indexStartHour = dowHours.indexOf(event.start.hour());
     // get max startHour of all contraints (of event.end.day) in a sequential range (whitout gaps) from event.start.hour
     // this startHour add 1 is the max end hour that is allowed in resize
@@ -224,9 +259,9 @@ function saveRecurringEvent(event) {
     response.maxResizeHour = maxEndHour;
     // check if event.end.hour fit in the allowed range and if
     // (maxEndHour == event.end.hour) check if event.end is a full hour
-    if ( (maxEndHour > event.end.hour()) ||
-         (maxEndHour == event.end.hour() && event.end.minute() == 0) )
-        return true;
+    if ((maxEndHour > event.end.hour()) ||
+      (maxEndHour == event.end.hour() && event.end.minute() == 0))
+      return true;
     return false;
   }
 
@@ -264,11 +299,11 @@ function saveRecurringEvent(event) {
       }
     },
     /* function loading: Triggered when event or resource fetching starts/stops. */
-    loading: function(isLoading) {
+    loading: function (isLoading) {
       $("#loader-events").css('display', 'block');
     },
     /* function eventAfterAllRender: Triggered after all events have finished rendering. */
-    eventAfterAllRender: function(view) {
+    eventAfterAllRender: function (view) {
       $("#loader-events").css('display', 'none');
     },
     /* function eventReceive: Called when a external event has been dropped onto the calendar. */
@@ -279,7 +314,7 @@ function saveRecurringEvent(event) {
         saveEvent(event); 
     },
     /* function eventResize: Triggered when resizing stops and the event has changed in duration. */
-    eventResize: function(event, delta, revertFunc) {
+    eventResize: function (event, delta, revertFunc) {
       var response = { maxResizeHour: '' };
       if (event.end.minute() != 0) {
         showResponse(`Alocação deve ser feita em horas cheias (${event.end.hour()}:${event.end.minute()} não é permitido).`, 'warning');
@@ -304,7 +339,7 @@ function saveRecurringEvent(event) {
   $('#external-events').on('mousedown', '.fc-event', function () {
     $calendar.fullCalendar('renderEvents', $(this).data('event')._constraints);
   });
-  
+
   // remove contraints events (with id defined in _externalEventId) of triggered external event
   $('#external-events').on('mouseup', '.fc-event', function () {
     $calendar.fullCalendar('removeEvents', $(this).data('event')._externalEventId);
