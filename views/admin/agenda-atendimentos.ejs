@@ -82,7 +82,9 @@
       // active menu style
       $(function() {
         $('#p_agenda_atendimentos').addClass('selected');
-        $('#p_agenda').addClass('highlight');
+        var $menu =  $('#p_agenda');
+        $menu.find('a.collapsible-header').addClass('active');
+        $menu.find('div.collapsible-body').css('display', 'block');         
       });
     </script>
 </body>

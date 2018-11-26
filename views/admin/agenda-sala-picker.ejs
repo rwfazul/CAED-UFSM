@@ -34,8 +34,12 @@
     <script>
       // active menu style
       $(function() {
-        $('#p_agenda_atendimentos').addClass('selected');
-        $('#p_agenda').addClass('highlight');
+        var pathname = window.location.pathname; 
+        var page = pathname.split('/')[3];
+        $(`#p_agenda_${page}`).addClass('selected');
+        var $menu =  $('#p_agenda');
+        $menu.find('a.collapsible-header').addClass('active');
+        $menu.find('div.collapsible-body').css('display', 'block');   
       });
     </script>
 </body>

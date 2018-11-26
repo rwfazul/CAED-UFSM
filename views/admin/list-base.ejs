@@ -44,7 +44,9 @@
       var page = pathname.split('/')[2];
       var $submenu = $(`#p_${page}`);
       $submenu.addClass('selected');
-      $submenu.parents('li:first').addClass('highlight');
+      var $menu = $submenu.parents('li:first');
+      $menu.find('a.collapsible-header').addClass('active');
+      $menu.find('div.collapsible-body').css('display', 'block ');      
     });
   </script>
 </body>
