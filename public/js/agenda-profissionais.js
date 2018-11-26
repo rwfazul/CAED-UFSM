@@ -141,14 +141,38 @@ $(function () {
         color: event.color,
         salaId: _salaId
       },
-      success: function (id) {
-        event.id = id;
-        delete event.constraint;
-        $calendar.fullCalendar('updateEvent', event);
-        // only updateEvent doesn't allow event resizing/change
-        $calendar.fullCalendar('removeEvents', event.id);
-        $calendar.fullCalendar('renderEvent', event);
-        showResponse(`Alocação de '${event.title}' <b>salva</b> com sucesso!`, 'success');
+      success: function(id) {
+        if (id) {
+          event.id = id;
+          delete event.constraint;
+          $calendar.fullCalendar('updateEvent', event);
+          // only updateEvent doesn't allow event resizing/change
+          $calendar.fullCalendar('removeEvents', event.id); 
+          $calendar.fullCalendar('renderEvent', event);
+          showResponse(`Alocação de '${event.title}' <b>salva</b> com sucesso!`, 'success');
+        }
+      },
+      error: function() {
+        $calendar.fullCalendar('removeEvents', event.id); 
+        showResponse(`Erro ao <b>salvar</b> alocação de '${event.title}'.`, 'error');
+      }
+    });
+  }
+
+function saveRecurringEvent(event) {
+    $.post({
+      url: '/api/profissionais/agenda/semestre',
+      data: event,
+      success: function(id) {
+        if (id) {
+          /*event.id = id;
+          delete event.constraint;
+          $calendar.fullCalendar('updateEvent', event);
+          // only updateEvent doesn't allow event resizing/change
+          $calendar.fullCalendar('removeEvents', event.id); 
+          $calendar.fullCalendar('renderEvent', event);*/
+          showResponse(`Alocação de '${event.title}' <b>salva</b> com sucesso!`, 'success');
+        }
       },
       error: function () {
         $calendar.fullCalendar('removeEvents', event.id);
@@ -188,20 +212,23 @@ $(function () {
     });
   }
 
-  function agendarSemestreInteiro(event) {
-    var month = moment(event.start, "YYYY-MM-DD").format("M");
-    var currentYear = moment().format("YYYY");
-    var end_month = month <= 6 ? 6 : 11;  //6 = july, 11 = december
-    var end_date = new Date(currentYear, end_month, 31);
-    var date_start = event.start;
-    var date_end = event.end;
-    while (date_end < end_date) {
-      date_start = moment(date_start).add(7, 'days');
-      date_end = moment(date_end).add(7, 'days');
-      event.start = date_start;
-      event.end = date_end;
-      saveEvent(event);
+  function scheduleEntirePeriod(event){
+    var startMonth = event.start.month();
+    var endMonth = startMonth <= 6 ? 6 : 11;  //6 = july, 11 = december
+    var add = endMonth - startMonth;
+    var start = moment(event.start).format('YYYY/MM/DD');
+    var end = moment(event.start.clone().add(add, 'month')).format('YYYY/MM/DD');
+    var ranges = [ {start: start, end: end} ];
+    var data = {
+      title: event.title,
+      start: moment(event.start).format('HH:mm'),
+      end: moment(event.end).format('HH:mm'),
+      dow: [ event.start.day() ],
+      ranges: ranges,
+      color: event.color,
+      salaId: _salaId
     }
+    saveRecurringEvent(data);
   }
 
   function getMaxContinuousHour(array, start) {
@@ -263,6 +290,14 @@ $(function () {
     eventSources: [
       '/api/profissionais/agenda/' + _salaId
     ],
+    /* function eventRender: triggered while an event is being rendered. */
+    eventRender: function(event) {
+      if (event.ranges) { 
+        return (event.ranges.filter(function(range){ // test event against all the ranges
+          return (event.start.isBefore(range.end) && event.end.isAfter(range.start));
+        }).length)>0; //if it isn't in one of the ranges, don't render it (by returning false)
+      }
+    },
     /* function loading: Triggered when event or resource fetching starts/stops. */
     loading: function (isLoading) {
       $("#loader-events").css('display', 'block');
@@ -272,12 +307,11 @@ $(function () {
       $("#loader-events").css('display', 'none');
     },
     /* function eventReceive: Called when a external event has been dropped onto the calendar. */
-    eventReceive: function (event) {
-      saveEvent(event);
-      var decision = confirm("Agendar até o fim do semestre?");
-      if (decision) {
-        agendarSemestreInteiro(event);
-      }
+    eventReceive: function(event) {
+      if ( confirm("Agendar até o fim do semestre?") )
+        scheduleEntirePeriod(event);
+      else
+        saveEvent(event); 
     },
     /* function eventResize: Triggered when resizing stops and the event has changed in duration. */
     eventResize: function (event, delta, revertFunc) {
@@ -295,9 +329,8 @@ $(function () {
       }
     },
     /* function eventClick: Triggered when the user clicks an event. */
-    eventClick: function (event) {
-      var decision = confirm("Tem certeza que deseja cancelar essa locação?");
-      if (decision)
+    eventClick: function(event) {
+      if ( confirm("Tem certeza que deseja cancelar essa locação?") )
         removeEvent(event);
     }
   });
