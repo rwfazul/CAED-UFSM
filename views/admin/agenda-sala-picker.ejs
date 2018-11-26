@@ -30,7 +30,14 @@
     <!-- /Main -->
 
     <% include partials/footer %>
-      <script src="/js/cards-salas.js"></script>
+    <script src="/js/cards-salas.js"></script>
+    <script>
+      // active menu style
+      $(function() {
+        $('#p_agenda_atendimentos').addClass('selected');
+        $('#p_agenda').addClass('highlight');
+      });
+    </script>
 </body>
 
 </html>

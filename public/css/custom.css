@@ -31,6 +31,32 @@
 	visibility: hidden;
 }
 
+@media only screen and (max-width: 992px) {
+	aside .brand-sidebar .logo-wrapper {
+	    padding: 21px 18px;
+	}
+}
+
+ul.side-nav.leftside-navigation li:not(.no-padding).selected,
+.side-nav .collapsible-body > ul:not(.collapsible) > li.selected, 
+.side-nav.fixed .collapsible-body > ul:not(.collapsible) > li.selected {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+ul.side-nav.leftside-navigation li:not(.no-padding).selected > a,
+.side-nav .collapsible-body > ul:not(.collapsible) > li.selected > a, 
+.side-nav.fixed .collapsible-body > ul:not(.collapsible) > li.selected > a,
+ul.side-nav.leftside-navigation li:not(.no-padding).selected > a > i,
+.side-nav .collapsible-body > ul:not(.collapsible) > li.selected > a > i, 
+.side-nav.fixed .collapsible-body > ul:not(.collapsible) > li.selected > a > i {
+	color: #204C90;
+}
+
+li.highlight > a,
+li.highlight > a > i{
+	color: #204C90 !important;
+}
+
 .calendar h2 {
   font-size: 22px;
 }
@@ -117,7 +143,7 @@ button.btn.btn-logout > i {
 }
 
 #table-buttons .dt-button:hover {
-	color: #CC8F00;
+	color: #204C90;
 }
 
 #table-buttons .dt-button i.material-icons {
@@ -148,4 +174,13 @@ a.btn-horarios:focus {
 
 #modal-new-event.modal {
 	max-height: 100%;
+}
+
+table.dataTable.dtr-inline.collapsed>tbody>tr[role="row"]>td:first-child:before, table.dataTable.dtr-inline.collapsed>tbody>tr[role="row"]>th:first-child:before {
+    background-color: #204C90 !important;
+    
+}
+
+table.dataTable.dtr-inline.collapsed>tbody>tr.parent>td:first-child:before, table.dataTable.dtr-inline.collapsed>tbody>tr.parent>th:first-child:before {
+    background-color: #31b131 !important;
 }

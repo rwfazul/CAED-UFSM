@@ -37,5 +37,15 @@
   <script src="/js/lists/schedule-table.js"></script>
   <script src="/js/lists/init-datatable.js"></script>
   <script src="/js/lists/<%= data.name %>.js"></script>
+  <script>
+    // active menu style
+    $(function() {
+      var pathname = window.location.pathname; 
+      var page = pathname.split('/')[2];
+      var $submenu = $(`#p_${page}`);
+      $submenu.addClass('selected');
+      $submenu.parents('li:first').addClass('highlight');
+    });
+  </script>
 </body>
 </html>
