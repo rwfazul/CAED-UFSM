@@ -38,11 +38,11 @@ function initDataTable($table, nameSing, namePlural) {
 
   var buttons = new $.fn.dataTable.Buttons(table, {
     buttons: [
-      { extend: 'colvis', text: 'Visibilidade <i class="left material-icons">visibility</i>' },
-      { extend: 'print', exportOptions: { columns: [ ':visible' ] }, text: 'Imprimir <i class="left material-icons">print</i>' },        
-      { extend: 'copyHtml5', exportOptions: { columns: [ ':visible' ] }, text: 'Copiar <i class="left material-icons">content_copy</i>' },
-      { extend: 'csvHtml5', exportOptions: { columns: [ ':visible' ] }, text: 'CSV <i class="left material-icons">view_week</i>' },
-      { extend: 'pdfHtml5', exportOptions: { columns: [ ':visible' ] }, text: 'PDF <i class="left material-icons">picture_as_pdf</i>' }, 
+      { extend: 'colvis', text: '<i class="left material-icons">visibility</i> Visibilidade' },
+      { extend: 'print', exportOptions: { columns: [ ':visible' ] }, text: '<i class="left material-icons">print</i> Imprimir' },        
+      { extend: 'copyHtml5', exportOptions: { columns: [ ':visible' ] }, text: '<i class="left material-icons">content_copy</i> Copiar' },
+      { extend: 'csvHtml5', exportOptions: { columns: [ ':visible' ] }, text: '<i class="left material-icons">view_week</i> CSV' },
+      { extend: 'pdfHtml5', exportOptions: { columns: [ ':visible' ] }, text: '<i class="left material-icons">picture_as_pdf</i> PDF' }, 
     ]
   }).container().appendTo($('#table-buttons'));
 
