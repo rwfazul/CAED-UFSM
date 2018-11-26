@@ -43,6 +43,21 @@ router
 			if (err) res.status(500).send(err);
 			else     res.status(201).json(docId);
 		});	
+	})
+	.post('/agenda/semestre', function(req, res) {
+		var doc = {
+			title: req.body['title'],
+			start: req.body['start'],
+			end:   req.body['end'],
+			dow:   req.body['dow'],
+			ranges: req.body['ranges'],
+			color: req.body['color'],
+			_salaId: req.body['salaId'],
+		};
+		firestore.addDoc(colAgenda, doc, function(docId, err) {
+			if (err) res.status(500).send(err);
+			else     res.status(201).json(docId);
+		});	
 	});
 
 router.route('/agenda/:id')
