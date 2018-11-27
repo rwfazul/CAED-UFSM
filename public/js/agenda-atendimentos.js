@@ -315,9 +315,9 @@ $(function () {
     },
     /* eventAfterRender: Triggered after an event has been placed on the calendar in its final position. */
     eventAfterRender: function(event, element, view) {
-      if (!(event._type) && event.title) { // profissional
-        if ($(element).css('margin-right','20px') != '0px')
-          $(element).css('margin-right','20px');
+      if (!(event._type) && event.title) { // 'profissional' event
+        if ($(element).css('margin-right','20px') != '0px') // if event is in left side
+          $(element).css('margin-right','20px'); // decrise size for better constraints visualization
       }
     },
     /* function eventAfterAllRender: Triggered after all events have finished rendering. */
