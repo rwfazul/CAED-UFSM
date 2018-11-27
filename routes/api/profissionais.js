@@ -50,17 +50,23 @@ router
 			else     res.status(201).json(docId);
 		});	
 	})
-	.post('/agenda/semestre', function(req, res) {
+	.put('/agenda/:id/semestre', function(req, res) {
 		var doc = {
-			title: req.body['title'],
 			start: req.body['start'],
 			end:   req.body['end'],
 			dow:   req.body['dow'],
-			ranges: req.body['ranges'],
-			color: req.body['color'],
-			_salaId: req.body['salaId'],
+			ranges: req.body['ranges']
 		};
-		firestore.addDoc(colAgenda, doc, function(docId, err) {
+		firestore.updateDoc(colAgenda, req.params.id, doc, function(docId, err) {
+			if (err) res.status(500).send(err);
+			else     res.status(201).json(docId);
+		});	
+	})
+	.put('/agenda/:id/semestre/excludedDates', function(req, res) {
+		var doc = {
+			excludedDates: req.body['excludedDates']
+		};
+		firestore.updateDoc(colAgenda, req.params.id, doc, function(docId, err) {
 			if (err) res.status(500).send(err);
 			else     res.status(201).json(docId);
 		});	

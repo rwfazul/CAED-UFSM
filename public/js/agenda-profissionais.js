@@ -7,6 +7,7 @@ $(function () {
   const $calendar = $('#calendar');
   const $external_events = $('#external-events');
   const $pagination = $('#pagination-profissionais');
+  const $optionsModal = $('#optionsModal');
   const _salaId = $('#salaId').data('id');
 
   // TODO: Mudar para as cores certas
@@ -159,24 +160,20 @@ $(function () {
     });
   }
 
-function saveRecurringEvent(event) {
-    $.post({
-      url: '/api/profissionais/agenda/semestre',
-      data: event,
+  function saveRecurringEvent(id, data, title) {
+    $.ajax({
+      method: 'PUT',
+      url: `/api/profissionais/agenda/${id}/semestre`,
+      data: data,
       success: function(id) {
         if (id) {
-          /*event.id = id;
-          delete event.constraint;
-          $calendar.fullCalendar('updateEvent', event);
-          // only updateEvent doesn't allow event resizing/change
-          $calendar.fullCalendar('removeEvents', event.id); 
-          $calendar.fullCalendar('renderEvent', event);*/
-          showResponse(`Alocação de '${event.title}' <b>salva</b> com sucesso!`, 'success');
+          showResponse(`Alocação de '${title}' <b>salva</b> com sucesso!`, 'success');
+          $calendar.fullCalendar('refetchEvents');        
         }
       },
-      error: function () {
+      error: function() {
         $calendar.fullCalendar('removeEvents', event.id);
-        showResponse(`Erro ao <b>salvar</b> alocação de '${event.title}'.`, 'error');
+        showResponse(`Erro ao <b>salvar</b> alocação de '${title}'.`, 'error');
       }
     });
   }
@@ -202,33 +199,52 @@ function saveRecurringEvent(event) {
     $.ajax({
       method: 'DELETE',
       url: '/api/profissionais/agenda/' + event.id,
-      success: function () {
+      success: function() {
         showResponse(`Alocação de '${event.title}' <b>removida</b> com sucesso!`, 'success');
-        $('#calendar').fullCalendar('removeEvents', event.id);
+        $calendar.fullCalendar('removeEvents', event.id);
       },
-      error: function () {
+      error: function() {
         showResponse(`Erro ao <b>remover</b> alocação de '${event.title}'.`, 'error');
       }
     });
   }
 
-  function scheduleEntirePeriod(event){
+  function scheduleEntirePeriod(event) {
     var startMonth = event.start.month();
     var endMonth = startMonth <= 6 ? 6 : 11;  //6 = july, 11 = december
     var add = endMonth - startMonth;
     var start = moment(event.start).format('YYYY/MM/DD');
-    var end = moment(event.start.clone().add(add, 'month')).format('YYYY/MM/DD');
+    var end = moment(event.start.clone().add(add, 'month')).endOf('month').format('YYYY/MM/DD');
     var ranges = [ {start: start, end: end} ];
     var data = {
-      title: event.title,
       start: moment(event.start).format('HH:mm'),
       end: moment(event.end).format('HH:mm'),
       dow: [ event.start.day() ],
-      ranges: ranges,
-      color: event.color,
-      salaId: _salaId
+      ranges: ranges
     }
-    saveRecurringEvent(data);
+    saveRecurringEvent(event.id, data, event.title);
+  }
+
+  function addExcludedDate(event) {
+    var excludedDates = event.excludedDates ? event.excludedDates : [];
+    excludedDates.push(moment(event.start).format('YYYY/MM/DD'));
+    $.ajax({
+      method: 'PUT',
+      url: `/api/profissionais/agenda/${event.id}/semestre/excludedDates`,
+      data: {
+        excludedDates: excludedDates
+      },
+      success: function(id) {
+        if (id) {
+          showResponse(`Alocação de '${event.title}' <b>removida</b> com sucesso!`, 'success');
+          $calendar.fullCalendar('refetchEvents');
+        }
+      },
+      error: function() {
+        $calendar.fullCalendar('removeEvents', event.id);
+        showResponse(`Erro ao <b>remover</b> alocação de '${event.title}'.`, 'error');
+      }
+    })
   }
 
   function getMaxContinuousHour(array, start) {
@@ -265,6 +281,21 @@ function saveRecurringEvent(event) {
     return false;
   }
 
+  /* Modal actions */
+  $optionsModal.on('click', '#btn-age', function() {
+    scheduleEntirePeriod($optionsModal.data('event'));
+    $optionsModal.modal('close');
+  });
+
+  $optionsModal.on('click', '#btn-del', function() {
+    var event = $optionsModal.data('event');
+    if (!event.ranges)
+      removeEvent(event);
+    else
+      addExcludedDate(event);
+    $optionsModal.modal('close');
+  });
+
   // page is now ready, initialize the calendar...
   $calendar.fullCalendar({
     header: {
@@ -292,10 +323,16 @@ function saveRecurringEvent(event) {
     ],
     /* function eventRender: triggered while an event is being rendered. */
     eventRender: function(event) {
+      if (event.excludedDates) {
+        for (var i = 0; i < event.excludedDates.length; i++) {
+          if (event.excludedDates[i] == event.start.format('YYYY/MM/DD'))
+            return false;
+        }
+      }
       if (event.ranges) { 
-        return (event.ranges.filter(function(range){ // test event against all the ranges
-          return (event.start.isBefore(range.end) && event.end.isAfter(range.start));
-        }).length)>0; //if it isn't in one of the ranges, don't render it (by returning false)
+        return (event.ranges.filter(function(range) { // test event against all the ranges
+          return (event.start.isBetween(moment(range.start, 'YYYY/MM/DD'), moment(range.end, 'YYYY/MM/DD')));
+        }).length) > 0; //if it isn't in one of the ranges, don't render it (by returning false)
       }
     },
     /* function loading: Triggered when event or resource fetching starts/stops. */
@@ -308,10 +345,7 @@ function saveRecurringEvent(event) {
     },
     /* function eventReceive: Called when a external event has been dropped onto the calendar. */
     eventReceive: function(event) {
-      if ( confirm("Agendar até o fim do semestre?") )
-        scheduleEntirePeriod(event);
-      else
-        saveEvent(event); 
+      saveEvent(event); 
     },
     /* function eventResize: Triggered when resizing stops and the event has changed in duration. */
     eventResize: function (event, delta, revertFunc) {
@@ -330,8 +364,14 @@ function saveRecurringEvent(event) {
     },
     /* function eventClick: Triggered when the user clicks an event. */
     eventClick: function(event) {
-      if ( confirm("Tem certeza que deseja cancelar essa locação?") )
-        removeEvent(event);
+      var data = {'id': event.id, 'title': event.title, 'start': event.start, 'end': event.end, 'color': event.color};
+      if (event.ranges)
+        data['ranges'] = event.ranges; 
+      if (event.excludedDates)
+        data['excludedDates'] = event.excludedDates;
+      $optionsModal
+        .data('event', data)
+        .modal('open');
     }
   });
 
