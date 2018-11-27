@@ -310,28 +310,35 @@ $(function () {
       '/api/atendimentos/agenda/' + _salaId
     ],
     /* function loading: Triggered when event or resource fetching starts/stops. */
-    loading: function (isLoading) {
+    loading: function(isLoading) {
       $("#loader-events").css('display', 'block');
     },
+    /* eventAfterRender: Triggered after an event has been placed on the calendar in its final position. */
+    eventAfterRender: function(event, element, view) {
+      if (!(event._type) && event.title) { // profissional
+        if ($(element).css('margin-right','20px') != '0px')
+          $(element).css('margin-right','20px');
+      }
+    },
     /* function eventAfterAllRender: Triggered after all events have finished rendering. */
-    eventAfterAllRender: function (view) {
+    eventAfterAllRender: function(view) {
       $("#loader-events").css('display', 'none');
     },
     /* function eventReceive: Called when a external event has been dropped onto the calendar. */
-    eventReceive: function (event) {
+    eventReceive: function(event) {
       saveEvent(event);
     },
     /* function eventDrop: Triggered when dragging stops and the event has moved to a different day/time. */
-    eventDrop: function (event) {
+    eventDrop: function(event) {
       updateEvent(event);
     },
     /* function drop: Called when a valid external jQuery UI draggable has been dropped onto the calendar. */
-    drop: function () {
+    drop: function() {
       // remove the element from the "Draggable Events" list
       $(this).remove();
     },
     /* select method: A method for programmatically selecting a period of time. */
-    select: function (start, end) {
+    select: function(start, end) {
       $modal_new_event.modal("open");
       var rounded = start.minute() != 0 ? start.clone().subtract(30, 'minute') : start;
       $("#event-start").val(rounded.format());
@@ -339,9 +346,8 @@ $(function () {
       $('#calendar').fullCalendar('unselect');
     },
     /* function eventClic: Triggered when the user clicks an event. */
-    eventClick: function (event) {
-      console.log(event);
-      if (event._type) { // if false = profissional
+    eventClick: function(event) {
+      if (event._type) { // 'agendamentos' only
         var decision = confirm("Tem certeza que deseja cancelar esse atendimento?");
         if (decision)
           removeEvent(event);
