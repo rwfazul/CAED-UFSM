@@ -121,6 +121,14 @@ button.btn.btn-logout > i {
 	line-height: 36px;
 }
 
+.btn-side {
+	padding: 0 0.5rem !important;
+	width: 175px;
+	text-align: left;
+	display: block;
+	margin: 5px;
+}
+
 .brand-sidebar .logo-wrapper a.navbar-toggler i {
 	font-size: 18px;
     line-height: 30px;

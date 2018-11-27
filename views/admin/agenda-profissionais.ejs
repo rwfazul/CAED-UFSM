@@ -24,10 +24,11 @@
         <section id="content">
           <!--start container-->
           <div class="container">
-            <div class="section">
+            <div class="section" id="canvas">
               <div class="row">
                 <div class="col s12 m4 l3">
-                  <a href="#modal-legenda-cores" class="btn base-color modal-trigger">Legenda Cores</a>
+                  <a href="#modal-legenda-cores" class="btn btn-side base-color modal-trigger"><i class="left material-icons">color_lens</i> Legenda Cores</a>
+                  <button id="makepdf" class="btn btn-side base-color"><i class="left material-icons">picture_as_pdf</i> Salvar PDF</button>
                 </div>
                 <div class="col s12 m8 l9">
                   <h4 class="center">
@@ -61,89 +62,12 @@
     </div>
     <!-- /Wrapper -->
   </div>
-
-  <!-- Action Modal -->
-  <div id="optionsModal" class="modal modal_agenda">
-    <div class="modal-content">
-      <h4 class="modal-title"></h4>
-      <div class="row" id="already-schedule">
-        <p><b>Atenção: </b>Esta locação já foi replicada semestralmente</p>
-      </div>
-      <div class="row" id="div-schedule-period">
-        <p><b>Replicar</b> esta locação até o final do semestre</p>
-        <button id="btn-schedule-period" class="modal-close btn-schedule
-         btn-flat">Alocar para todo semestre</button>
-      </div>
-      <div class="row">
-        <p><b>Deletar</b> apenas esta locação em específico</p>
-        <button id="btn-delete-single" class="modal-close btn-delete btn-flat">Deletar unicamente</button>
-      </div>
-      <div class="row" id="div-delete-period">
-        <p><b>Deletar</b> esta locação até o final do semeste</p>
-        <button id="btn-delete-period" class="modal-close btn-delete btn-flat">Deletar para todo semestre</button>
-      </div>
-    </div>
-    <div class="modal-footer">
-      <a href="#!" class="modal-close btn-modal btn-flat">Fechar</a>
-    </div>
-  </div>
-
-  <!-- Confirmation Modal -->
-  <div id="confirmationExternalEvent" class="modal modal_agenda modal_confirmation">
-    <div class="modal-content">
-      <h4 class="modal-title">Atenção!</h4>
-      <p>Você tem certeza que deseja realizar a <b>exclusão</b>?</p>
-      <p><b>Ação</b>: Deletar este profissional</p>
-      <p class="modal-info"></p>
-    </div>
-    <div class="modal-footer">
-      <button id="btn-confirmation" class="modal-close btn-delete btn-flat">Excluir</button>
-      <a href="#!" class="modal-close btn-modal btn-flat">Cancelar</a>
-    </div>
-  </div>
-
-  <div id="confirmationSchedulePeriod" class="modal modal_agenda modal_confirmation">
-    <div class="modal-content">
-      <h4 class="modal-title">Atenção!</h4>
-      <p>Você tem certeza que deseja realizar a <b>locação semestral</b>?</p>
-      <p><b>Ação</b>: Replicar esta locação até o final do semestre</p>
-      <p class="modal-info"></p>
-    </div>
-    <div class="modal-footer">
-      <button id="btn-confirmation" class="modal-close btn-schedule btn-flat">Alocar</button>
-      <a href="#!" class="modal-close btn-modal btn-flat">Cancelar</a>
-    </div>
-  </div>
-
-  <div id="confirmationSingleEvent" class="modal modal_agenda modal_confirmation">
-    <div class="modal-content">
-      <h4 class="modal-title">Atenção!</h4>
-      <p>Você tem certeza que deseja realizar a <b>exclusão</b>?</p>
-      <p><b>Ação</b>: Deletar apenas esta locação em específico</p>
-      <p class="modal-info"></p>
-    </div>
-    <div class="modal-footer">
-      <button id="btn-confirmation" class="modal-close btn-delete btn-flat">Excluir</button>
-      <a href="#!" class="modal-close btn-modal btn-flat">Cancelar</a>
-    </div>
-  </div>
-
-  <div id="confirmationDeletePeriod" class="modal modal_agenda modal_confirmation">
-    <div class="modal-content">
-      <h4 class="modal-title">Atenção!</h4>
-      <p>Você tem certeza que deseja realizar a <b>exclusão</b>?</p>
-      <p><b>Ação:</b> Deletar esta locação até o final do semeste</p>  
-      <p class="modal-info"></p>
-    </div>
-    <div class="modal-footer">
-      <button id="btn-confirmation" class="modal-close btn-delete btn-flat">Excluir</button>
-      <a href="#!" class="modal-close btn-modal btn-flat">Cancelar</a>
-    </div>
-  </div>
-
   <!-- /Main -->
+
+  <% include partials/modals_event %>
   <% include partials/modal_legenda_cores %>
   <% include partials/footer %>
+
   <!-- Plugins -->
   <script src='/vendors/jquery/jquery-ui.min.js'></script>
   <script src="/vendors/jquery/jquery.toast.min.js"></script>
@@ -153,7 +77,12 @@
   <!-- Custom -->
   <script src="/js/schedule-formatter.js"></script>
   <script src="/js/agenda-profissionais.js"></script>
+  <!-- Pagination -->
   <script src="/vendors/materialize-pagination/materialize-pagination.js"></script>
+  <!-- PDF -->
+  <script src="/vendors/html2canvas/html2canvas.min.js"></script>
+  <script src="/vendors/jspdf/jspdf.min.js"></script>
+  <script src="/js/generate-pdf.js"></script>
   <script>
     // active menu style
     $(function() {
@@ -163,7 +92,6 @@
       $menu.find('div.collapsible-body').css('display', 'block'); 
     });
   </script>
-
 </body>
 
 </html>

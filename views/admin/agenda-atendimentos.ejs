@@ -27,7 +27,8 @@
               <div class="section">
                 <div class="row">
                   <div class="col s12 m4 l3">
-                    <a href="#modal-legenda-cores" class="waves-effect waves-light btn modal-trigger">Legenda Cores</a>
+                    <a href="#modal-legenda-cores" class="btn btn-side base-color modal-trigger"><i class="left material-icons">color_lens</i> Legenda Cores</a>
+                    <button id="makepdf" class="btn btn-side base-color"><i class="left material-icons">picture_as_pdf</i> Salvar PDF</button>
                   </div>
                   <div class="col s12 m8 l9">
                     <h4 class="center">
@@ -64,6 +65,8 @@
       <!-- /Wrapper -->
     </div>
     <!-- /Main -->
+
+    <% include partials/modals_event %>
     <% include partials/modal_legenda_cores %>
     <% include partials/modal_new_event %>
     <% include partials/footer %>
@@ -77,7 +80,13 @@
     <!-- Custom -->
     <script src="/js/schedule-formatter.js"></script>
     <script src="/js/agenda-atendimentos.js"></script>
+    <!-- Pagination -->
     <script src="/vendors/materialize-pagination/materialize-pagination.js"></script>
+    <!-- PDF -->
+    <script src="/vendors/html2canvas/html2canvas.min.js"></script>
+    <script src="/vendors/jspdf/jspdf.min.js"></script>
+    <script src="/js/generate-pdf.js"></script>
+
     <script>
       // active menu style
       $(function() {
