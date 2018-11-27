@@ -34,11 +34,8 @@ router
 	.post('/agenda/atendimentos/sala/:uri', function(req, res) {
 		var sala = { id: req.body['id'], nome: req.body['nome'] };
 		returnResponse({ sala: sala }, res, 'agenda-atendimentos');
-	})
-	.get('/relatorios', function(req, res) {
-		res.render('admin/relatorios');
 	});
-
+	
 function returnResponse(data, res, page, partial) {
 	var response = {};
 	if (partial) response.partial = 'partials/' + partial;

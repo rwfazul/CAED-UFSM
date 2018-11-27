@@ -74,6 +74,15 @@
     <script src="/js/schedule-formatter.js"></script>
     <script src="/js/agenda-profissionais.js"></script>
     <script src="/vendors/materialize-pagination/materialize-pagination.js"></script>
+    <script>
+      // active menu style
+      $(function() {
+        $('#p_agenda_profissionais').addClass('selected');
+        var $menu =  $('#p_agenda');
+        $menu.find('a.collapsible-header').addClass('active');
+        $menu.find('div.collapsible-body').css('display', 'block'); 
+      });
+    </script>
 
 </body>
 
