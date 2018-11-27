@@ -193,16 +193,16 @@ a.btn-horarios:focus {
 	color: #000;
 }
 
-#optionsModal button.btn-schedule {
-	background-color: #339933;
-}
-
 .modal_agenda h4 {
 	font-size: 1.8rem;
 }
 
 .modal_agenda button:hover {
 	color: #000;
+}
+
+.modal_agenda button.btn-schedule {
+	background-color: #339933;
 }
 
 .modal_agenda button.btn-delete {

@@ -9,8 +9,9 @@ $(function () {
   const $pagination = $('#pagination-profissionais');
   const $optionsModal = $('#optionsModal');
   const $confirmationExternalEvent = $('#confirmationExternalEvent');
+  const $confirmationSchedulePeriod = $('#confirmationSchedulePeriod');  
   const $confirmationSingleEvent = $('#confirmationSingleEvent');
-  const $confirmationEntirePeriod = $('#confirmationEntirePeriod');  
+  const $confirmationDeletePeriod = $('#confirmationDeletePeriod');  
   const _salaId = $('#salaId').data('id');
 
   // TODO: Mudar para as cores certas
@@ -300,32 +301,37 @@ $(function () {
   }
 
   /* Modal actions */
-  $optionsModal.on('click', '#btn-schedule-period', function() {
-    scheduleEntirePeriod($optionsModal.data('event'));
+  $optionsModal.on('click', '#btn-schedule-period', function() {7
+    var event = $optionsModal.data('event');
+    $confirmationSchedulePeriod.find('.modal-info').html(`<b>Profissional:</b> ${event.title}`);
+    $confirmationSchedulePeriod
+      .data('event', event)
+      .modal('open');
   });
 
   $optionsModal.on('click', '#btn-delete-single', function() {
     var event = $optionsModal.data('event');
-    var data = {'id': event.id, 'title': event.title, 'start': event.start};
-    if (event.ranges) data['ranges'] = event.ranges;
-    if (event.excludedDates) data['excludedDates'] = event.excludedDates;
     $confirmationSingleEvent.find('.modal-info').html(`<b>Profissional:</b> ${event.title}`);
     $confirmationSingleEvent
-      .data('event', data)
+      .data('event', event)
       .modal('open');
   });
 
   $optionsModal.on('click', '#btn-delete-period', function() {
     var event = $optionsModal.data('event');
-    $confirmationEntirePeriod.find('.modal-info').html(`<b>Profissional:</b> ${event.title}`);
-    $confirmationEntirePeriod
-      .data('event', {'id': event.id, 'title': event.title})
+    $confirmationDeletePeriod.find('.modal-info').html(`<b>Profissional:</b> ${event.title}`);
+    $confirmationDeletePeriod
+      .data('event', event)
       .modal('open');    
   });
 
   /* Modal confirmation */
   $confirmationExternalEvent.on('click', '#btn-confirmation', function() {
     removeExternalEvent($confirmationExternalEvent.data('event'));
+  });
+
+  $confirmationSchedulePeriod.on('click', '#btn-confirmation', function() {
+    scheduleEntirePeriod($confirmationSchedulePeriod.data('event'));
   });
 
   $confirmationSingleEvent.on('click', '#btn-confirmation', function() {
@@ -336,8 +342,8 @@ $(function () {
       addExcludedDate(event);
   }); 
 
-  $confirmationEntirePeriod.on('click', '#btn-confirmation', function() {
-    removeEvent($confirmationEntirePeriod.data('event'));
+  $confirmationDeletePeriod.on('click', '#btn-confirmation', function() {
+    removeEvent($confirmationDeletePeriod.data('event'));
   });
 
   // page is now ready, initialize the calendar...
@@ -408,23 +414,25 @@ $(function () {
     },
     /* function eventClick: Triggered when the user clicks an event. */
     eventClick: function(event) {
-      var data = {'id': event.id, 'title': event.title, 'start': event.start, 'end': event.end, 'color': event.color};
-      if (event.ranges) {
-        data['ranges'] = event.ranges; 
-        $optionsModal.find('#div-schedule-period').hide();
-        $optionsModal.find('#div-delete-period').show();        
-        $optionsModal.find('#already-schedule').show();        
-      } else {
-        $optionsModal.find('#div-schedule-period').show();
-        $optionsModal.find('#div-delete-period').hide();        
-        $optionsModal.find('#already-schedule').hide();        
+      if (event.id) {
+        var data = {'id': event.id, 'title': event.title, 'start': event.start, 'end': event.end};
+        if (event.ranges) {
+          data['ranges'] = event.ranges; 
+          $optionsModal.find('#div-schedule-period').hide();
+          $optionsModal.find('#div-delete-period').show();        
+          $optionsModal.find('#already-schedule').show();        
+        } else {
+          $optionsModal.find('#div-schedule-period').show();
+          $optionsModal.find('#div-delete-period').hide();        
+          $optionsModal.find('#already-schedule').hide();        
+        }
+        if (event.excludedDates)
+          data['excludedDates'] = event.excludedDates;
+        $optionsModal.find(".modal-title").html(`Profissional: ${event.title}`);
+        $optionsModal
+          .data('event', data)
+          .modal('open');
       }
-      if (event.excludedDates)
-        data['excludedDates'] = event.excludedDates;
-      $optionsModal.find(".modal-title").html(`Profissional: ${event.title}`);
-      $optionsModal
-        .data('event', data)
-        .modal('open');
     }
   });
 
