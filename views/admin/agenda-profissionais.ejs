@@ -13,91 +13,143 @@
 <body>
   <% include partials/header %>
 
-    <!-- Main -->
-    <div id="main">
-      <!-- Wrapper -->
-      <div class="wrapper">
-        <!-- Left Sidebar Nav-->
-        <% include partials/aside %>
-          <!-- /Left Sidebar Nav-->
-          <!-- Content -->
-          <section id="content">
-            <!--start container-->
-            <div class="container">
-              <div class="section">
+  <!-- Main -->
+  <div id="main">
+    <!-- Wrapper -->
+    <div class="wrapper">
+      <!-- Left Sidebar Nav-->
+      <% include partials/aside %>
+        <!-- /Left Sidebar Nav-->
+        <!-- Content -->
+        <section id="content">
+          <!--start container-->
+          <div class="container">
+            <div class="section">
+              <div class="row">
+                <div class="col s12 m4 l3">
+                  <a href="#modal-legenda-cores" class="btn base-color modal-trigger">Legenda Cores</a>
+                </div>
+                <div class="col s12 m8 l9">
+                  <h4 class="center">
+                    <%- data.sala.nome -%> - Agenda de profissionais</h4>
+                  <div id="salaId" data-id="<%- data.sala.id %>"></div>
+                </div>
+              </div>
+              <div id="full-calendar">
                 <div class="row">
                   <div class="col s12 m4 l3">
-                    <a href="#modal-legenda-cores" class="btn base-color modal-trigger">Legenda Cores</a>
+                    <div id='external-events'>
+                      <h4 class="header">Profissionais</h4>
+                    </div>
+                    <div id="pagination-profissionais"></div>
                   </div>
                   <div class="col s12 m8 l9">
-                    <h4 class="center">
-                      <%- data.sala.nome -%> - Agenda de profissionais</h4>
-                    <div id="salaId" data-id="<%- data.sala.id %>"></div>
-                  </div>
-                </div>
-                <div id="full-calendar">
-                  <div class="row">
-                    <div class="col s12 m4 l3">
-                      <div id='external-events'>
-                        <h4 class="header">Profissionais</h4>
+                    <div id="loader-events" style="display: block">
+                      <p>Aguarde, as alocações estão sendo carregadas.</p>
+                      <div class="progress">
+                        <div class="indeterminate"></div>
                       </div>
-                      <div id="pagination-profissionais"></div>
                     </div>
-                    <div class="col s12 m8 l9">
-                      <div id="loader-events" style="display: block">
-                        <p>Aguarde, as alocações estão sendo carregadas.</p>
-                        <div class="progress">
-                          <div class="indeterminate"></div>
-                        </div>
-                      </div>
-                      <div id='calendar' class="calendar"></div>
-                    </div>
+                    <div id='calendar' class="calendar"></div>
                   </div>
                 </div>
               </div>
             </div>
-          </section>
-          <!-- /Content-->
-      </div>
-      <!-- /Wrapper -->
+          </div>
+        </section>
+        <!-- /Content-->
+    </div>
+    <!-- /Wrapper -->
+  </div>
 
- <!-- Modal Structure -->
-  <div id="optionsModal" class="modal">
+  <!-- Action Modal -->
+  <div id="optionsModal" class="modal modal_agenda">
     <div class="modal-content">
-      <span class="hidden" id="m_prof_id"></span>
-      <h4>Profissional: <span id="m_prof_title"></span></h4>
-      <p>texxxxxxxxxxxt</p>
+      <h4 class="modal-title"></h4>
+      <div class="row" id="already-schedule">
+        <p><b>Atenção: </b>Esta locação já foi replicada semestralmente</p>
+      </div>
+      <div class="row" id="div-schedule-period">
+        <p><b>Replicar</b> esta locação até o final do semestre</p>
+        <button id="btn-schedule-period" class="modal-close btn-schedule
+         btn-flat">Agendar para todo semestre</button>
+      </div>
+      <div class="row">
+        <p><b>Deletar</b> apenas esta locação em específico</p>
+        <button id="btn-delete-single" class="modal-close btn-delete btn-flat">Deletar unicamente</button>
+      </div>
+      <div class="row" id="div-delete-period">
+        <p><b>Deletar</b> esta locação até o final do semeste</p>
+        <button id="btn-delete-period" class="modal-close btn-delete btn-flat">Deletar para todo semestre</button>
+      </div>
     </div>
     <div class="modal-footer">
-      <button id="btn-del" class="btn-flat">Deletar</button>
-      <button id="btn-age" class="btn-flat">Agendar todo semestre</button>
-      <a href="#!" class="modal-close btn-flat">Cancelar</a>
+      <a href="#!" class="modal-close btn-modal btn-flat">Fechar</a>
     </div>
   </div>
 
+  <!-- Confirmation Modal -->
+  <div id="confirmationExternalEvent" class="modal modal_agenda modal_confirmation">
+    <div class="modal-content">
+      <h4 class="modal-title">Atenção!</h4>
+      <p>Você tem certeza que deseja realizar a <b>exclusão</b>?</p>
+      <p><b>Ação</b>: Deletar este profissional</p>
+      <p class="modal-info"></p>
+    </div>
+    <div class="modal-footer">
+      <button id="btn-confirmation" class="modal-close btn-delete btn-flat">Excluir</button>
+      <a href="#!" class="modal-close btn-modal btn-flat">Cancelar</a>
+    </div>
+  </div>
 
-    <!-- /Main -->
-    <% include partials/modal_legenda_cores %>
-    <% include partials/footer %>
-    <!-- Plugins -->
-    <script src='/vendors/jquery/jquery-ui.min.js'></script>
-    <script src="/vendors/jquery/jquery.toast.min.js"></script>
-    <script src='/vendors/moment/moment.min.js'></script>
-    <script src='/vendors/fullcalendar/fullcalendar.min.js'></script>
-    <script src="/vendors/moment/pt-br.js"></script>
-    <!-- Custom -->
-    <script src="/js/schedule-formatter.js"></script>
-    <script src="/js/agenda-profissionais.js"></script>
-    <script src="/vendors/materialize-pagination/materialize-pagination.js"></script>
-    <script>
-      // active menu style
-      $(function() {
-        $('#p_agenda_profissionais').addClass('selected');
-        var $menu =  $('#p_agenda');
-        $menu.find('a.collapsible-header').addClass('active');
-        $menu.find('div.collapsible-body').css('display', 'block'); 
-      });
-    </script>
+  <div id="confirmationSingleEvent" class="modal modal_agenda modal_confirmation">
+    <div class="modal-content">
+      <h4 class="modal-title">Atenção!</h4>
+      <p>Você tem certeza que deseja realizar a <b>exclusão</b>?</p>
+      <p><b>Ação</b>: Deletar apenas esta locação em específico</p>
+      <p class="modal-info"></p>
+    </div>
+    <div class="modal-footer">
+      <button id="btn-confirmation" class="modal-close btn-delete btn-flat">Excluir</button>
+      <a href="#!" class="modal-close btn-modal btn-flat">Cancelar</a>
+    </div>
+  </div>
+
+  <div id="confirmationEntirePeriod" class="modal modal_agenda modal_confirmation">
+    <div class="modal-content">
+      <h4 class="modal-title">Atenção!</h4>
+      <p>Você tem certeza que deseja realizar a <b>exclusão</b>?</p>
+      <p><b>Ação:</b> Deletar esta locação até o final do semeste</p>  
+      <p class="modal-info"></p>
+    </div>
+    <div class="modal-footer">
+      <button id="btn-confirmation" class="modal-close btn-delete btn-flat">Excluir</button>
+      <a href="#!" class="modal-close btn-modal btn-flat">Cancelar</a>
+    </div>
+  </div>
+
+  <!-- /Main -->
+  <% include partials/modal_legenda_cores %>
+  <% include partials/footer %>
+  <!-- Plugins -->
+  <script src='/vendors/jquery/jquery-ui.min.js'></script>
+  <script src="/vendors/jquery/jquery.toast.min.js"></script>
+  <script src='/vendors/moment/moment.min.js'></script>
+  <script src='/vendors/fullcalendar/fullcalendar.min.js'></script>
+  <script src="/vendors/moment/pt-br.js"></script>
+  <!-- Custom -->
+  <script src="/js/schedule-formatter.js"></script>
+  <script src="/js/agenda-profissionais.js"></script>
+  <script src="/vendors/materialize-pagination/materialize-pagination.js"></script>
+  <script>
+    // active menu style
+    $(function() {
+      $('#p_agenda_profissionais').addClass('selected');
+      var $menu =  $('#p_agenda');
+      $menu.find('a.collapsible-header').addClass('active');
+      $menu.find('div.collapsible-body').css('display', 'block'); 
+    });
+  </script>
 
 </body>
 

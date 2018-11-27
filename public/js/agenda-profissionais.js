@@ -8,6 +8,9 @@ $(function () {
   const $external_events = $('#external-events');
   const $pagination = $('#pagination-profissionais');
   const $optionsModal = $('#optionsModal');
+  const $confirmationExternalEvent = $('#confirmationExternalEvent');
+  const $confirmationSingleEvent = $('#confirmationSingleEvent');
+  const $confirmationEntirePeriod = $('#confirmationEntirePeriod');  
   const _salaId = $('#salaId').data('id');
 
   // TODO: Mudar para as cores certas
@@ -110,18 +113,33 @@ $(function () {
   $($external_events).on('click', '.fc-event > .delete-external-event', function () {
     var externalEvent = $(this).parent();
     var event = $(externalEvent).data('event');
+    $confirmationExternalEvent.find('.modal-info').html(`<b>Profissional:</b> ${event.title}`);
+    $confirmationExternalEvent
+      .data('event', {'title': event.title, '_externalEventId': event._externalEventId})
+      .modal('open');
+  });
+
+  function removeExternalEvent(event) {
     $.ajax({
       method: 'DELETE',
       url: '/api/profissionais/' + event._externalEventId,
       success: function () {
         showResponse(`Profissional '${event.title}' <b>removido</b> com sucesso!`, 'success');
-        $(externalEvent).remove();
+        var fcEvents = $external_events.find('.fc-event');
+        // find and remove (visual response)
+        for (var i = 0; i < fcEvents.length; i++) {
+          var $fcEvent = $(fcEvents[i]);
+          if ($fcEvent.data('event')._externalEventId == event._externalEventId) {
+            $fcEvent.remove();
+            break;
+          }
+        }
       },
       error: function () {
         showResponse(`Erro ao <b>remover</b> profissional '${event.title}'.`, 'error');
       }
     });
-  });
+  }
 
   function showResponse(msg, type) {
     $.toast({
@@ -282,23 +300,49 @@ $(function () {
   }
 
   /* Modal actions */
-  $optionsModal.on('click', '#btn-age', function() {
+  $optionsModal.on('click', '#btn-schedule-period', function() {
     scheduleEntirePeriod($optionsModal.data('event'));
-    $optionsModal.modal('close');
   });
 
-  $optionsModal.on('click', '#btn-del', function() {
+  $optionsModal.on('click', '#btn-delete-single', function() {
     var event = $optionsModal.data('event');
+    var data = {'id': event.id, 'title': event.title, 'start': event.start};
+    if (event.ranges) data['ranges'] = event.ranges;
+    if (event.excludedDates) data['excludedDates'] = event.excludedDates;
+    $confirmationSingleEvent.find('.modal-info').html(`<b>Profissional:</b> ${event.title}`);
+    $confirmationSingleEvent
+      .data('event', data)
+      .modal('open');
+  });
+
+  $optionsModal.on('click', '#btn-delete-period', function() {
+    var event = $optionsModal.data('event');
+    $confirmationEntirePeriod.find('.modal-info').html(`<b>Profissional:</b> ${event.title}`);
+    $confirmationEntirePeriod
+      .data('event', {'id': event.id, 'title': event.title})
+      .modal('open');    
+  });
+
+  /* Modal confirmation */
+  $confirmationExternalEvent.on('click', '#btn-confirmation', function() {
+    removeExternalEvent($confirmationExternalEvent.data('event'));
+  });
+
+  $confirmationSingleEvent.on('click', '#btn-confirmation', function() {
+    var event = $confirmationSingleEvent.data('event');
     if (!event.ranges)
       removeEvent(event);
-    else
+    else 
       addExcludedDate(event);
-    $optionsModal.modal('close');
+  }); 
+
+  $confirmationEntirePeriod.on('click', '#btn-confirmation', function() {
+    removeEvent($confirmationEntirePeriod.data('event'));
   });
 
   // page is now ready, initialize the calendar...
   $calendar.fullCalendar({
-    header: {
+    header: { 
       left: 'prev,next today',
       center: 'title',
       right: 'month,agendaWeek,agendaDay,listWeek'
@@ -323,8 +367,8 @@ $(function () {
     ],
     /* function eventRender: triggered while an event is being rendered. */
     eventRender: function(event) {
-      if (event.excludedDates) {
-        for (var i = 0; i < event.excludedDates.length; i++) {
+      if (event.excludedDates) { 
+        for (var i = 0; i < event.excludedDates.length; i++) { // test event against all the excluded dates
           if (event.excludedDates[i] == event.start.format('YYYY/MM/DD'))
             return false;
         }
@@ -365,10 +409,19 @@ $(function () {
     /* function eventClick: Triggered when the user clicks an event. */
     eventClick: function(event) {
       var data = {'id': event.id, 'title': event.title, 'start': event.start, 'end': event.end, 'color': event.color};
-      if (event.ranges)
+      if (event.ranges) {
         data['ranges'] = event.ranges; 
+        $optionsModal.find('#div-schedule-period').hide();
+        $optionsModal.find('#div-delete-period').show();        
+        $optionsModal.find('#already-schedule').show();        
+      } else {
+        $optionsModal.find('#div-schedule-period').show();
+        $optionsModal.find('#div-delete-period').hide();        
+        $optionsModal.find('#already-schedule').hide();        
+      }
       if (event.excludedDates)
         data['excludedDates'] = event.excludedDates;
+      $optionsModal.find(".modal-title").html(`Profissional: ${event.title}`);
       $optionsModal
         .data('event', data)
         .modal('open');
