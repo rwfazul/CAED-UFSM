@@ -1,38 +1,63 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <% include partials/head %>
+    <link href="/vendors/chartist/chartist.min.css" type="text/css" rel="stylesheet">
+
 </head>
+
 <body>
   <% include partials/header %>
 
-  <!-- Main -->
-  <div id="main">
-    <!-- Wrapper -->
-    <div class="wrapper">
-      <!-- Left Sidebar Nav-->
+    <!-- Main -->
+    <div id="main">
+      <!-- Wrapper -->
+      <div class="wrapper">
+        <!-- Left Sidebar Nav-->
         <% include partials/aside %>
-      <!-- /Left Sidebar Nav-->
-      <!-- Content -->
-      <section id="content">
-        <div class="container">
-          <div class="section">
-
-          </div>
-        </div>
-      </section>
-      <!-- /Content-->
+          <!-- /Left Sidebar Nav-->
+          <!-- Content -->
+          <section id="content">
+            <div class="container">
+              <div class="section">
+                <div class="row">
+                  <div class="col s12">
+                    <h4 class="header">
+                      Resumo solicitações/encaminhamentos
+                    </h4>
+                  </div>
+                  <div class="col s12">
+                    <p>Quantidade de solicitações e encaminhamentos por mês</p>
+                    <div class="ct-chart" id="chart_month"></div>
+                  </div>
+                  <div class="col s12">
+                      <p>Quantidade de solicitações e encaminhamentos por tipo de atendimento</p>
+                    <div class="ct-chart" id="chart_type"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+          <!-- /Content-->
+      </div>
+      <!-- /Wrapper -->
     </div>
-    <!-- /Wrapper -->
-  </div>
-  <!-- /Main -->
+    <!-- /Main -->
 
-  <% include partials/footer %>
-  <script>
-    // active menu style
-    $(function() {
-      $(`#p_dashboard`).addClass('selected');
-    });
-  </script>
+    <% include partials/footer %>
+
+      <script src="/vendors/chartist/chartist.min.js"></script>
+      <script src="/js/dashboard-graphics.js"></script>
+
+      <script>
+          // active menu style
+          $(function() {
+            $(`#p_dashboard`).addClass('selected');
+          });
+        </script>
+
+
 </body>
+
 </html>
