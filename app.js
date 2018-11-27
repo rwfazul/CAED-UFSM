@@ -51,12 +51,10 @@ app.use(function(err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-  var error_page = err.status ? err.status.toString() : '404';
-
+  
   // render the error page
   res.status(err.status || 500);
-  res.render('errors/error_template', { page: error_page });
+  res.render(err.status == 404 ? 'errors/404' : 'admin/dashboard');
 });
 
 module.exports = app;
