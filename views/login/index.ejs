@@ -44,8 +44,14 @@
       <div class="col s10 offset-s1 m4 offset-m4 z-depth-4 card-panel">
         <div class="row">
           <div class="input-field col s12 center">
-            <!-- <img src="images/login-logo.png" alt="" class="circle responsive-img valign profile-image-login"> -->
-            <p class="center form-login-text">Login CAED-UFSM</p>
+            <!-- <img src="images/login-logo.png" alt="" class="circle responsive-img valign profile-image-login"> -->  
+            <p id="login-text" class="center form-login-text">Login CAED-UFSM</p>
+            <div id="login-loader" style="display: none">
+              <p>Aguarde, verificando credenciais...</p>
+              <div class="progress">
+                <div class="indeterminate"></div>
+              </div>
+            </div>
           </div>
         </div>
         <form action="/auth/login" method="POST" id="form-login" class="form-login">
@@ -64,9 +70,9 @@
             </div>
           </div>
           <span id="form-error" class="error red-text text-darken-2"></span>
-          <div class="row">
+          <div class="row">          
             <div class="input-field col s12">
-              <button type="submit" class="btn base-color col s12">Entrar</button>
+              <button id="btn-login" type="submit" class="btn base-color col s12">Entrar</button>
             </div>
           </div>
           <div class="row">
@@ -80,6 +86,7 @@
     </div>
   </div>
   <!-- ./Login Form -->
+  
   <!-- jQuery Library -->
   <script src="/vendors/jquery/jquery.min.js"></script>
   <!-- jQuery Toast -->
@@ -90,6 +97,8 @@
   <script src="/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
   <!-- Specific JS codes for Plugin Settings -->
   <script src="/vendors/plugins/plugins.js"></script>
+  <!-- Custom login script --> 
+  <script src="/js/login.js"></script>
 
   <% if (locals.logout) { %>
   <script>
@@ -103,36 +112,5 @@
     });
   </script>
   <% } %>
-  <script>
-    $(function() {  
-      // TODO: local storage -> cookie
-      $("#form-login").submit(function(e) {
-        var form = $(this);
-        e.preventDefault(); 
-        $.ajax({
-          type:  form.attr('method'),
-          url: form.attr('action'),
-          data: form.serialize(),
-          success: function(data) {
-            // TODO: cookie -> local storage
-            window.location.href = "/admin/dashboard";
-          },
-          error: function(xhr, status, error) {
-            // TODO: delete both cookie and local storage
-            var data = JSON.parse(xhr.responseText);
-            $("#password").val('');
-            $('#form-error').text(`* ${data['message']}`);
-            var toastData = {
-              heading: 'Erro',
-              text: data['tip'] ? data['tip'] : data['message'],
-              showHideTransition: 'slide',
-              icon: 'error'
-            };
-            $.toast(toastData);
-          }
-        });
-      });
-    });
-  </script>
 </body>
 </html>
