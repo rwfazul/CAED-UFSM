@@ -7,7 +7,6 @@ $(function() {
   var $loginText   = $('#login-text')
   var $loginLoader = $("#login-loader")
 
-  // TODO: local storage -> cookie
   $formLogin.submit(function(e) {
     $btnLogin.prop('disabled', true);
     $loginText.hide();
@@ -19,11 +18,9 @@ $(function() {
       url: form.attr('action'),
       data: form.serialize(),
       success: function(data) {
-        // TODO: cookie -> local storage
         window.location.href = "/admin/dashboard";
       },
       error: function(xhr, status, error) {
-        // TODO: delete both cookie and local storage
         var data = JSON.parse(xhr.responseText);
         $password.val('');
         $formError.text(`* ${data['message']}`);
@@ -42,4 +39,5 @@ $(function() {
       }
     });
   });
+
 });
