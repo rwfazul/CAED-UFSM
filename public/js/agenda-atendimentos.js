@@ -8,7 +8,11 @@ $(function () {
   const $calendar = $('#calendar');
   const $external_events = $('.external-events');
   const $modal_new_event = $('#modal-new-event');
-
+  const $optionsModal = $('#optionsModal');
+  const $confirmationExternalEvent = $('#confirmationExternalEvent');
+  const $confirmationSchedulePeriod = $('#confirmationSchedulePeriod');  
+  const $confirmationSingleEvent = $('#confirmationSingleEvent');
+  const $confirmationDeletePeriod = $('#confirmationDeletePeriod');
   const _salaId = $('#salaId').data('id');
 
   const mapColors = {
@@ -96,7 +100,7 @@ $(function () {
   function getExternalEvents(type, page) {
     $.getJSON(`/api/${type.collection}/${page}`)
       .done(function (events) {
-        $container = type.external;
+        $container = $(type.external);
         $container.empty();
         $container.append($('<h4>').addClass('header').text(type.plural));
         $.each(events, function (i, event) {
@@ -124,7 +128,7 @@ $(function () {
     $.getJSON(`/api/${type.collection}/getpages`)
       .done(function (events) {
         type.pages = (events.length > 5) ? Math.ceil((events.length) / 5) : 1;
-        type.pagination.empty();
+        $(type.pagination).empty();
         createPagination(type);
       })
       .fail(function () {
@@ -141,9 +145,15 @@ $(function () {
   loadExternalEvents(types.solicitacoes);
   loadExternalEvents(types.encaminhamentos);
 
-  $($external_events).on('click', '.fc-event > .delete-external-event',
-    function () {
-      removeExternalEvent($(this).parent())
+  $($external_events).on('click', '.fc-event > .delete-external-event', function () {
+    var externalEvent = $(this).parent();
+    var event = $(externalEvent).data('event');
+    var type = types[event._type];
+    var label = type.sing.charAt(0).toUpperCase() + type.sing.slice(1);
+    $confirmationExternalEvent.find('.modal-info').html(`<b>${label}:</b> ${event.title}`);
+    $confirmationExternalEvent
+      .data('event', {'externalEvent': externalEvent, 'title': event.title, '_externalEventId': event._externalEventId, 'type': event._type, 'label': label})
+      .modal('open');
     }
   );
 
@@ -161,16 +171,16 @@ $(function () {
     saveEspecialEvent(eventData);
   });
 
-  function removeExternalEvent(externalEvent) {
-    var event = $(externalEvent).data('event');
-    var type = types[$(externalEvent).data('type')];
+  function removeExternalEvent(event) {
+    var type = types[event.type];
     $.ajax({
       method: 'DELETE',
       url: `/api/${type.collection}/${event._externalEventId}`,
       success: function () {
-        var singCap = type.sing.charAt(0).toUpperCase() + type.sing.slice(1);
-        showResponse(`${singCap} '${event.title}' <b>removido</b> com sucesso!`, 'success');
-        $(externalEvent).remove();
+        showResponse(`${event.label} de '${event.title}' <b>removido</b> com sucesso!`, 'success');
+        var fcEvents = $external_events.find('.fc-event');
+        // find and remove (visual response)
+        $(event.externalEvent).remove();
         loadExternalEvents(type);
       },
       error: function () {
@@ -196,6 +206,43 @@ $(function () {
         showResponse(`Erro ao <b>remover</b> atendimento de '${event.title}'.`, 'error');
       }
     });
+  }
+
+  function scheduleEntirePeriod(event) {
+    var startMonth = event.start.month();
+    var endMonth = startMonth <= 6 ? 6 : 11;  //6 = july, 11 = december
+    var add = endMonth - startMonth;
+    var start = moment(event.start).format('YYYY/MM/DD');
+    var end = moment(event.start.clone().add(add, 'month')).endOf('month').format('YYYY/MM/DD');
+    var ranges = [ {start: start, end: end} ];
+    var data = {
+      start: moment(event.start).format('HH:mm'),
+      end: moment(event.end).format('HH:mm'),
+      dow: [ event.start.day() ],
+      ranges: ranges
+    }
+    saveRecurringEvent(event.id, data, event.title);
+  }
+
+  function addExcludedDate(event) {
+    var excludedDates = event.excludedDates ? event.excludedDates : [];
+    excludedDates.push(moment(event.start).format('YYYY/MM/DD'));
+    $.ajax({
+      method: 'PUT',
+      url: `/api/atendimentos/agenda/${event.id}/semestre/excludedDates`,
+      data: {
+        excludedDates: excludedDates
+      },
+      success: function(id) {
+        if (id) {
+          showResponse(`Agendamento de '${event.title}' <b>removido</b> com sucesso!`, 'success');
+          $calendar.fullCalendar('refetchEvents');
+        }
+      },
+      error: function() {
+        showResponse(`Erro ao <b>remover</b> agendamento de '${event.title}'.`, 'error');
+      }
+    })
   }
 
   function showResponse(msg, type) {
@@ -231,6 +278,24 @@ $(function () {
       error: function () {
         $calendar.fullCalendar('removeEvents', event.id);
         showResponse(`Erro ao salvar atendimento de '${event.title}'.`, 'error');
+      }
+    });
+  }
+
+  function saveRecurringEvent(id, data, title) {
+    $.ajax({
+      method: 'PUT',
+      url: `/api/atendimentos/agenda/${id}/semestre`,
+      data: data,
+      success: function(id) {
+        if (id) {
+          showResponse(`Agendamento de '${title}' <b>salvo</b> com sucesso!`, 'success');
+          $calendar.fullCalendar('refetchEvents');        
+        }
+      },
+      error: function() {
+        $calendar.fullCalendar('removeEvents', event.id);
+        showResponse(`Erro ao <b>salvar</b> agendamento de '${title}'.`, 'error');
       }
     });
   }
@@ -283,6 +348,52 @@ $(function () {
     });
   }
 
+  /* Modal actions */
+  $optionsModal.on('click', '#btn-schedule-period', function() {7
+    var event = $optionsModal.data('event');
+    $confirmationSchedulePeriod.find('.modal-info').html(`<b>${event.label}:</b> ${event.title}`);
+    $confirmationSchedulePeriod
+      .data('event', event)
+      .modal('open');
+  });
+
+  $optionsModal.on('click', '#btn-delete-single', function() {
+    var event = $optionsModal.data('event');
+    $confirmationSingleEvent.find('.modal-info').html(`<b>${event.label}:</b> ${event.title}`);
+    $confirmationSingleEvent
+      .data('event', event)
+      .modal('open');
+  });
+
+  $optionsModal.on('click', '#btn-delete-period', function() {
+    var event = $optionsModal.data('event');
+    $confirmationDeletePeriod.find('.modal-info').html(`<b>${event.label}:</b> ${event.title}`);
+    $confirmationDeletePeriod
+      .data('event', event)
+      .modal('open');    
+  });
+
+  /* Modal confirmation */
+  $confirmationExternalEvent.on('click', '#btn-confirmation', function() {
+    removeExternalEvent($confirmationExternalEvent.data('event'));
+  });
+
+  $confirmationSchedulePeriod.on('click', '#btn-confirmation', function() {
+    scheduleEntirePeriod($confirmationSchedulePeriod.data('event'));
+  });
+
+  $confirmationSingleEvent.on('click', '#btn-confirmation', function() {
+    var event = $confirmationSingleEvent.data('event');
+    if (!event.ranges)
+      removeEvent(event);
+    else 
+      addExcludedDate(event);
+  }); 
+
+  $confirmationDeletePeriod.on('click', '#btn-confirmation', function() {
+    removeEvent($confirmationDeletePeriod.data('event'));
+  });
+
   // page is now ready, initialize the calendar...
   $calendar.fullCalendar({
     header: {
@@ -309,6 +420,20 @@ $(function () {
       '/api/profissionais/agenda/' + _salaId,
       '/api/atendimentos/agenda/' + _salaId
     ],
+    /* function eventRender: triggered while an event is being rendered. */
+    eventRender: function(event) {
+      if (event.excludedDates) { 
+        for (var i = 0; i < event.excludedDates.length; i++) { // test event against all the excluded dates
+          if (event.excludedDates[i] == event.start.format('YYYY/MM/DD'))
+            return false;
+        }
+      }
+      if (event.ranges) { 
+        return (event.ranges.filter(function(range) { // test event against all the ranges
+          return (event.start.isBetween(moment(range.start, 'YYYY/MM/DD'), moment(range.end, 'YYYY/MM/DD')));
+        }).length) > 0; //if it isn't in one of the ranges, don't render it (by returning false)
+      }
+    },
     /* function loading: Triggered when event or resource fetching starts/stops. */
     loading: function(isLoading) {
       $("#loader-events").css('display', 'block');
@@ -347,10 +472,26 @@ $(function () {
     },
     /* function eventClic: Triggered when the user clicks an event. */
     eventClick: function(event) {
-      if (event._type) { // 'agendamentos' only
-        var decision = confirm("Tem certeza que deseja cancelar esse atendimento?");
-        if (decision)
-          removeEvent(event);
+      if (event.id && event._type) { // 'agendamentos' only
+        var type = types[event._type];
+        var label = type.sing.charAt(0).toUpperCase() + type.sing.slice(1);
+        var data = {'id': event.id, 'title': event.title, 'start': event.start, 'end': event.end, 'type': event._type, 'label': label};
+        if (event.ranges) {
+          data['ranges'] = event.ranges; 
+          $optionsModal.find('#div-schedule-period').hide();
+          $optionsModal.find('#div-delete-period').show();        
+          $optionsModal.find('#already-schedule').show();        
+        } else {
+          $optionsModal.find('#div-schedule-period').show();
+          $optionsModal.find('#div-delete-period').hide();        
+          $optionsModal.find('#already-schedule').hide();        
+        }
+        if (event.excludedDates)
+          data['excludedDates'] = event.excludedDates;
+        $optionsModal.find(".modal-title").html(`${label}: ${event.title}`);
+        $optionsModal
+          .data('event', data)
+          .modal('open');
       }
     }
   });

@@ -14,7 +14,6 @@ $(function () {
   const $confirmationDeletePeriod = $('#confirmationDeletePeriod');  
   const _salaId = $('#salaId').data('id');
 
-  // TODO: Mudar para as cores certas
   const mapColors = {
     //especialidade profissional
     'Psicologia': '#f44336', //vermelho forte
@@ -116,7 +115,7 @@ $(function () {
     var event = $(externalEvent).data('event');
     $confirmationExternalEvent.find('.modal-info').html(`<b>Profissional:</b> ${event.title}`);
     $confirmationExternalEvent
-      .data('event', {'title': event.title, '_externalEventId': event._externalEventId})
+      .data('event', {'externalEvent': externalEvent, 'title': event.title, '_externalEventId': event._externalEventId})
       .modal('open');
   });
 
@@ -126,15 +125,7 @@ $(function () {
       url: '/api/profissionais/' + event._externalEventId,
       success: function () {
         showResponse(`Profissional '${event.title}' <b>removido</b> com sucesso!`, 'success');
-        var fcEvents = $external_events.find('.fc-event');
-        // find and remove (visual response)
-        for (var i = 0; i < fcEvents.length; i++) {
-          var $fcEvent = $(fcEvents[i]);
-          if ($fcEvent.data('event')._externalEventId == event._externalEventId) {
-            $fcEvent.remove();
-            break;
-          }
-        }
+        $(externalEvent).remove();
       },
       error: function () {
         showResponse(`Erro ao <b>remover</b> profissional '${event.title}'.`, 'error');
@@ -218,9 +209,11 @@ $(function () {
     $.ajax({
       method: 'DELETE',
       url: '/api/profissionais/agenda/' + event.id,
-      success: function() {
-        showResponse(`Alocação de '${event.title}' <b>removida</b> com sucesso!`, 'success');
-        $calendar.fullCalendar('removeEvents', event.id);
+      success: function(id) {
+        if (id) {
+          showResponse(`Alocação de '${event.title}' <b>removida</b> com sucesso!`, 'success');
+          $calendar.fullCalendar('removeEvents', event.id);
+        }
       },
       error: function() {
         showResponse(`Erro ao <b>remover</b> alocação de '${event.title}'.`, 'error');
@@ -260,7 +253,6 @@ $(function () {
         }
       },
       error: function() {
-        $calendar.fullCalendar('removeEvents', event.id);
         showResponse(`Erro ao <b>remover</b> alocação de '${event.title}'.`, 'error');
       }
     })
