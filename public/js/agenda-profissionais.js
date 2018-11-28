@@ -125,7 +125,8 @@ $(function () {
       url: '/api/profissionais/' + event._externalEventId,
       success: function () {
         showResponse(`Profissional '${event.title}' <b>removido</b> com sucesso!`, 'success');
-        $(externalEvent).remove();
+        $(event.externalEvent).remove();
+        loadExternalEvents();
       },
       error: function () {
         showResponse(`Erro ao <b>remover</b> profissional '${event.title}'.`, 'error');

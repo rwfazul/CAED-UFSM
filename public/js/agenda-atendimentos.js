@@ -195,11 +195,10 @@ $(function () {
       url: '/api/atendimentos/agenda/' + event.id,
       success: function (id) {
         if (id) {
+          updateSolicitacao(event.type, event.externalEventId, false);
           showResponse(`Atendimento de '${event.title}' <b>removido</b> com sucesso!`, 'success');
           $('#calendar').fullCalendar('removeEvents', event.id);
-          if (types[event._type])
-            updateSolicitacao(event, false);
-          loadExternalEvents(types[event._type]);
+          loadExternalEvents(types[event.type]);
         }
       },
       error: function () {
@@ -270,7 +269,7 @@ $(function () {
         if (id) {
           event.id = id;
           $calendar.fullCalendar('updateEvent', event);
-          updateSolicitacao(event, true);
+          updateSolicitacao(event._type, event._externalEventId, true);
           loadExternalEvents(types[event._type]);
           showResponse(`Atendimento de '${event.title}' agendado com sucesso!`, 'success');
         }
@@ -320,10 +319,10 @@ $(function () {
     });
   }
 
-  function updateSolicitacao(event, ja_agendado) {
+  function updateSolicitacao(type, externalEventId, ja_agendado) {
     $.ajax({
       method: 'PUT',
-      url: '/api/' + event._type + '/' + event._externalEventId,
+      url: '/api/' + type + '/' + externalEventId,
       data: {
         agendado: ja_agendado,
         ultimaModificacao: moment().format()
@@ -475,7 +474,7 @@ $(function () {
       if (event.id && event._type) { // 'agendamentos' only
         var type = types[event._type];
         var label = type.sing.charAt(0).toUpperCase() + type.sing.slice(1);
-        var data = {'id': event.id, 'title': event.title, 'start': event.start, 'end': event.end, 'type': event._type, 'label': label};
+          var data = {'id': event.id, 'title': event.title, 'start': event.start, 'end': event.end, 'type': event._type, 'label': label, 'externalEventId': event._externalEventId};
         if (event.ranges) {
           data['ranges'] = event.ranges; 
           $optionsModal.find('#div-schedule-period').hide();
