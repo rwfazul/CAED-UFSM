@@ -7,7 +7,7 @@ $(function () {
       series: [solicitacoes, encaminhamentos]
     };
     var options_chart_type = {
-      seriesBarDistance: 15,
+      seriesBarDistance: 25,
       width: 500,
       height: 250
     };
@@ -56,10 +56,9 @@ $(function () {
     var t1 = $.getJSON(`/api/solicitacoes/getcount/${year}`);
     var t2 = $.getJSON(`/api/encaminhamentos/getcount/${year}`);
     $.when(t1, t2).done(function (d1, d2) {
+      $(".loader").css('display', 'none');
       createGraphType(getCountType(d1[0]), getCountType(d2[0]));
-      $("#loader-chart-type").css('display', 'none');
       createGraphMonth(getCountMonth(d1[0]), getCountMonth(d2[0]));
-      $("#loader-chart-month").css('display', 'none');
     })
       .fail(function () {
         alert(`Erro ao recuperar os dados. Por favor, dentro de alguns instantes, tente recarregar a página.`)
@@ -68,10 +67,9 @@ $(function () {
 
   function loaderGraphics(){
     $("select option:selected").each(function() {
-      $("#chart_type").empty();
-      $("#loader-chart-type").css('display', 'block');
-      $("#chart_month").empty();
-      $("#loader-chart-month").css('display', 'block');
+      $(".ct-chart").empty();
+      $(".loader").css('display', 'block');
+      $(".year-title").text(` em ${$(this).text()}`);
       createGraphs($(this).text());
     });
   }
