@@ -27,12 +27,32 @@
                       Resumo solicitações/encaminhamentos
                     </h4>
                   </div>
+                  <div class="input-field col s12 m6">
+                    <select id="year">
+                      <option value="" disabled selected>Escolha o ano</option>
+                      <option value="2018">2018</option>
+                      <option value="2017">2017</option>
+                    </select>
+                    <label>Ano</label>
+                  </div>
                   <div class="col s12">
-                    <p>Quantidade de solicitações e encaminhamentos por mês</p>
+                    <h5>Quantidade de solicitações e encaminhamentos por mês</h5>
+                    <div id="loader-chart-month" style="display: none">
+                      <p>Aguarde, os dados estão sendo carregados.</p>
+                      <div class="progress">
+                        <div class="indeterminate"></div>
+                      </div>
+                    </div>
                     <div class="ct-chart" id="chart_month"></div>
                   </div>
                   <div class="col s12">
-                      <p>Quantidade de solicitações e encaminhamentos por tipo de atendimento</p>
+                      <h5>Quantidade de solicitações e encaminhamentos por tipo de atendimento</h5>
+                      <div id="loader-chart-type" style="display: none">
+                        <p>Aguarde, os dados estão sendo carregados.</p>
+                        <div class="progress">
+                          <div class="indeterminate"></div>
+                        </div>
+                      </div>
                     <div class="ct-chart" id="chart_type"></div>
                   </div>
                 </div>
@@ -49,6 +69,7 @@
 
       <script src="/vendors/chartist/chartist.min.js"></script>
       <script src="/js/dashboard-graphics.js"></script>
+      <script src='/vendors/moment/moment.min.js'></script>
 
       <script>
           // active menu style

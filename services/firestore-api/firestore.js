@@ -36,6 +36,32 @@ module.exports = {
 		getDocs(query, callback);
 	},
 
+	getCount: function (collection, year, callback) {
+		var db = factory.getDbInstance();
+		var colRef = db.collection(collection);
+		var query = colRef
+			.get()
+			.then(snapshot => {
+				var documents = [];
+				snapshot.forEach(doc => {
+					var data = doc.data();
+					var date = new Date(Date(data.timestamp));
+					if(date.getFullYear() == year){
+						var docs = {};
+						docs.tipoAtendimento = data.tipoAtendimento;
+						docs.timestamp = data.timestamp;
+						documents.push(docs);
+					}
+				});
+				callback(documents);
+			})
+			.catch(err => {
+				console.log('Error getting documents', err);
+				callback({}, err);
+			});
+
+	},
+
 	getDocsPagination: function (collection, colOrder, filter, page, callback) {
 		var db = factory.getDbInstance();
 		var colRef = db.collection(collection);

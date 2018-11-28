@@ -27,6 +27,12 @@ router
 			if (err) res.status(500).send(err);
 			else res.status(200).json(docs);
 		});
+	})
+	.get('/getcount/:year', function (req, res) {
+		firestore.getCount(colEncaminhamentos, req.params['year'], function (docs, err) {
+			if (err) res.status(500).send(err);
+			else res.status(200).json(docs);
+		});
 	});
 
 router.route('/:id')

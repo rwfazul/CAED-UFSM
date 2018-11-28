@@ -20,6 +20,12 @@ router
 			else res.status(200).json(docs);
 		});
 	})
+	.get('/getcount/:year', function (req, res) {
+		firestore.getCount(colSolicitacoes, req.params['year'], function (docs, err) {
+			if (err) res.status(500).send(err);
+			else res.status(200).json(docs);
+		});
+	})
 	.get('/:page', function (req, res) {
 		var filter = ['agendado', '==', false];
 		var order = ['ultimaModificacao', 'timestamp'];
