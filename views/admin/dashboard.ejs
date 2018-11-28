@@ -46,38 +46,37 @@
                     <div class="ct-chart" id="chart_month"></div>
                   </div>
                   <div class="col s12">
-                      <h5>Quantidade de solicitações e encaminhamentos por tipo de atendimento</h5>
-                      <div id="loader-chart-type" style="display: none">
-                        <p>Aguarde, os dados estão sendo carregados.</p>
-                        <div class="progress">
-                          <div class="indeterminate"></div>
-                        </div>
+                    <h5>Quantidade de solicitações e encaminhamentos por tipo de atendimento</h5>
+                    <div id="loader-chart-type" style="display: none">
+                      <p>Aguarde, os dados estão sendo carregados.</p>
+                      <div class="progress">
+                        <div class="indeterminate"></div>
                       </div>
+                    </div>
                     <div class="ct-chart" id="chart_type"></div>
                   </div>
                 </div>
               </div>
             </div>
-          </section>
-          <!-- /Content-->
       </div>
-      <!-- /Wrapper -->
+      </section>
+      <!-- /Content-->
+    </div>
+    <!-- /Wrapper -->
     </div>
     <!-- /Main -->
 
     <% include partials/footer %>
-
       <script src="/vendors/chartist/chartist.min.js"></script>
       <script src="/js/dashboard-graphics.js"></script>
       <script src='/vendors/moment/moment.min.js'></script>
 
       <script>
-          // active menu style
-          $(function() {
-            $(`#p_dashboard`).addClass('selected');
-          });
-        </script>
-
+        // active menu style
+        $(function () {
+          $(`#p_dashboard`).addClass('selected');
+        });
+      </script>
 
 </body>
 

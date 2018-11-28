@@ -1,0 +1,78 @@
+<!-- Action Modal -->
+<div id="optionsModal" class="modal modal_agenda">
+  <div class="modal-content">
+    <h4 class="modal-title"></h4>
+    <div class="row" id="already-schedule">
+      <p><b>Atenção: </b>Este atendimento já foi replicado no semestre</p>
+    </div>
+    <div class="row" id="div-schedule-period">
+      <p><b>Replicar</b> este atendimento até o final do semestre</p>
+      <button id="btn-schedule-period" class="modal-close btn-schedule
+       btn-flat">Agendar para todo semestre</button>
+    </div>
+    <div class="row">
+      <p><b>Deletar</b> apenas este atendimento em específico</p>
+      <button id="btn-delete-single" class="modal-close btn-delete btn-flat">Deletar unicamente</button>
+    </div>
+    <div class="row" id="div-delete-period">
+      <p><b>Deletar</b> este atendimento até o final do semeste</p>
+      <button id="btn-delete-period" class="modal-close btn-delete btn-flat">Deletar para todo semestre</button>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <a href="#!" class="modal-close btn-modal btn-flat">Fechar</a>
+  </div>
+</div>
+
+<!-- Confirmation Modals -->
+<div id="confirmationExternalEvent" class="modal modal_agenda modal_confirmation">
+  <div class="modal-content">
+    <h4 class="modal-title">Atenção!</h4>
+    <p>Você tem certeza que deseja realizar a <b>exclusão</b>?</p>
+    <p><b>Ação</b>: Deletar esta solicitação</p>
+    <p class="modal-info"></p>
+  </div>
+  <div class="modal-footer">
+    <button id="btn-confirmation" class="modal-close btn-delete btn-flat">Excluir</button>
+    <a href="#!" class="modal-close btn-modal btn-flat">Cancelar</a>
+  </div>
+</div>
+
+<div id="confirmationSchedulePeriod" class="modal modal_agenda modal_confirmation">
+  <div class="modal-content">
+    <h4 class="modal-title">Atenção!</h4>
+    <p>Você tem certeza que deseja realizar o <b>agendamento semestral</b>?</p>
+    <p><b>Ação</b>: Replicar este atendimento até o final do semestre</p>
+    <p class="modal-info"></p>
+  </div>
+  <div class="modal-footer">
+    <button id="btn-confirmation" class="modal-close btn-schedule btn-flat">Alocar</button>
+    <a href="#!" class="modal-close btn-modal btn-flat">Cancelar</a>
+  </div>
+</div>
+
+<div id="confirmationSingleEvent" class="modal modal_agenda modal_confirmation">
+  <div class="modal-content">
+    <h4 class="modal-title">Atenção!</h4>
+    <p>Você tem certeza que deseja realizar a <b>exclusão</b>?</p>
+    <p><b>Ação</b>: Deletar apenas este atendimento em específico</p>
+    <p class="modal-info"></p>
+  </div>
+  <div class="modal-footer">
+    <button id="btn-confirmation" class="modal-close btn-delete btn-flat">Excluir</button>
+    <a href="#!" class="modal-close btn-modal btn-flat">Cancelar</a>
+  </div>
+</div>
+
+<div id="confirmationDeletePeriod" class="modal modal_agenda modal_confirmation">
+  <div class="modal-content">
+    <h4 class="modal-title">Atenção!</h4>
+    <p>Você tem certeza que deseja realizar a <b>exclusão semestral</b>?</p>
+    <p><b>Ação:</b> Deletar</b> este atendimento até o final do semeste</p>  
+    <p class="modal-info"></p>
+  </div>
+  <div class="modal-footer">
+    <button id="btn-confirmation" class="modal-close btn-delete btn-flat">Excluir</button>
+    <a href="#!" class="modal-close btn-modal btn-flat">Cancelar</a>
+  </div>
+</div>

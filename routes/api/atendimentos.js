@@ -30,6 +30,27 @@ router
 			if (err) res.status(500).send(err);
 			else     res.status(201).json(docId);
 		});	
+	})
+	.put('/agenda/:id/semestre', function(req, res) {
+		var doc = {
+			start: req.body['start'],
+			end:   req.body['end'],
+			dow:   req.body['dow'],
+			ranges: req.body['ranges']
+		};
+		firestore.updateDoc(colAgenda, req.params.id, doc, function(docId, err) {
+			if (err) res.status(500).send(err);
+			else     res.status(201).json(docId);
+		});	
+	})
+	.put('/agenda/:id/semestre/excludedDates', function(req, res) {
+		var doc = {
+			excludedDates: req.body['excludedDates']
+		};
+		firestore.updateDoc(colAgenda, req.params.id, doc, function(docId, err) {
+			if (err) res.status(500).send(err);
+			else     res.status(201).json(docId);
+		});	
 	});
 
 router.route('/agenda/:id')

@@ -15,16 +15,9 @@ var jwtOptions = {
 
 var jwtStrategy = new JWTStrategy(jwtOptions, function(jwtPayload, next) {
     // find the user in db and do some stuff if needed
-    if (jwtPayload.id == '787afafaof5') {
-        var user = {
-            id: '787afafaof5',
-            username: 'admin',
-            admin: true
-        }        
-        next(null, user);
-    } else {
-        next(null, false);
-    }
+    if (jwtPayload.id)
+        return next(null, { id: jwtPayload.id, admin: true });
+    next(null, false);
 });
 
 module.exports = jwtStrategy;

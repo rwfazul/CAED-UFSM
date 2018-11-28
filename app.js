@@ -4,7 +4,7 @@ var path         = require('path');
 var cookieParser = require('cookie-parser');
 var logger       = require('morgan');
 
-var { authJwt } = require('./controllers/auth/authController');
+var { authJwt }  = require('./controllers/auth/authController');
 
 var userRouter   = require('./routes/user');
 var caedRouter   = require('./routes/caed');
@@ -34,12 +34,12 @@ app.use('/api', authJwt, apiRouter);
 app.use('/tests', testsRouter);
 
 // CORS (Cross-Origin Resource Sharing) headers to support Cross-site HTTP requests
-app.all('*', function (req, res, next) {
+/*app.all('*', function (req, res, next) {
   console.log('cors');
   res.header("Access-Control-Allow-Origin", "*"); // TODO: change to app domain
   res.header("Access-Control-Allow-Headers", "Content-Type, X-Requested-With");
   next();
-});
+});*/
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

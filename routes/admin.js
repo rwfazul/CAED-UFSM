@@ -6,7 +6,6 @@ const listBase = 'lists/list-';
 
 router
 	.get(['/', '/dashboard'], function(req, res) {
-		console.log('-> /admin /admin/dashboard');
 		res.render('admin/dashboard');
 	})
 	.get('/salas', function(req, res) {
