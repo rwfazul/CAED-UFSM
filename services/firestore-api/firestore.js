@@ -45,11 +45,12 @@ module.exports = {
 				var documents = [];
 				snapshot.forEach(doc => {
 					var data = doc.data();
-					var date = new Date(Date(data.timestamp));
-					if(date.getFullYear() == year){
+					data.timestamp = ((data.timestamp).toDate());
+					console.log(data.timestamp);
+					if(data.timestamp.getFullYear() == year){
 						var docs = {};
 						docs.tipoAtendimento = data.tipoAtendimento;
-						docs.timestamp = data.timestamp;
+						docs.timestamp = data.timestamp.toLocaleDateString();
 						documents.push(docs);
 					}
 				});

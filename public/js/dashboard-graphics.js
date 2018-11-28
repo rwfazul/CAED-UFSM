@@ -32,11 +32,11 @@ $(function () {
   function getCountType(data) {
     var count = Array(3).fill(0);
     $.each(data, function (i, doc) {
-      if (doc.tipoAtendimento == "Psicológico") {
+      if ($.trim(doc.tipoAtendimento) == "Psicológico") {
         count[0]++;
-      } else if (doc.tipoAtendimento == "Psicopedagógico") {
+      } else if ($.trim(doc.tipoAtendimento) == "Psicopedagógico") {
         count[1]++;
-      } else if (doc.tipoAtendimento == "Orientação Profissional") {
+      } else if ($.trim(doc.tipoAtendimento) == "Orientação Profissional") {
         count[2]++;
       }
     });
