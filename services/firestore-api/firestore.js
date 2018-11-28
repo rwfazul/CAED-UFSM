@@ -40,18 +40,16 @@ module.exports = {
 		var db = factory.getDbInstance();
 		var colRef = db.collection(collection);
 		var query = colRef
+			.select("tipoAtendimento", "timestamp")
 			.get()
 			.then(snapshot => {
 				var documents = [];
 				snapshot.forEach(doc => {
 					var data = doc.data();
 					data.timestamp = ((data.timestamp).toDate());
-					console.log(data.timestamp);
 					if(data.timestamp.getFullYear() == year){
-						var docs = {};
-						docs.tipoAtendimento = data.tipoAtendimento;
-						docs.timestamp = data.timestamp.toLocaleDateString();
-						documents.push(docs);
+						data.timestamp = data.timestamp.toLocaleDateString();
+						documents.push(data);
 					}
 				});
 				callback(documents);

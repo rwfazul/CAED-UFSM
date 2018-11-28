@@ -27,8 +27,10 @@
               <div class="section" id="canvas">
                 <div class="row">
                   <div class="col s12 m4 l3">
-                    <a href="#modal-legenda-cores" class="btn btn-side base-color modal-trigger"><i class="left material-icons">color_lens</i> Legenda Cores</a>
-                    <button id="makepdf" class="btn btn-side base-color"><i class="left material-icons">picture_as_pdf</i> Salvar PDF</button>
+                    <a href="#modal-legenda-cores" class="btn btn-side base-color modal-trigger">
+                      <i class="left material-icons">color_lens</i> Legenda Cores</a>
+                    <button id="makepdf" class="btn btn-side base-color">
+                      <i class="left material-icons">picture_as_pdf</i> Salvar PDF</button>
                   </div>
                   <div class="col s12 m8 l9">
                     <h4 class="center">
@@ -39,19 +41,24 @@
                 <div id="full-calendar">
                   <div class="row">
                     <div class="col s12 m4 l3">
+                      <h4 class="header">Solicitações</h4>
+                      <div id="loader-solicitacoes">
+                        <% include partials/loader %>
+                      </div>
                       <div id="external-events-solicitacoes" class="external-events">
                       </div>
                       <div id="pagination-solicitacoes"></div>
+                      <h4 class="header">Encaminhamentos</h4>
+                      <div id="loader-encaminhamentos">
+                        <% include partials/loader %>
+                      </div>
                       <div id="external-events-encaminhamentos" class="external-events">
                       </div>
                       <div id="pagination-encaminhamentos"></div>
                     </div>
                     <div class="col s12 m8 l9">
-                      <div id="loader-events" style="display: block">
-                        <p>Aguarde, os agendamentos estão sendo carregados.</p>
-                        <div class="progress">
-                          <div class="indeterminate"></div>
-                        </div>
+                      <div id="loader-agenda">
+                        <% include partials/loader %>
                       </div>
                       <div id='calendar' class="calendar"></div>
                     </div>
@@ -67,35 +74,35 @@
     <!-- /Main -->
 
     <% include partials/modals_atendimentos %>
-    <% include partials/modal_legenda_cores %>
-    <% include partials/modal_new_event %>
-    <% include partials/footer %>
+      <% include partials/modal_legenda_cores %>
+        <% include partials/modal_new_event %>
+          <% include partials/footer %>
 
-    <!-- Plugins -->
-    <script src='/vendors/jquery/jquery-ui.min.js'></script>
-    <script src="/vendors/jquery/jquery.toast.min.js"></script>
-    <script src='/vendors/moment/moment.min.js'></script>
-    <script src='/vendors/fullcalendar/fullcalendar.min.js'></script>
-    <script src="/vendors/moment/pt-br.js"></script>
-    <!-- Custom -->
-    <script src="/js/schedule-formatter.js"></script>
-    <script src="/js/agenda-atendimentos.js"></script>
-    <!-- Pagination -->
-    <script src="/vendors/materialize-pagination/materialize-pagination.js"></script>
-    <!-- PDF -->
-    <script src="/vendors/html2canvas/html2canvas.min.js"></script>
-    <script src="/vendors/jspdf/jspdf.min.js"></script>
-    <script src="/js/generate-pdf.js"></script>
+            <!-- Plugins -->
+            <script src='/vendors/jquery/jquery-ui.min.js'></script>
+            <script src="/vendors/jquery/jquery.toast.min.js"></script>
+            <script src='/vendors/moment/moment.min.js'></script>
+            <script src='/vendors/fullcalendar/fullcalendar.min.js'></script>
+            <script src="/vendors/moment/pt-br.js"></script>
+            <!-- Custom -->
+            <script src="/js/schedule-formatter.js"></script>
+            <script src="/js/agenda-atendimentos.js"></script>
+            <!-- Pagination -->
+            <script src="/vendors/materialize-pagination/materialize-pagination.js"></script>
+            <!-- PDF -->
+            <script src="/vendors/html2canvas/html2canvas.min.js"></script>
+            <script src="/vendors/jspdf/jspdf.min.js"></script>
+            <script src="/js/generate-pdf.js"></script>
 
-    <script>
-      // active menu style
-      $(function() {
-        $('#p_agenda_atendimentos').addClass('selected');
-        var $menu =  $('#p_agenda');
-        $menu.find('a.collapsible-header').addClass('active');
-        $menu.find('div.collapsible-body').css('display', 'block');         
-      });
-    </script>
+            <script>
+              // active menu style
+              $(function () {
+                $('#p_agenda_atendimentos').addClass('selected');
+                var $menu = $('#p_agenda');
+                $menu.find('a.collapsible-header').addClass('active');
+                $menu.find('div.collapsible-body').css('display', 'block');
+              });
+            </script>
 </body>
 
 </html>

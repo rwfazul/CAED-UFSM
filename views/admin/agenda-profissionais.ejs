@@ -13,85 +13,87 @@
 <body>
   <% include partials/header %>
 
-  <!-- Main -->
-  <div id="main">
-    <!-- Wrapper -->
-    <div class="wrapper">
-      <!-- Left Sidebar Nav-->
-      <% include partials/aside %>
-        <!-- /Left Sidebar Nav-->
-        <!-- Content -->
-        <section id="content">
-          <!--start container-->
-          <div class="container">
-            <div class="section" id="canvas">
-              <div class="row">
-                <div class="col s12 m4 l3">
-                  <a href="#modal-legenda-cores" class="btn btn-side base-color modal-trigger"><i class="left material-icons">color_lens</i> Legenda Cores</a>
-                  <button id="makepdf" class="btn btn-side base-color"><i class="left material-icons">picture_as_pdf</i> Salvar PDF</button>
-                </div>
-                <div class="col s12 m8 l9">
-                  <h4 class="center">
-                    <%- data.sala.nome -%> - Agenda de profissionais</h4>
-                  <div id="salaId" data-id="<%- data.sala.id %>"></div>
-                </div>
-              </div>
-              <div id="full-calendar">
+    <!-- Main -->
+    <div id="main">
+      <!-- Wrapper -->
+      <div class="wrapper">
+        <!-- Left Sidebar Nav-->
+        <% include partials/aside %>
+          <!-- /Left Sidebar Nav-->
+          <!-- Content -->
+          <section id="content">
+            <!--start container-->
+            <div class="container">
+              <div class="section" id="canvas">
                 <div class="row">
                   <div class="col s12 m4 l3">
-                    <div id='external-events'>
-                      <h4 class="header">Profissionais</h4>
-                    </div>
-                    <div id="pagination-profissionais"></div>
+                    <a href="#modal-legenda-cores" class="btn btn-side base-color modal-trigger">
+                      <i class="left material-icons">color_lens</i> Legenda Cores</a>
+                    <button id="makepdf" class="btn btn-side base-color">
+                      <i class="left material-icons">picture_as_pdf</i> Salvar PDF</button>
                   </div>
                   <div class="col s12 m8 l9">
-                    <div id="loader-events" style="display: block">
-                      <p>Aguarde, as alocações estão sendo carregadas.</p>
-                      <div class="progress">
-                        <div class="indeterminate"></div>
+                    <h4 class="center">
+                      <%- data.sala.nome -%> - Agenda de profissionais</h4>
+                    <div id="salaId" data-id="<%- data.sala.id %>"></div>
+                  </div>
+                </div>
+                <div id="full-calendar">
+                  <div class="row">
+                    <div class="col s12 m4 l3">
+                      <div id='external-events'>
+                        <h4 class="header">Profissionais</h4>
+                        <div id="loader-profissionais">
+                            <% include partials/loader %>
+                          </div>
                       </div>
+                      <div id="pagination-profissionais"></div>
                     </div>
-                    <div id='calendar' class="calendar"></div>
+                    <div class="col s12 m8 l9">
+                      <div id="loader-agenda">
+                        <% include partials/loader %>
+                      </div>
+                      <div id='calendar' class="calendar"></div>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-        </section>
-        <!-- /Content-->
+          </section>
+          <!-- /Content-->
+      </div>
+      <!-- /Wrapper -->
     </div>
-    <!-- /Wrapper -->
-  </div>
-  <!-- /Main -->
+    <!-- /Main -->
 
-  <% include partials/modals_profissionais %>
-  <% include partials/modal_legenda_cores %>
-  <% include partials/footer %>
+    <% include partials/modals_profissionais %>
+      <% include partials/modal_legenda_cores %>
+        <% include partials/footer %>
 
-  <!-- Plugins -->
-  <script src='/vendors/jquery/jquery-ui.min.js'></script>
-  <script src="/vendors/jquery/jquery.toast.min.js"></script>
-  <script src='/vendors/moment/moment.min.js'></script>
-  <script src='/vendors/fullcalendar/fullcalendar.min.js'></script>
-  <script src="/vendors/moment/pt-br.js"></script>
-  <!-- Custom -->
-  <script src="/js/schedule-formatter.js"></script>
-  <script src="/js/agenda-profissionais.js"></script>
-  <!-- Pagination -->
-  <script src="/vendors/materialize-pagination/materialize-pagination.js"></script>
-  <!-- PDF -->
-  <script src="/vendors/html2canvas/html2canvas.min.js"></script>
-  <script src="/vendors/jspdf/jspdf.min.js"></script>
-  <script src="/js/generate-pdf.js"></script>
-  <script>
-    // active menu style
-    $(function() {
-      $('#p_agenda_profissionais').addClass('selected');
-      var $menu =  $('#p_agenda');
-      $menu.find('a.collapsible-header').addClass('active');
-      $menu.find('div.collapsible-body').css('display', 'block'); 
-    });
-  </script>
+          <!-- Plugins -->
+          <script src='/vendors/jquery/jquery-ui.min.js'></script>
+          <script src="/vendors/jquery/jquery.toast.min.js"></script>
+          <script src='/vendors/moment/moment.min.js'></script>
+          <script src='/vendors/fullcalendar/fullcalendar.min.js'></script>
+          <script src="/vendors/moment/pt-br.js"></script>
+          <!-- Custom -->
+          <script src="/js/schedule-formatter.js"></script>
+          <script src="/js/agenda-profissionais.js"></script>
+          <!-- Pagination -->
+          <script src="/vendors/materialize-pagination/materialize-pagination.js"></script>
+          <!-- PDF -->
+          <script src="/vendors/html2canvas/html2canvas.min.js"></script>
+          <script src="/vendors/jspdf/jspdf.min.js"></script>
+          <script src="/js/generate-pdf.js"></script>
+          <script>
+            // active menu style
+            $(function () {
+              $('#p_agenda_profissionais').addClass('selected');
+              var $menu = $('#p_agenda');
+              $menu.find('a.collapsible-header').addClass('active');
+              $menu.find('div.collapsible-body').css('display', 'block');
+            });
+          </script>
 </body>
 
 </html>

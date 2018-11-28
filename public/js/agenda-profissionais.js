@@ -69,6 +69,7 @@ $(function () {
       .done(function (profissionais) {
         $external_events.empty();
         $external_events.append($('<h4>').addClass('header').text("Profissionais"));
+        $("#loader-profissionais").css('display', 'none');
         $.each(profissionais, function (i, profissional) {
           $external_events.append(createExternalEvent(profissional));
         });
@@ -104,6 +105,7 @@ $(function () {
 
   //function to load and reload external events and pagination
   function loadExternalEvents() {
+    $("#loader-profissionais").css('display', 'block');
     getExternalEvents(1);
     getPagesExternalEvents();
   }
@@ -380,11 +382,11 @@ $(function () {
     },
     /* function loading: Triggered when event or resource fetching starts/stops. */
     loading: function (isLoading) {
-      $("#loader-events").css('display', 'block');
+      $("#loader-agenda").css('display', 'block');
     },
     /* function eventAfterAllRender: Triggered after all events have finished rendering. */
     eventAfterAllRender: function (view) {
-      $("#loader-events").css('display', 'none');
+      $("#loader-agenda").css('display', 'none');
     },
     /* function eventReceive: Called when a external event has been dropped onto the calendar. */
     eventReceive: function(event) {

@@ -83,6 +83,7 @@ $(function () {
       sing: 'solicitação',
       plural: 'solicitações',
       external: $('#external-events-solicitacoes'),
+      externalLoader: $("#loader-solicitacoes"),
       pagination: $('#pagination-solicitacoes'),
       pages: 1
     },
@@ -91,6 +92,7 @@ $(function () {
       sing: 'encaminhamento',
       plural: 'encaminhamentos',
       external: $('#external-events-encaminhamentos'),
+      externalLoader: $("#loader-encaminhamentos"),
       pagination: $('#pagination-encaminhamentos'),
       pages: 1
     }
@@ -98,13 +100,13 @@ $(function () {
 
   // fetch external events
   function getExternalEvents(type, page) {
+    type.external.empty();
+    type.externalLoader.css('display', 'block');
     $.getJSON(`/api/${type.collection}/${page}`)
       .done(function (events) {
-        $container = $(type.external);
-        $container.empty();
-        $container.append($('<h4>').addClass('header').text(type.plural));
+        type.externalLoader.css('display', 'none');
         $.each(events, function (i, event) {
-          $container.append(createExternalEvent(event, type.collection));
+          type.external.append(createExternalEvent(event, type.collection));
         });
       })
       .fail(function () {
@@ -138,6 +140,8 @@ $(function () {
 
   //function to load and reload external events and pagination
   function loadExternalEvents(type) {
+    type.external.empty();
+    type.externalLoader.css('display', 'block');
     getExternalEvents(type, 1);
     getPagesExternalEvents(type);
   }
@@ -437,7 +441,7 @@ $(function () {
     },
     /* function loading: Triggered when event or resource fetching starts/stops. */
     loading: function(isLoading) {
-      $("#loader-events").css('display', 'block');
+      $("#loader-agenda").css('display', 'block');
     },
     /* eventAfterRender: Triggered after an event has been placed on the calendar in its final position. */
     eventAfterRender: function(event, element, view) {
@@ -448,7 +452,7 @@ $(function () {
     },
     /* function eventAfterAllRender: Triggered after all events have finished rendering. */
     eventAfterAllRender: function(view) {
-      $("#loader-events").css('display', 'none');
+      $("#loader-agenda").css('display', 'none');
     },
     /* function eventReceive: Called when a external event has been dropped onto the calendar. */
     eventReceive: function(event) {
