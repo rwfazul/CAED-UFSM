@@ -269,6 +269,8 @@ $(function () {
         if (id) {
           event.id = id;
           $calendar.fullCalendar('updateEvent', event);
+          $calendar.fullCalendar('removeEvents', event.id); 
+          $calendar.fullCalendar('renderEvent', event);
           updateSolicitacao(event._type, event._externalEventId, true);
           loadExternalEvents(types[event._type]);
           showResponse(`Atendimento de '${event.title}' agendado com sucesso!`, 'success');
