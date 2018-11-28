@@ -479,7 +479,7 @@ $(function () {
     },
     /* function eventClic: Triggered when the user clicks an event. */
     eventClick: function(event) {
-      if (event.externalEventId && event._type) { // 'agendamentos' only
+      if (event._externalEventId && event._type) { // 'agendamentos' only
         var type = types[event._type];
         var label = type.sing.charAt(0).toUpperCase() + type.sing.slice(1);
           var data = {'id': event.id, 'title': event.title, 'start': event.start, 'end': event.end, 'type': event._type, 'label': label, 'externalEventId': event._externalEventId};
@@ -499,7 +499,7 @@ $(function () {
         $optionsModal
           .data('event', data)
           .modal('open');
-      } else if(!event.externalEventId && event._type){
+      } else if(!event._externalEventId && event._type){
         var label = event._type.charAt(0).toUpperCase() + event._type.slice(1);
           var event = {'id': event.id, 'title': event.title, 'start': event.start, 'end': event.end, 'type': event._type, 'label': label};
           $confirmationSingleEvent.find('.modal-info').html(`<b>${event.label}:</b> ${event.title}`);
