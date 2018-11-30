@@ -102,7 +102,7 @@ $(function () {
   function getExternalEvents(type, page) {
     type.external.empty();
     type.externalLoader.css('display', 'block');
-    $.getJSON(`/api/${type.collection}/${page}`)
+    $.getJSON(`/api/${type.collection}/${page}?preventCache=${new Date().getTime()}`)
       .done(function (events) {
         type.externalLoader.css('display', 'none');
         $.each(events, function (i, event) {
@@ -127,9 +127,9 @@ $(function () {
   }
 
   function getPagesExternalEvents(type) {
-    $.getJSON(`/api/${type.collection}/getpages`)
-      .done(function (events) {
-        type.pages = (events.length > 5) ? Math.ceil((events.length) / 5) : 1;
+    $.getJSON(`/api/${type.collection}/numPages`)
+      .done(function(numPages) {
+        type.pages = (numPages > 5) ? Math.ceil((numPages) / 5) : 1;
         $(type.pagination).empty();
         createPagination(type);
       })
@@ -199,12 +199,10 @@ $(function () {
       url: '/api/atendimentos/agenda/' + event.id,
       success: function (id) {
         if (id) {
-          showResponse(`Atendimento de '${event.title}' <b>removido</b> com sucesso!`, 'success');
-          $('#calendar').fullCalendar('removeEvents', event.id);
-          if(event.externalEventId){
+          $calendar.fullCalendar('removeEvents', event.id);
+          if(event.externalEventId)
             updateSolicitacao(event.type, event.externalEventId, false);
-            loadExternalEvents(types[event.type]);
-          }
+          showResponse(`Atendimento de '${event.title}' <b>removido</b> com sucesso!`, 'success');
         }
       },
       error: function () {
@@ -278,7 +276,6 @@ $(function () {
           $calendar.fullCalendar('removeEvents', event.id); 
           $calendar.fullCalendar('renderEvent', event);
           updateSolicitacao(event._type, event._externalEventId, true);
-          loadExternalEvents(types[event._type]);
           showResponse(`Atendimento de '${event.title}' agendado com sucesso!`, 'success');
         }
       },
@@ -334,6 +331,12 @@ $(function () {
       data: {
         agendado: ja_agendado,
         ultimaModificacao: moment().format()
+      },
+      success: function() {
+        loadExternalEvents(types[type]);
+      },
+      error: function() {
+        showResponse(`Erro ao salvar <b>status</b>.`, 'error');
       }
     });
   }
@@ -475,7 +478,7 @@ $(function () {
       var rounded = start.minute() != 0 ? start.clone().subtract(30, 'minute') : start;
       $("#event-start").val(rounded.format());
       $("#event-end").val(rounded.clone().add(1, 'hour').format());
-      $('#calendar').fullCalendar('unselect');
+      $calendar.fullCalendar('unselect');
     },
     /* function eventClic: Triggered when the user clicks an event. */
     eventClick: function(event) {
