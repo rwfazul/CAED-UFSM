@@ -92,9 +92,9 @@ $(function () {
   }
 
   function getPagesExternalEvents() {
-    $.getJSON(`/api/profissionais`)
-      .done(function (events) {
-        var pages = (events.length > 5) ? Math.ceil((events.length) / 5) : 1;
+    $.getJSON(`/api/profissionais/numPages`)
+      .done(function (numPages) {
+        var pages = (numPages > 5) ? Math.ceil((numPages) / 5) : 1;
         $pagination.empty();
         createPagination(pages);
       })
