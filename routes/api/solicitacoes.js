@@ -13,15 +13,15 @@ router
 			else res.status(200).json(docs);
 		});
 	})
-	.get('/getpages', function (req, res) {
+	.get('/numPages', function (req, res) {
 		var filter = ['agendado', '==', false];
-		firestore.getDocsWithFilter(colSolicitacoes, filter, function (docs, err) {
+		firestore.getDocsCountWithFilter(colSolicitacoes, filter, ['agendado'], function (docs, err) {
 			if (err) res.status(500).send(err);
 			else res.status(200).json(docs);
 		});
 	})
-	.get('/getcount/:year', function (req, res) {
-		firestore.getCount(colSolicitacoes, req.params['year'], function (docs, err) {
+	.get('/count/:year', function (req, res) {
+		firestore.getCountByYear(colSolicitacoes, req.params['year'], function (docs, err) {
 			if (err) res.status(500).send(err);
 			else res.status(200).json(docs);
 		});

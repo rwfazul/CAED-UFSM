@@ -13,9 +13,9 @@ router
 			else res.status(200).json(docs);
 		});
 	})
-	.get('/getpages', function (req, res) {
+	.get('/numPages', function (req, res) {
 		var filter = ['agendado', '==', false];
-		firestore.getDocsWithFilter(colEncaminhamentos, filter, function (docs, err) {
+		firestore.getDocsCountWithFilter(colEncaminhamentos, filter, ['agendado'], function (docs, err) {
 			if (err) res.status(500).send(err);
 			else res.status(200).json(docs);
 		});
@@ -28,8 +28,8 @@ router
 			else res.status(200).json(docs);
 		});
 	})
-	.get('/getcount/:year', function (req, res) {
-		firestore.getCount(colEncaminhamentos, req.params['year'], function (docs, err) {
+	.get('/count/:year', function (req, res) {
+		firestore.getCountByYear(colEncaminhamentos, req.params['year'], function (docs, err) {
 			if (err) res.status(500).send(err);
 			else res.status(200).json(docs);
 		});
