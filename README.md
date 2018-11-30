@@ -123,21 +123,33 @@ O **CAED-UFSM** será um canal de comunicação entre alunos e servidores com o 
     <tr>
        <td rowspan="2">Testes finais</td>
        <td>Planejamento testes com clientes/usuários</td>
-       <td>&#9744;</td>
+       <td>&#9745;</td>
        <td>15/11/2018</td>
     </tr>    
     <tr>
        <td>Realização testes com clientes/usuários</td>
-       <td>&#9744;</td>
+       <td>&#9745;</td>
        <td>22/11/2018</td>
     </tr>
     <tr>
        <td rowspan="2">Apresentação</td>
        <td>Apresentação final do sistema</td>
-       <td>&#9744;</td>
+       <td>&#9745;</td>
        <td>29/11/2018</td>
     </tr> 
+    <tr>
+       <td rowspan="2">Testes finais / Adaptação</td>
+       <td>Uso do sistema para adaptação e validação da solução</td>
+       <td>&#9744;</td>
+       <td>xx/12/2018</td>
+    </tr> 
+    <tr>
+       <td rowspan="2">Implantação</td>
+       <td><em>Deploy</em> no ambiente produção</td>
+       <td>&#9744;</td>
+       <td>???</td>
+    </tr>         
   </tbody>
 </table>
 
-<p align="right"><em>Backlog last updated on November 17, 2018.</em></p>
+<p align="right"><em>Backlog last updated on November 30, 2018.</em></p>
