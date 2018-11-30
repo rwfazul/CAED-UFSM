@@ -3,117 +3,87 @@
 
 <head>
   <% include partials/head %>
-    <link href="/vendors/chartist/chartist.min.css" type="text/css" rel="stylesheet">
-
-    <style>
-      .ct-series-a .ct-line,
-      .ct-series-a .ct-point,
-      .ct-series-a .ct-bar {
-        stroke: #f44336;
-      }
-
-      .ct-series-b .ct-line,
-      .ct-series-b .ct-point,
-      .ct-series-b .ct-bar {
-        stroke: #2196f3;
-      }
-      
-      .ct-bar {
-        stroke-width: 20px;
-      }
-    </style>
+  <link href="/vendors/chartist/chartist.min.css" type="text/css" rel="stylesheet">
 </head>
 
 <body>
   <% include partials/header %>
 
-    <!-- Main -->
-    <div id="main">
-      <!-- Wrapper -->
-      <div class="wrapper">
-        <!-- Left Sidebar Nav-->
-        <% include partials/aside %>
-          <!-- /Left Sidebar Nav-->
-          <!-- Content -->
-          <section id="content">
-            <div class="container">
-              <div class="section">
-                <div class="row">
-                  <div class="col s12">
-                    <div class="col s12 m9">
-                      <h4 class="header">
-                        Resumo solicitações/encaminhamentos
-                      </h4>
-                      <div class="input-field col s12 m6">
-                        <select id="year">
-                          <option value="" disabled>Escolha o ano</option>
-                          <option value="2018" selected>2018</option>
-                          <option value="2017">2017</option>
-                        </select>
-                        <label>Ano</label>
-                      </div>
-                    </div>
-                    <div class="col s12 m3">
-                      <span>
-                        <b>Legenda</b>
-                      </span>
-                      <ul>
-                        <li>
-                          <div class="col s3">
-                            <a class="btn-floating red"></a>
-                          </div>
-                          <div class="col s9">
-                            <p>Solicitações</p>
-                          </div>
-                        </li>
-                        <li>
-                          <div class="col s3">
-                            <a class="btn-floating blue"></a>
-                          </div>
-                          <div class="col s9">
-                            <p>Encaminhamentos</p>
-                          </div>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                  <div class="col s12">
-                    <h5>Quantidade de solicitações e encaminhamentos por mês
-                      <span class="year-title"></span>
-                    </h5>
-                    <% include partials/loader %>
-                      <div class="ct-chart" id="chart_month"></div>
-                  </div>
-                  <div class="col s12">
-                    <h5>Quantidade de solicitações e encaminhamentos por tipo de atendimento
-                      <span class="year-title"></span>
-                    </h5>
-                    <% include partials/loader %>
-                      <div class="ct-chart" id="chart_type"></div>
-                  </div>
+  <!-- Main -->
+  <div id="main">
+    <!-- Wrapper -->
+    <div class="wrapper">
+    <!-- Left Sidebar Nav-->
+    <% include partials/aside %>
+    <!-- /Left Sidebar Nav-->
+    <!-- Content -->
+    <section id="content">
+      <div class="container">
+        <div class="section">
+          <div class="row">
+            <div class="col s12 m9">
+              <div class="row">
+                <div class="col s12">
+                  <h4 class="header">Resumo solicitações/encaminhamentos</h4>
+                </div>
+              </div>
+              <div class="row">
+                <div class="input-field col s12 m6">
+                  <select id="year">
+                    <option value="" disabled>Escolha o ano</option>
+                    <option value="2018" selected>2018</option>
+                    <option value="2017">2017</option>
+                  </select>
+                  <label>Ano</label>
                 </div>
               </div>
             </div>
+            <div class="col s12 m3">
+              <p><b>Legenda</b></p>
+              <ul class="legenda">
+                <li>
+                  <i class="btn-floating red"></i> Solicitações
+                </li>
+                <li>
+                  <i class="btn-floating blue"></i> Encaminhamentos
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col s12">
+              <h5 class="chart-title"><i class="material-icons left">show_chart</i> Quantidade de solicitações e encaminhamentos por mês <span class="year-title"></span></h5>
+              <% include partials/loader %>
+              <div class="center ct-chart" id="chart_month"></div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col s12">
+              <h5 class="chart-title"><i class="material-icons left">show_chart</i> Quantidade de solicitações e encaminhamentos por tipo de atendimento <span class="year-title"></span></h5>
+              <% include partials/loader %>
+              <div class="center ct-chart" id="chart_type"></div>
+            </div>
+          </div>
+        </div>
       </div>
-      </section>
-      <!-- /Content-->
+    </section>
+    <!-- /Content-->
     </div>
     <!-- /Wrapper -->
-    </div>
-    <!-- /Main -->
+  </div>
+  <!-- /Main -->
 
-    <% include partials/footer %>
-      <script src="/vendors/chartist/chartist.min.js"></script>
-      <script src="/js/dashboard-graphics.js"></script>
-      <script src='/vendors/moment/moment.min.js'></script>
+  <% include partials/footer %>
+  <script src="/vendors/chartist/chartist.min.js"></script>
+  <script src="/js/dashboard-graphics.js"></script>
+  <script src='/vendors/moment/moment.min.js'></script>
 
-      <script>
-        // active menu style
-        $(function () {
-          $(`#p_dashboard`).addClass('selected');
-        });
-      </script>
-
+  <script>
+    // active menu style
+    $(function () {
+      $(`#p_dashboard`).addClass('selected');
+    });
+  </script>
 </body>
 
 </html>

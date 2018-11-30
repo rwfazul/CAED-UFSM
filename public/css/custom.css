@@ -242,3 +242,36 @@ table.dataTable.dtr-inline.collapsed>tbody>tr[role="row"]>td:first-child:before,
 table.dataTable.dtr-inline.collapsed>tbody>tr.parent>td:first-child:before, table.dataTable.dtr-inline.collapsed>tbody>tr.parent>th:first-child:before {
     background-color: #31b131 !important;
 }
+
+ul .btn-floating {
+	margin-bottom: 5px;
+}
+
+h5.chart-title {
+	font-family: 'Ubuntu';
+	font-size: 1.5rem; 
+}
+
+ul.legenda li {
+	font-family: 'Ubuntu';
+}
+
+ul.legenda li i {
+	margin-right: 3px;
+}
+
+.ct-series-a .ct-line,
+.ct-series-a .ct-point,
+.ct-series-a .ct-bar {
+	stroke: #f44336 !important;
+}
+
+.ct-series-b .ct-line,
+.ct-series-b .ct-point,
+.ct-series-b .ct-bar {
+	stroke: #2196f3 !important;
+}
+
+.ct-bar {
+	stroke-width: 20px !important;
+}
