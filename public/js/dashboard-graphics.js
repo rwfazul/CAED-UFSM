@@ -53,8 +53,8 @@ $(function () {
   }
 
   function createGraphs(year) {
-    var t1 = $.getJSON(`/api/solicitacoes/getcount/${year}`);
-    var t2 = $.getJSON(`/api/encaminhamentos/getcount/${year}`);
+    var t1 = $.getJSON(`/api/solicitacoes/count/${year}`);
+    var t2 = $.getJSON(`/api/encaminhamentos/count/${year}`);
     $.when(t1, t2).done(function (d1, d2) {
       $(".loader").css('display', 'none');
       createGraphType(getCountType(d1[0]), getCountType(d2[0]));
@@ -78,5 +78,4 @@ $(function () {
   });
 
   loaderGraphics();
-
 });

@@ -1,7 +1,7 @@
 const factory = require('./factory');
 
 
-var getDocs = function (query, callback) {
+var getDocs = function(query, callback) {
 	query.get()
 		.then(snapshot => {
 			var documents = [];
@@ -22,7 +22,7 @@ var getDocs = function (query, callback) {
 
 module.exports = {
 
-	getAllDocs: function (collection, callback) {
+	getAllDocs: function(collection, callback) {
 		var db = factory.getDbInstance();
 		var colRef = db.collection(collection);
 		var allDocs = colRef;
@@ -36,11 +36,42 @@ module.exports = {
 		getDocs(query, callback);
 	},
 
-	getCount: function (collection, year, callback) {
+	getDocsCount: function(collection, projection, callback) {
+		var db = factory.getDbInstance();
+		var colRef = db.collection(collection);
+		colRef
+			.select(...projection)
+			.get()
+			.then(snapshot => {
+				callback(snapshot.size);
+			})
+			.catch(err => {
+				console.log('Error getting documents', err);
+				callback({}, err);
+			});	
+	},
+
+	getDocsCountWithFilter: function(collection, filter, projection, callback) {
+		var db = factory.getDbInstance();
+		var colRef = db.collection(collection);
+		colRef
+			.where(...filter)
+			.select(...projection)
+			.get()
+			.then(snapshot => {
+				callback(snapshot.size);
+			})
+			.catch(err => {
+				console.log('Error getting documents', err);
+				callback({}, err);
+			});	
+	},
+
+	getCountByYear: function(collection, year, callback) {
 		var db = factory.getDbInstance();
 		var colRef = db.collection(collection);
 		var query = colRef
-			.select("tipoAtendimento", "timestamp")
+			.select('tipoAtendimento', 'timestamp')
 			.get()
 			.then(snapshot => {
 				var documents = [];
@@ -61,7 +92,7 @@ module.exports = {
 
 	},
 
-	getDocsPagination: function (collection, colOrder, filter, page, callback) {
+	getDocsPagination: function(collection, colOrder, filter, page, callback) {
 		var db = factory.getDbInstance();
 		var colRef = db.collection(collection);
 		var limit = page > 1 ? ((page - 1) * 5) : 5;
@@ -102,7 +133,7 @@ module.exports = {
 		}
 	},
 
-	addDoc: function (collection, doc, callback) {
+	addDoc: function(collection, doc, callback) {
 		var db = factory.getDbInstance();
 		var colRef = db.collection(collection);
 		var addDoc = colRef.add(doc)
@@ -115,7 +146,7 @@ module.exports = {
 			});
 	},
 
-	updateDoc: function (collection, id, doc, callback) {
+	updateDoc: function(collection, id, doc, callback) {
 		var db = factory.getDbInstance();
 		var docRef = db.collection(collection).doc(id);
 		var updateSingle = docRef.update(doc)
@@ -128,7 +159,7 @@ module.exports = {
 			});
 	},
 
-	deleteDoc: function (collection, id, callback) {
+	deleteDoc: function(collection, id, callback) {
 		var db = factory.getDbInstance();
 		var docRef = db.collection(collection).doc(id);
 		var deleteDoc = docRef.delete()
