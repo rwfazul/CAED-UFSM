@@ -7,9 +7,14 @@ $(function () {
     .done(function (encaminhamentos) {
       $.each(encaminhamentos, function (i, encaminhamento) {
         var classAgendado = encaminhamento.agendado ? 'hasEvent' : 'noEvent';
+        var date;
+        if (moment(solicitacao.timestamp, "YYYY-MM-DD").isValid())
+          date = moment(solicitacao.timestamp, "YYYY-MM-DD").format("DD/MM/YYYY");
+        else // try with another possible format of toLocaleDateString()
+          date = moment(solicitacao.timestamp, "MM/DD/YYYY").format("DD/MM/YYYY");        
         $tbody.append(
           `<tr class="${classAgendado}">
-            <td>${moment(encaminhamento.timestamp, "YYYY-MM-DD").format("DD/MM/YYYY")}</td>
+            <td>${date}</td>
             <td>${encaminhamento.matricula}</td>
             <td>${encaminhamento.nome}</td>
             <td>${encaminhamento.email}</td>
