@@ -132,22 +132,22 @@ O **CAED-UFSM** será um canal de comunicação entre alunos e servidores com o 
        <td>22/11/2018</td>
     </tr>
     <tr>
-       <td rowspan="2">Apresentação</td>
-       <td>Apresentação final do sistema</td>
+       <td>Apresentação</td>
+       <td>Apresentação do sistema</td>
        <td>&#9745;</td>
        <td>29/11/2018</td>
     </tr> 
     <tr>
-       <td rowspan="2">Testes finais / Adaptação</td>
-       <td>Uso do sistema para adaptação e validação da solução</td>
+       <td>Período de Adaptação</td>
+       <td>Uso do sistema para adaptação e validação finais da solução</td>
        <td>&#9744;</td>
        <td>xx/12/2018</td>
     </tr> 
     <tr>
-       <td rowspan="2">Implantação</td>
+       <td>Implantação</td>
        <td><em>Deploy</em> no ambiente produção</td>
        <td>&#9744;</td>
-       <td>???</td>
+       <td>(???)</td>
     </tr>         
   </tbody>
 </table>
