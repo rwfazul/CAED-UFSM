@@ -46,7 +46,7 @@ $(function () {
   function getCountMonth(data) {
     var count = Array(12).fill(0);
     $.each(data, function (i, doc) {
-      var month = parseInt(moment(doc.timestamp, "YYYY-MM-DD").format('M')) - 1;
+      var month = parseInt(moment(doc.timestamp).format('M')) - 1;
       count[month]++;
     });
     return count;
